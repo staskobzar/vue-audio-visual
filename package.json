@@ -75,5 +75,25 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/staskobzar/vue-audio-visual.git"
+  },
+  "keywords": [
+    "vue",
+    "audio",
+    "http5-audio-api",
+    "http5-audio-visualizer",
+    "canvas"
+  ],
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/staskobzar/vue-audio-visual/issues"
+  },
+  "homepage": "https://github.com/staskobzar/vue-audio-visual#readme"
 }
