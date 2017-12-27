@@ -1,19 +1,27 @@
 export default {
   name: 'av-bars',
-  render: function (h) {
-    this.header = h('h3', `av-bars: ${this.msg}`)
-    return this.header
+  props: {
+    /**
+     * prop: 'audio-src'
+     * Audio element src attribute. When provided creates audio element
+     */
+    audioSrc: {
+      type: String,
+      default: null
+    }
   },
   data () {
     return {
-      header: null,
-      msg: 'Hello World!'
+      audio: null,
+      analyser: null,
+      canvas: null
     }
   },
+  render: function (h) {
+    return h('h3', `av-bars: AAA`)
+  },
   mounted () {
-    console.log(this.header)
-    const hdr = this.header.elm
-    console.log(hdr.innerHTML)
-    hdr.innerHTML = 'Changed header'
+    // const hdr = this.header.elm
+    // hdr.innerHTML = '<div style="color: red"> Error </div>'
   }
 }
