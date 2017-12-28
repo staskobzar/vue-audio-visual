@@ -52,14 +52,13 @@ const props = {
     default: null
   },
   /**
-   * prop: 'canv-position'
-   * Canvas element position relatively to audio element.
-   * Valid values: 'top', 'bottom'
-   * Default: 'bottom'
+   * prop: 'canv-top'
+   * Canvas element position on top relatively to audio element.
+   * Default: false
    */
-  canvPosition: {
-    type: String,
-    default: 'bottom'
+  canvTop: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -90,7 +89,7 @@ const AvBars = {
     this.audio = h('audio', { attrs: audioAttrs })
     this.canvas = h('canvas', { attrs: canvAttrs })
     const items = [ this.audio, this.canvas ]
-    if (this.canvPosition === 'top') {
+    if (this.canvTop) {
       items.reverse()
     }
     return h('div', items.map(v => h('div', [v])))

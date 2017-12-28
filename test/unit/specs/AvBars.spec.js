@@ -1,4 +1,5 @@
 import { createLocalVue, mount } from 'vue-test-utils'
+import AvBars from '@/components/AvBars'
 import Plugin from '@/'
 
 const localVue = createLocalVue()
@@ -81,10 +82,18 @@ describe('AvBars', () => {
 
   it('should create canvas element on top of the audio element', () => {
     const App = { template: `
-      <av-bars canv-position="top"
+      <av-bars canv-top
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.findAll('div').at(1).contains('canvas')).toBe(true)
     expect(Comp.findAll('div').at(2).contains('audio')).toBe(true)
+  })
+
+  it('should fill background canvas with color', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      canvFillColor: '#CCCCCC'
+    }
+    const Comp = mount(AvBars, { propsData: props })
   })
 })
