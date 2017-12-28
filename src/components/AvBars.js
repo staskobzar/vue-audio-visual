@@ -59,6 +59,26 @@ const props = {
   canvTop: {
     type: Boolean,
     default: false
+  },
+  /**
+   * prop: 'fft-size'
+   * Represents the window size in samples that is used when performing
+   * a Fast Fourier Transform (FFT) to get frequency domain data.
+   * Must be power of 2 between 2^5 and 2^15
+   * Default: 1028
+   */
+  fftSize: {
+    type: Number,
+    default: 1028
+  },
+  /**
+   * prop: 'canv-fill-color'
+   * Canvas fill background color. Can be string RGB color or canvas gradients array.
+   * Default is transperent.
+   */
+  canvFillColor: {
+    type: [String, Array],
+    default: null
   }
 }
 
@@ -72,31 +92,56 @@ const AvBars = {
     return {
       audio: null,
       analyser: null,
+      ctx: null,
       canvas: null
     }
   },
-  render: function (h) {
-    const audioAttrs = {
-      src: this.audioSrc,
-      controls: this.audioControls,
-      class: this.audioClass
-    }
-    const canvAttrs = {
-      class: this.canvClass,
-      width: this.canvWidth,
-      height: this.canvHeight
-    }
-    this.audio = h('audio', { attrs: audioAttrs })
-    this.canvas = h('canvas', { attrs: canvAttrs })
-    const items = [ this.audio, this.canvas ]
-    if (this.canvTop) {
-      items.reverse()
-    }
-    return h('div', items.map(v => h('div', [v])))
-  },
+  render: h => h('div'),
   mounted () {
-    // const hdr = this.header.elm
-    // hdr.innerHTML = '<div style="color: red"> Error </div>'
+    this._createHTMLElements()
+    // console.log(Array.isArray(this.canvFillColor))
+    // this._setAnalyser()
+    // this._setCanvasContext()
+    // this._mainLoop()
+  },
+  methods: {
+    _createHTMLElements: function () {
+      const audio = document.createElement('audio')
+      const audioDiv = document.createElement('div')
+      const canv = document.createElement('canvas')
+      const canvDiv = document.createElement('div')
+
+      audio.setAttribute('src', this.audioSrc)
+      if (this.audioControls) audio.setAttribute('controls', true)
+      if (this.audioClass) audio.setAttribute('class', this.audioClass)
+      audioDiv.appendChild(audio)
+      this.$el.appendChild(audioDiv)
+
+      if (this.canvClass) canv.setAttribute('class', this.canvClass)
+      if (this.canvWidth) canv.setAttribute('width', this.canvWidth)
+      if (this.canvHeight) canv.setAttribute('height', this.canvHeight)
+      canvDiv.appendChild(canv)
+
+      if (this.canvTop) {
+        this.$el.insertBefore(canvDiv, audioDiv)
+      } else {
+        this.$el.appendChild(canvDiv)
+      }
+    },
+    _setAnalyser: function () {
+      const ctx = new AudioContext()
+      const src = ctx.createMediaElementSource(this.canvas.element)
+      this.analyser = ctx.createAnalyser()
+
+      src.connect(this.analyser)
+      this.analyser.fftSize = this.fftSize
+      this.analyser.connect(ctx.destination)
+    },
+    _setCanvasContext: function () {
+      this.ctx = this.canvas.elm.getContext('2d')
+    },
+    _mainLoop: function () {
+    }
   }
 }
 

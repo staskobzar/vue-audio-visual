@@ -1,16 +1,16 @@
 import { createLocalVue, mount } from 'vue-test-utils'
-import AvBars from '@/components/AvBars'
 import Plugin from '@/'
+import AudioContext from './utils'
 
 const localVue = createLocalVue()
 localVue.use(Plugin)
 
-describe('AvBars', () => {
+describe('AvBars component insert', () => {
   it('should create audio element with source', () => {
     const App = { template: `<av-bars audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
-    expect(Comp.find('audio').element.getAttribute('src'))
+    expect(Comp.vm.$el.querySelector('audio').src)
           .toEqual('/assets/foo.mp3')
   })
 
@@ -20,7 +20,7 @@ describe('AvBars', () => {
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
-    expect(Comp.find('audio').element.hasAttribute('controls'))
+    expect(Comp.vm.$el.querySelector('audio').hasAttribute('controls'))
           .toBe(true)
   })
 
@@ -30,7 +30,7 @@ describe('AvBars', () => {
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
-    expect(Comp.find('audio').element.getAttribute('class'))
+    expect(Comp.vm.$el.querySelector('audio').getAttribute('class'))
           .toEqual('my-class0')
   })
 
@@ -44,9 +44,9 @@ describe('AvBars', () => {
     const App = { template: `<av-bars audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
-    expect(Comp.find('canvas').element.getAttribute('width'))
+    expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
           .toEqual('300')
-    expect(Comp.find('canvas').element.getAttribute('height'))
+    expect(Comp.vm.$el.querySelector('canvas').getAttribute('height'))
           .toEqual('80')
   })
 
@@ -57,9 +57,9 @@ describe('AvBars', () => {
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
-    expect(Comp.find('canvas').element.getAttribute('width'))
+    expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
           .toEqual('600')
-    expect(Comp.find('canvas').element.getAttribute('height'))
+    expect(Comp.vm.$el.querySelector('canvas').getAttribute('height'))
           .toEqual('100')
   })
 
@@ -69,15 +69,16 @@ describe('AvBars', () => {
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
-    expect(Comp.find('canvas').element.getAttribute('class'))
+    expect(Comp.vm.$el.querySelector('canvas').getAttribute('class'))
           .toEqual('my-class')
   })
 
   it('should create canvas element below the audio element by default', () => {
     const App = { template: `<av-bars audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
-    expect(Comp.findAll('div').at(1).contains('audio')).toBe(true)
-    expect(Comp.findAll('div').at(2).contains('canvas')).toBe(true)
+    const divs = Comp.vm.$el.querySelectorAll('div')
+    expect(divs[0].firstChild instanceof HTMLAudioElement).toBeTruthy()
+    expect(divs[1].firstChild instanceof HTMLCanvasElement).toBeTruthy()
   })
 
   it('should create canvas element on top of the audio element', () => {
@@ -85,15 +86,8 @@ describe('AvBars', () => {
       <av-bars canv-top
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
-    expect(Comp.findAll('div').at(1).contains('canvas')).toBe(true)
-    expect(Comp.findAll('div').at(2).contains('audio')).toBe(true)
-  })
-
-  it('should fill background canvas with color', () => {
-    const props = {
-      audioSrc: '/assets/foo.mp3',
-      canvFillColor: '#CCCCCC'
-    }
-    const Comp = mount(AvBars, { propsData: props })
+    const divs = Comp.vm.$el.querySelectorAll('div')
+    expect(divs[0].firstChild instanceof HTMLCanvasElement).toBeTruthy()
+    expect(divs[1].firstChild instanceof HTMLAudioElement).toBeTruthy()
   })
 })
