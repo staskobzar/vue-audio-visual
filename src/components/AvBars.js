@@ -236,7 +236,7 @@ const AvBars = {
       const frqBits = this.analyser.frequencyBinCount
       const data = new Uint8Array(frqBits)
       const barWidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
-      const step = Math.round((barWidth + this.barSpace) / w * frqBits)
+      const step = Math.round((barWidth + this.barSpace) / frqBits * w)
       const barFill = Array.isArray(this.barColor) ?
                        this._fillGradient(this.barColor) : this.barColor
       let x = 0

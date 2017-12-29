@@ -18,10 +18,9 @@ describe('AvBars canvas build', () => {
 
   it('should draw caps when caps-height property is set', () => {
     AvBars.methods._drawCap = jest.fn()
-    const frqBitCount = AudioContext().createAnalyser().frequencyBinCount
     const Comp = mount(AvBars, { propsData: {capsHeight: 4} })
     expect(AvBars.methods._drawCap.mock.calls.length)
-          .toBe(frqBitCount)
+          .toBe(1)
   })
 
   it('should not draw brick bar by default', () => {
@@ -32,9 +31,9 @@ describe('AvBars canvas build', () => {
 
   it('should draw brick bar by when brick-height is set', () => {
     AvBars.methods._drawBrickBar = jest.fn()
-    const frqBitCount = AudioContext().createAnalyser().frequencyBinCount
+    // const frqBitCount = AudioContext().createAnalyser().frequencyBinCount
     const Comp = mount(AvBars, { propsData: {brickHeight: 4} })
-    expect(AvBars.methods._drawBrickBar.mock.calls.length).toBe(frqBitCount)
+    expect(AvBars.methods._drawBrickBar.mock.calls.length).toBe(1)
   })
 
   it('should create gradient when canvFillColor is an array', () => {
