@@ -4,8 +4,12 @@ window.AudioContext = jest.fn().mockImplementation(() => {
       return { connect: () => {} }
     },
     createAnalyser: () => {
-      return { connect: () => {} }
+      return {
+        connect: () => {},
+        getByteFrequencyData: () => {}
+      }
     }
   }
 })
+
 export default window.AudioContext

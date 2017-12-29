@@ -2,6 +2,8 @@ import { mount } from 'vue-test-utils'
 import AvBars from '@/components/AvBars'
 import AudioContext from './utils'
 
+window.requestAnimationFrame = jest.fn()
+
 describe('AvBars canvas build', () => {
   beforeEach(() => {
     jest.resetModules()
@@ -15,6 +17,6 @@ describe('AvBars canvas build', () => {
     }
     AvBars.methods._fillGradient = jest.fn()
     const Comp = mount(AvBars, { propsData: props })
-    // expect(AvBars.methods._fillGradient.mock.calls.length).toBe(1)
+    expect(AvBars.methods._fillGradient.mock.calls.length).toBe(1)
   })
 })
