@@ -105,6 +105,49 @@ const props = {
   barColor: {
     type: [String, Array],
     default: '#0A0AFF'
+  },
+  /**
+   * prop: 'caps-height'
+   * Create caps on bars with given height in pixels.
+   * If zero caps then skip creating bars.
+   * Default: 0
+   */
+  capsHeight: {
+    type: Number,
+    default: 0
+  },
+  /**
+   * prop: 'caps-drop-speed'
+   * Caps drop down animation speed.
+   * Default: 0.9
+   */
+  capsDropSpeed: {
+    type: Number,
+    default: 0.9
+  },
+  /**
+   * prop: 'caps-color'
+   * Caps rectangles RGB color.
+   */
+  capsColor: {
+    type: String,
+    default: '#A0A0FF'
+  },
+  /**
+   * prop: 'brick-height'
+   * Draw bar as bricks with set height.
+   */
+  brickHeight: {
+    type: Number,
+    default: 0
+  },
+  /**
+   * prop: 'brick-space'
+   * Space between bricks.
+   */
+  brickSpace: {
+    type: Number,
+    default: 1
   }
 }
 
@@ -119,7 +162,7 @@ const AvBars = {
       audio: null,
       analyser: null,
       ctx: null,
-      canvas: null
+      caps: null
     }
   },
   render: h => h('div'),
@@ -170,6 +213,10 @@ const AvBars = {
       src.connect(this.analyser)
       this.analyser.fftSize = this.fftSize
       this.analyser.connect(ctx.destination)
+
+      // set caps array and fill with zeros
+      this.caps = Array.apply(null, Array(this.analyser.frequencyBinCount))
+                       .map(() => 0)
     },
     /**
      * Main loop. Draws visualization.
@@ -181,23 +228,23 @@ const AvBars = {
       const data = new Uint8Array(frqBits)
       const barwidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
       const step = Math.round((barwidth + this.barSpace) / w * frqBits)
+      const barFill = Array.isArray(this.barColor) ?
+                       this._fillGradient(this.barColor) : this.barColor
       let x = 0
 
       this.analyser.getByteFrequencyData(data)
       this._fillCanvasBG()
-
-      this.ctx.fillStyle = Array.isArray(this.barColor) ?
-                           this._fillGradient(this.barColor) : this.barColor
 
       data.forEach((_, index) => {
         if (index % step) return
         const bits = Math.round(data.slice(index, index + step)
                           .reduce((v, t) => t + v, 0) / step)
         const val = bits / 255 * h
-        this.ctx.fillRect(
-          x, h - val,
-          barwidth, val
-        )
+        if (this.capsHeight) {
+          this._drawCap(index, barwidth, x, bits)
+        }
+        this.ctx.fillStyle = barFill
+        this._drawBar(barwidth, val, x)
         x += barwidth + this.barSpace
       })
       requestAnimationFrame(this.mainLoop)
@@ -210,9 +257,12 @@ const AvBars = {
       const w = this.canvWidth
       const h = this.canvHeight
       this.ctx.clearRect(0, 0, w, h)
-      this.ctx.fillStyle = Array.isArray(this.canvFillColor) ?
-                           this._fillGradient(this.canvFillColor) : this.canvFillColor
-      this.ctx.fillRect(0, 0, w, h)
+      if (this.canvFillColor) {
+        this.ctx.fillStyle = Array.isArray(this.canvFillColor) ?
+                        this._fillGradient(this.canvFillColor) :
+                        this.canvFillColor
+        this.ctx.fillRect(0, 0, w, h)
+      }
     },
     /**
      * Canvas gradient. Vertical, from top down
@@ -228,6 +278,46 @@ const AvBars = {
         offset += (1 / colorsArray.length)
       })
       return gradient
+    },
+    /**
+     * Draw bar. Solid bar or brick bar.
+     * @private
+     */
+    _drawBar: function (barwidth, frqBit, barX) {
+      if (this.brickHeight) {
+        this._drawBrickBar(barwidth, frqBit, barX)
+      } else {
+        this.ctx.fillRect(
+          barX, this.canvHeight - frqBit,
+          barwidth, frqBit
+        )
+      }
+    },
+    /**
+     * Draw bricks bar.
+     * @private
+     */
+    _drawBrickBar: function(barwidth, frqBit, barX) {
+      for (let b = 0; b < frqBit; b += this.brickHeight + this.brickSpace) {
+        this.ctx.fillRect(
+          barX, this.canvHeight - frqBit + b,
+          barwidth, this.brickHeight
+        )
+      }
+    },
+    /**
+     * Draw cap for each bar and animate caps falling down.
+     * @private
+     */
+    _drawCap: function (index, barwidth, barX, barY) {
+      const cap = this.caps[index] <= barY ?
+                                      barY :
+                                      this.caps[index] - this.capsDropSpeed
+      this.ctx.fillStyle = this.capsColor
+      this.ctx.fillRect(
+          barX, this.canvHeight - (cap / 255.0 * this.canvHeight) - this.capsHeight,
+          barwidth, this.capsHeight)
+      this.caps[index] = cap
     }
   }
 }
