@@ -148,6 +148,15 @@ const props = {
   brickSpace: {
     type: Number,
     default: 1
+  },
+  /**
+   * prop: 'symmetric'
+   * Draw bars symmetric to canvas vertical center
+   * Default: false
+   */
+  symmetric: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -226,8 +235,8 @@ const AvBars = {
       const h = this.canvHeight
       const frqBits = this.analyser.frequencyBinCount
       const data = new Uint8Array(frqBits)
-      const barwidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
-      const step = Math.round((barwidth + this.barSpace) / w * frqBits)
+      const barWidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
+      const step = Math.round((barWidth + this.barSpace) / w * frqBits)
       const barFill = Array.isArray(this.barColor) ?
                        this._fillGradient(this.barColor) : this.barColor
       let x = 0
@@ -239,13 +248,13 @@ const AvBars = {
         if (index % step) return
         const bits = Math.round(data.slice(index, index + step)
                           .reduce((v, t) => t + v, 0) / step)
-        const val = bits / 255 * h
+        const barHeight = bits / 255 * h
         if (this.capsHeight) {
-          this._drawCap(index, barwidth, x, bits)
+          this._drawCap(index, barWidth, x, bits)
         }
         this.ctx.fillStyle = barFill
-        this._drawBar(barwidth, val, x)
-        x += barwidth + this.barSpace
+        this._drawBar(barWidth, barHeight, x)
+        x += barWidth + this.barSpace
       })
       requestAnimationFrame(this.mainLoop)
     },
@@ -283,13 +292,13 @@ const AvBars = {
      * Draw bar. Solid bar or brick bar.
      * @private
      */
-    _drawBar: function (barwidth, frqBit, barX) {
+    _drawBar: function (barWidth, barHeight, barX) {
       if (this.brickHeight) {
-        this._drawBrickBar(barwidth, frqBit, barX)
+        this._drawBrickBar(barWidth, barHeight, barX)
       } else {
         this.ctx.fillRect(
-          barX, this.canvHeight - frqBit,
-          barwidth, frqBit
+          barX, this.canvHeight - barHeight - this._symAlign(barHeight),
+          barWidth, barHeight
         )
       }
     },
@@ -297,11 +306,11 @@ const AvBars = {
      * Draw bricks bar.
      * @private
      */
-    _drawBrickBar: function(barwidth, frqBit, barX) {
-      for (let b = 0; b < frqBit; b += this.brickHeight + this.brickSpace) {
+    _drawBrickBar: function(barWidth, barHeight, barX) {
+      for (let b = 0; b < barHeight; b += this.brickHeight + this.brickSpace) {
         this.ctx.fillRect(
-          barX, this.canvHeight - frqBit + b,
-          barwidth, this.brickHeight
+          barX, this.canvHeight - barHeight + b - this._symAlign(barHeight),
+          barWidth, this.brickHeight
         )
       }
     },
@@ -313,11 +322,25 @@ const AvBars = {
       const cap = this.caps[index] <= barY ?
                                       barY :
                                       this.caps[index] - this.capsDropSpeed
+      const y = (cap / 255.0 * this.canvHeight)
+      const capY = this.canvHeight - y - this.capsHeight - this._symAlign(y)
       this.ctx.fillStyle = this.capsColor
       this.ctx.fillRect(
-          barX, this.canvHeight - (cap / 255.0 * this.canvHeight) - this.capsHeight,
+          barX, capY,
           barwidth, this.capsHeight)
+      if (this.symmetric) {
+        this.ctx.fillRect(
+          barX, this.canvHeight - capY - this.capsHeight,
+          barwidth, this.capsHeight)
+      }
       this.caps[index] = cap
+    },
+    /**
+     * Shift for symmetric alignment
+     * @private
+     */
+    _symAlign: function (barHeight) {
+      return this.symmetric ? ((this.canvHeight - barHeight) / 2) : 0
     }
   }
 }

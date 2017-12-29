@@ -1,3 +1,7 @@
+/**
+ * Mock AudioContext
+ */
+
 window.AudioContext = jest.fn().mockImplementation(() => {
   return {
     createMediaElementSource: () => {
