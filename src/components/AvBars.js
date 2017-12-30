@@ -1,85 +1,8 @@
+import { baseProps, createHTMLElements, setAnalyser, fillGradient } from './AvBase'
 /**
  * Component props Object
  */
-const props = {
-  /**
-   * prop: 'audio-src'
-   * Audio element src attribute. When provided creates audio element
-   */
-  audioSrc: {
-    type: String,
-    default: null
-  },
-  /**
-   * prop: 'audio-controls'
-   * Audio element controls attribute. When provided should
-   * display audio element with controls
-   */
-  audioControls: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * prop: 'audio-class'
-   * Audio element css class name.
-   */
-  audioClass: {
-    type: String,
-    default: null
-  },
-  /**
-   * prop: 'canv-width'
-   * Canvas element width. Default 300
-   */
-  canvWidth: {
-    type: Number,
-    default: 300
-  },
-  /**
-   * prop: 'canv-height'
-   * Canvas element height. Default 80
-   */
-  canvHeight: {
-    type: Number,
-    default: 80
-  },
-  /**
-   * prop: 'canv-class'
-   * Canvas element css class name.
-   */
-  canvClass: {
-    type: String,
-    default: null
-  },
-  /**
-   * prop: 'canv-top'
-   * Canvas element position on top relatively to audio element.
-   * Default: false
-   */
-  canvTop: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * prop: 'fft-size'
-   * Represents the window size in samples that is used when performing
-   * a Fast Fourier Transform (FFT) to get frequency domain data.
-   * Must be power of 2 between 2^5 and 2^15
-   * Default: 1024
-   */
-  fftSize: {
-    type: Number,
-    default: 1024
-  },
-  /**
-   * prop: 'canv-fill-color'
-   * Canvas fill background color. Can be string RGB color or canvas gradients array.
-   * Default is transperent.
-   */
-  canvFillColor: {
-    type: [String, Array],
-    default: null
-  },
+const props = Object.assign({}, baseProps, {
   /**
    * prop: 'bar-width'
    * Width of the bar in pixels.
@@ -157,8 +80,19 @@ const props = {
   symmetric: {
     type: Boolean,
     default: false
+  },
+  /**
+   * prop: 'fft-size'
+   * Represents the window size in samples that is used when performing
+   * a Fast Fourier Transform (FFT) to get frequency domain data.
+   * Must be power of 2 between 2^5 and 2^15
+   * Default: 1024
+   */
+  fftSize: {
+    type: Number,
+    default: 1024
   }
-}
+})
 
 /**
  * Component AvBars
@@ -176,57 +110,14 @@ const AvBars = {
   },
   render: h => h('div'),
   mounted () {
-    this.createHTMLElements()
-    this.setAnalyser()
+    createHTMLElements(this)
+    setAnalyser(this)
+    if (this.capsHeight) {
+      this._setCapsArray()
+    }
     this.mainLoop()
   },
   methods: {
-    /**
-     * Create audio and canvas elements and insert in the HTML template.
-     * Using document.createElement to avoid Vue virtual DOM re-rendering
-     * which and lead to infinit loops.
-     */
-    createHTMLElements: function () {
-      const audio = document.createElement('audio')
-      const audioDiv = document.createElement('div')
-      const canv = document.createElement('canvas')
-      const canvDiv = document.createElement('div')
-
-      audio.setAttribute('src', this.audioSrc)
-      if (this.audioControls) audio.setAttribute('controls', true)
-      if (this.audioClass) audio.setAttribute('class', this.audioClass)
-      audioDiv.appendChild(audio)
-      this.$el.appendChild(audioDiv)
-
-      if (this.canvClass) canv.setAttribute('class', this.canvClass)
-      if (this.canvWidth) canv.setAttribute('width', this.canvWidth)
-      if (this.canvHeight) canv.setAttribute('height', this.canvHeight)
-      canvDiv.appendChild(canv)
-
-      if (this.canvTop) {
-        this.$el.insertBefore(canvDiv, audioDiv)
-      } else {
-        this.$el.appendChild(canvDiv)
-      }
-      this.ctx = canv.getContext('2d')
-      this.audio = audio
-    },
-    /**
-     * Set audio context analyser.
-     */
-    setAnalyser: function () {
-      const ctx = new AudioContext()
-      const src = ctx.createMediaElementSource(this.audio)
-      this.analyser = ctx.createAnalyser()
-
-      src.connect(this.analyser)
-      this.analyser.fftSize = this.fftSize
-      this.analyser.connect(ctx.destination)
-
-      // set caps array and fill with zeros
-      this.caps = Array.apply(null, Array(this.analyser.frequencyBinCount))
-                       .map(() => 0)
-    },
     /**
      * Main loop. Draws visualization.
      */
@@ -237,8 +128,9 @@ const AvBars = {
       const data = new Uint8Array(frqBits)
       const barWidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
       const step = Math.round((barWidth + this.barSpace) / frqBits * w)
-      const barFill = Array.isArray(this.barColor) ?
-                       this._fillGradient(this.barColor) : this.barColor
+      const barFill = Array.isArray(this.barColor)
+                      ? fillGradient(this.barColor, this)
+                      : this.barColor
       let x = 0
 
       this.analyser.getByteFrequencyData(data)
@@ -267,26 +159,11 @@ const AvBars = {
       const h = this.canvHeight
       this.ctx.clearRect(0, 0, w, h)
       if (this.canvFillColor) {
-        this.ctx.fillStyle = Array.isArray(this.canvFillColor) ?
-                        this._fillGradient(this.canvFillColor) :
-                        this.canvFillColor
+        this.ctx.fillStyle = Array.isArray(this.canvFillColor)
+                             ? fillGradient(this.canvFillColor, this)
+                             : this.canvFillColor
         this.ctx.fillRect(0, 0, w, h)
       }
-    },
-    /**
-     * Canvas gradient. Vertical, from top down
-     * @private
-     */
-    _fillGradient: function (colorsArray) {
-      const w = this.canvWidth
-      const h = this.canvHeight
-      const gradient = this.ctx.createLinearGradient(w / 2, 0, w / 2, h)
-      let offset = 0
-      colorsArray.forEach(color => {
-        gradient.addColorStop(offset, color)
-        offset += (1 / colorsArray.length)
-      })
-      return gradient
     },
     /**
      * Draw bar. Solid bar or brick bar.
@@ -306,7 +183,7 @@ const AvBars = {
      * Draw bricks bar.
      * @private
      */
-    _drawBrickBar: function(barWidth, barHeight, barX) {
+    _drawBrickBar: function (barWidth, barHeight, barX) {
       for (let b = 0; b < barHeight; b += this.brickHeight + this.brickSpace) {
         this.ctx.fillRect(
           barX, this.canvHeight - barHeight + b - this._symAlign(barHeight),
@@ -319,9 +196,9 @@ const AvBars = {
      * @private
      */
     _drawCap: function (index, barwidth, barX, barY) {
-      const cap = this.caps[index] <= barY ?
-                                      barY :
-                                      this.caps[index] - this.capsDropSpeed
+      const cap = this.caps[index] <= barY
+                           ? barY
+                           : this.caps[index] - this.capsDropSpeed
       const y = (cap / 255.0 * this.canvHeight)
       const capY = this.canvHeight - y - this.capsHeight - this._symAlign(y)
       this.ctx.fillStyle = this.capsColor
@@ -334,6 +211,14 @@ const AvBars = {
           barwidth, this.capsHeight)
       }
       this.caps[index] = cap
+    },
+    /**
+     * Set and init caps array
+     */
+    _setCapsArray: function () {
+      // set caps array and fill with zeros
+      this.caps = Array.apply(null, Array(this.analyser.frequencyBinCount))
+                       .map(() => 0)
     },
     /**
      * Shift for symmetric alignment

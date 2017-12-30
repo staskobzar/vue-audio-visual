@@ -1,6 +1,6 @@
 import { createLocalVue, mount } from 'vue-test-utils'
 import Plugin from '@/'
-import AudioContext from './utils'
+import './utils'
 
 window.requestAnimationFrame = jest.fn()
 
