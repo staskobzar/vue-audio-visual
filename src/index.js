@@ -1,5 +1,7 @@
 import AvBars from './components/AvBars'
 import AvLine from './components/AvLine'
+import AvCircle from './components/AvCircle'
+
 const AVPlugin = {}
 
 AVPlugin.install = function (Vue) {
@@ -9,6 +11,7 @@ AVPlugin.install = function (Vue) {
   // Components
   Vue.component(AvBars.name, AvBars)
   Vue.component(AvLine.name, AvLine)
+  Vue.component(AvCircle.name, AvCircle)
 }
 
 export default AVPlugin
