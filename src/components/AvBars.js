@@ -1,8 +1,8 @@
-import { baseProps, createHTMLElements, setAnalyser, fillGradient } from './AvBase'
+import BaseMixin from './AvBase'
 /**
  * Component props Object
  */
-const props = Object.assign({}, baseProps, {
+const props = {
   /**
    * prop: 'bar-width'
    * Width of the bar in pixels.
@@ -92,13 +92,14 @@ const props = Object.assign({}, baseProps, {
     type: Number,
     default: 1024
   }
-})
+}
 
 /**
  * Component AvBars
  */
 const AvBars = {
   name: 'av-bars',
+  mixins: [ BaseMixin ],
   props,
   data () {
     return {
@@ -110,8 +111,8 @@ const AvBars = {
   },
   render: h => h('div'),
   mounted () {
-    createHTMLElements(this)
-    setAnalyser(this)
+    this.createHTMLElements()
+    this.setAnalyser()
     if (this.capsHeight) {
       this._setCapsArray()
     }
@@ -129,7 +130,7 @@ const AvBars = {
       const barWidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
       const step = Math.round((barWidth + this.barSpace) / frqBits * w)
       const barFill = Array.isArray(this.barColor)
-                      ? fillGradient(this.barColor, this)
+                      ? this.fillGradient(this.barColor)
                       : this.barColor
       let x = 0
 
@@ -160,7 +161,7 @@ const AvBars = {
       this.ctx.clearRect(0, 0, w, h)
       if (this.canvFillColor) {
         this.ctx.fillStyle = Array.isArray(this.canvFillColor)
-                             ? fillGradient(this.canvFillColor, this)
+                             ? this.fillGradient(this.canvFillColor)
                              : this.canvFillColor
         this.ctx.fillRect(0, 0, w, h)
       }

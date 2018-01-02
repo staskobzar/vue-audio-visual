@@ -1,9 +1,9 @@
-import { baseProps, createHTMLElements, setAnalyser } from './AvBase'
+import BaseMixin from './AvBase'
 
 /**
  * Component props
  */
-const props = Object.assign({}, baseProps, {
+const props = {
   /**
    * prop: 'fft-size'
    * Represents the window size in samples that is used when performing
@@ -182,13 +182,14 @@ const props = Object.assign({}, baseProps, {
     type: Number,
     default: 0.001
   }
-})
+}
 
 /**
  * Component AvCircle
  */
 const AvCircle = {
   name: 'av-circle',
+  mixins: [ BaseMixin ],
   props,
   data () {
     return {
@@ -200,8 +201,8 @@ const AvCircle = {
   },
   render: h => h('div'),
   mounted () {
-    createHTMLElements(this)
-    setAnalyser(this)
+    this.createHTMLElements()
+    this.setAnalyser()
     this.mainLoop()
   },
   methods: {
@@ -270,25 +271,14 @@ const AvCircle = {
      * @private
      */
     _setCanvas: function () {
-      const w = this.canvWidth
-      const h = this.canvHeight
-      const canvColor = this.canvFillColor
-      const gradient = this.ctx.createLinearGradient(w / 2, 0, w / 2, h)
-      let offset = 0
-      this.ctx.clearRect(0, 0, w, h)
+      this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight)
 
-      if (!canvColor) return
+      if (!this.canvFillColor) return
 
-      if (Array.isArray(canvColor)) {
-        canvColor.forEach(color => {
-          gradient.addColorStop(offset, color)
-          offset += (1 / canvColor.length)
-        })
-        this.ctx.fillStyle = gradient
-      } else {
-        this.ctx.fillStyle = canvColor
-      }
-      this.ctx.fillRect(0, 0, w, h)
+      this.ctx.fillStyle = Array.isArray(this.canvFillColor)
+                           ? this.fillGradient(this.canvFillColor)
+                           : this.canvFillColor
+      this.ctx.fillRect(0, 0, this.canvWidth, this.canvHeight)
     },
     /**
      * Draw play progress meter

@@ -1,11 +1,11 @@
 /**
- * Base and common properties and functions.
+ * Mixin component with base and common properties and functions.
  */
 
 /**
- * Base properties common for the components
+ * Base properties common for the audio-visual components
  */
-const baseProps = {
+const props = {
   /**
    * prop: 'audio-src'
    * Audio element src attribute. When provided creates audio element
@@ -21,7 +21,7 @@ const baseProps = {
    */
   audioControls: {
     type: Boolean,
-    default: false
+    default: true
   },
   /**
    * prop: 'audio-class'
@@ -75,68 +75,66 @@ const baseProps = {
   }
 }
 
-/**
- * Create audio and canvas elements and insert in the HTML template.
- * Using document.createElement to avoid Vue virtual DOM re-rendering
- * which and lead to infinit loops.
- */
-function createHTMLElements (comp) {
-  const audio = document.createElement('audio')
-  const audioDiv = document.createElement('div')
-  const canv = document.createElement('canvas')
-  const canvDiv = document.createElement('div')
+const methods = {
+  /**
+   * Create audio and canvas elements and insert in the HTML template.
+   * Using document.createElement to avoid Vue virtual DOM re-rendering
+   * which and lead to infinit loops.
+   */
+  createHTMLElements: function () {
+    const audio = document.createElement('audio')
+    const audioDiv = document.createElement('div')
+    const canv = document.createElement('canvas')
+    const canvDiv = document.createElement('div')
 
-  audio.setAttribute('src', comp.audioSrc)
-  if (comp.audioControls) audio.setAttribute('controls', true)
-  if (comp.audioClass) audio.setAttribute('class', comp.audioClass)
-  audioDiv.appendChild(audio)
-  comp.$el.appendChild(audioDiv)
+    audio.setAttribute('src', this.audioSrc)
+    if (this.audioControls) audio.setAttribute('controls', true)
+    if (this.audioClass) audio.setAttribute('class', this.audioClass)
+    audioDiv.appendChild(audio)
+    this.$el.appendChild(audioDiv)
 
-  if (comp.canvClass) canv.setAttribute('class', comp.canvClass)
-  if (comp.canvWidth) canv.setAttribute('width', comp.canvWidth)
-  if (comp.canvHeight) canv.setAttribute('height', comp.canvHeight)
-  canvDiv.appendChild(canv)
+    if (this.canvClass) canv.setAttribute('class', this.canvClass)
+    if (this.canvWidth) canv.setAttribute('width', this.canvWidth)
+    if (this.canvHeight) canv.setAttribute('height', this.canvHeight)
+    canvDiv.appendChild(canv)
 
-  if (comp.canvTop) {
-    comp.$el.insertBefore(canvDiv, audioDiv)
-  } else {
-    comp.$el.appendChild(canvDiv)
+    if (this.canvTop) {
+      this.$el.insertBefore(canvDiv, audioDiv)
+    } else {
+      this.$el.appendChild(canvDiv)
+    }
+    this.ctx = canv.getContext('2d')
+    this.audio = audio
+  },
+  /**
+   * Set audio context analyser.
+   */
+  setAnalyser: function () {
+    const ctx = new AudioContext()
+    const src = ctx.createMediaElementSource(this.audio)
+    this.analyser = ctx.createAnalyser()
+
+    src.connect(this.analyser)
+    this.analyser.fftSize = this.fftSize
+    this.analyser.connect(ctx.destination)
+  },
+  /**
+   * Canvas gradient. Vertical, from top down
+   */
+  fillGradient: function (colorsArray) {
+    const w = this.canvWidth
+    const h = this.canvHeight
+    const gradient = this.ctx.createLinearGradient(w / 2, 0, w / 2, h)
+    let offset = 0
+    colorsArray.forEach(color => {
+      gradient.addColorStop(offset, color)
+      offset += (1 / colorsArray.length)
+    })
+    return gradient
   }
-  comp.ctx = canv.getContext('2d')
-  comp.audio = audio
 }
 
-/**
- * Set audio context analyser.
- */
-function setAnalyser (comp) {
-  const ctx = new AudioContext()
-  const src = ctx.createMediaElementSource(comp.audio)
-  comp.analyser = ctx.createAnalyser()
-
-  src.connect(comp.analyser)
-  comp.analyser.fftSize = comp.fftSize
-  comp.analyser.connect(ctx.destination)
-}
-
-/**
- * Canvas gradient. Vertical, from top down
- */
-function fillGradient (colorsArray, comp) {
-  const w = comp.canvWidth
-  const h = comp.canvHeight
-  const gradient = comp.ctx.createLinearGradient(w / 2, 0, w / 2, h)
-  let offset = 0
-  colorsArray.forEach(color => {
-    gradient.addColorStop(offset, color)
-    offset += (1 / colorsArray.length)
-  })
-  return gradient
-}
-
-export {
-  baseProps,
-  createHTMLElements,
-  setAnalyser,
-  fillGradient
+export default {
+  props,
+  methods
 }

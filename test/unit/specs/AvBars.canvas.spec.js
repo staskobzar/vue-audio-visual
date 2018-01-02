@@ -36,15 +36,13 @@ describe('AvBars canvas build', () => {
     expect(AvBars.methods._drawBrickBar.mock.calls.length).toBe(1)
   })
 
-/*
   it('should create gradient when canvFillColor is an array', () => {
     const props = {
       audioSrc: '/assets/foo.mp3',
       canvFillColor: ['black', '#CCC', 'rgb(255,255,255)']
     }
-    AvBase.fillGradient = jest.fn()
-    mount(AvBars, { propsData: props })
-    expect(AvBase.fillGradient).toHaveBeenCalled()
+    AvBars.methods.fillGradient = jest.fn()
+    const Comp = mount(AvBars, { propsData: props })
+    expect(AvBars.methods.fillGradient.mock.calls.length).toBe(1)
   })
-*/
 })

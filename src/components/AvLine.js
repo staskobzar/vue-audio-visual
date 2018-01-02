@@ -1,9 +1,9 @@
-import { baseProps, createHTMLElements, setAnalyser, fillGradient } from './AvBase'
+import BaseMixin from './AvBase'
 
 /**
  * Component props
  */
-const props = Object.assign({}, baseProps, {
+const props = {
   /**
    * prop: 'line-width'
    * Draw line width in px
@@ -31,13 +31,14 @@ const props = Object.assign({}, baseProps, {
     type: Number,
     default: 128
   }
-})
+}
 
 /**
  * Component AvLine
  */
 const AvLine = {
   name: 'av-line',
+  mixins: [ BaseMixin ],
   props,
   data () {
     return {
@@ -48,8 +49,8 @@ const AvLine = {
   },
   render: h => h('div'),
   mounted () {
-    createHTMLElements(this)
-    setAnalyser(this)
+    this.createHTMLElements()
+    this.setAnalyser()
     this.mainLoop()
   },
   methods: {
@@ -69,7 +70,7 @@ const AvLine = {
 
       this.ctx.lineWidth = this.lineWidth
       this.ctx.strokeStyle = Array.isArray(this.lineColor)
-                             ? fillGradient(this.lineColor, this)
+                             ? this.fillGradient(this.lineColor)
                              : this.lineColor
       this.ctx.beginPath()
 
