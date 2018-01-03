@@ -11,9 +11,9 @@ window.AudioContext = jest.fn().mockImplementation(() => {
     createAnalyser: () => {
       return {
         connect: () => {},
-        frequencyBinCount: 4,
+        frequencyBinCount: 8,
         getByteFrequencyData: (array) => {
-          array.set([128, 187, 59, 247])
+          array.set([128, 187, 59, 247, 128, 187, 59, 247])
         }
       }
     }

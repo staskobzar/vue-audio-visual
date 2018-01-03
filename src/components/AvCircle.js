@@ -225,7 +225,6 @@ const AvCircle = {
                      ? this.barLength
                      : (w / 2) - r
       let angle = Math.PI * this._rotate() // start from top
-      let x = 0
 
       this._setCanvas()
       this.analyser.getByteFrequencyData(data)
@@ -257,7 +256,7 @@ const AvCircle = {
         const bits = Math.round(data.slice(index, index + arcStep)
                           .reduce((v, t) => t + v, 0) / arcStep)
 
-        const blen = r + ( bits / 255.0 * barLen)
+        const blen = r + (bits / 255.0 * barLen)
         this.ctx.beginPath()
         this.ctx.moveTo(r * Math.cos(angle) + cx, r * Math.sin(angle) + cy)
         this.ctx.lineTo(blen * Math.cos(angle) + cx, blen * Math.sin(angle) + cy)

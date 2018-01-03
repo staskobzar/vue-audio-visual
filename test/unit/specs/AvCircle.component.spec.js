@@ -1,4 +1,5 @@
 import { createLocalVue, mount } from 'vue-test-utils'
+import AvCircle from '@/components/AvCircle'
 import Plugin from '@/'
 
 const localVue = createLocalVue()
@@ -88,5 +89,44 @@ describe('AvCircle component insert', () => {
     const divs = Comp.vm.$el.querySelectorAll('div')
     expect(divs[0].firstChild instanceof HTMLCanvasElement).toBeTruthy()
     expect(divs[1].firstChild instanceof HTMLAudioElement).toBeTruthy()
+  })
+
+  it('should create canvas and fill gradient color', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      canvFillColor: ['black', '#CCC', 'rgb(255,255,255)']
+    }
+    AvCircle.methods.fillGradient = jest.fn()
+    mount(AvCircle, { propsData: props })
+    expect(AvCircle.methods.fillGradient.mock.calls.length).toBe(1)
+  })
+
+  it('should draw playtime text', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      playtime: true
+    }
+    AvCircle.methods._drawPlaytime = jest.fn()
+    mount(AvCircle, { propsData: props })
+    expect(AvCircle.methods._drawPlaytime.mock.calls.length).toBe(1)
+  })
+
+  it('should rotate graph when enabled', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      rotateGraph: true,
+      rotateSpeed: 1
+    }
+    const Comp = mount(AvCircle, { propsData: props })
+    expect(Comp.vm.rotate).toBe(2.5)
+  })
+
+  it('should use solid bar color', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      barColor: '#00FFAA'
+    }
+    const Comp = mount(AvCircle, { propsData: props })
+    expect(Comp.vm.barColor).toEqual('#00FFAA')
   })
 })

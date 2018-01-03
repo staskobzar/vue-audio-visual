@@ -1,10 +1,16 @@
 import { mount } from 'vue-test-utils'
+import mockCanvas from './mockCanvas'
 import AvBars from '@/components/AvBars'
 
 describe('AvBars canvas build', () => {
   beforeEach(() => {
     jest.resetModules()
     jest.clearAllMocks()
+    const d = document
+    const f = document.createElement
+    document.createElement = (param) => param === 'canvas'
+                                        ? mockCanvas()
+                                        : f.call(d, param)
   })
 
   it('should not draw caps by default', () => {
@@ -18,6 +24,27 @@ describe('AvBars canvas build', () => {
     mount(AvBars, { propsData: {capsHeight: 4} })
     expect(AvBars.methods._drawCap.mock.calls.length)
           .toBe(1)
+  })
+
+  it('canvas draw rectangle bricks for each bar', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      canvWidth: 10,
+      canvHeight: 10,
+      barWidth: 10,
+      brickHeight: 1
+    }
+    const Comp = mount(AvBars, { propsData: props })
+    expect(Comp.vm.ctx.fillRect.mock.calls.length).toBe(2)
+  })
+
+  it('should fill gradient canvas background', () => {
+    const props = {
+      audioSrc: '/assets/foo.mp3',
+      canvFillColor: ['black', '#CCC', 'rgb(255,255,255)']
+    }
+    const Comp = mount(AvBars, { propsData: props })
+    expect(Comp.vm.ctx.createLinearGradient).toBeCalledWith(150, 0, 150, 80)
   })
 
   it('should not draw brick bar by default', () => {
@@ -38,17 +65,8 @@ describe('AvBars canvas build', () => {
       audioSrc: '/assets/foo.mp3',
       canvFillColor: ['black', '#CCC', 'rgb(255,255,255)']
     }
-    /*
-    const ce = window.document.createElement
-    window.document.createElement = (param) => {
-      if (param === 'canvas' ) {
-        console.log('Create canvas')
-      }
-      return ce.call(window.document, param)
-    }
-    */
     AvBars.methods.fillGradient = jest.fn()
-    const Comp = mount(AvBars, { propsData: props })
+    mount(AvBars, { propsData: props })
     expect(AvBars.methods.fillGradient.mock.calls.length).toBe(1)
   })
 })
