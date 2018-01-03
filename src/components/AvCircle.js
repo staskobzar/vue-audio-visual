@@ -287,6 +287,8 @@ const AvCircle = {
       const elapsed = this.audio.currentTime / this.audio.duration * 2 * Math.PI
       const angleEnd = Math.PI * 1.5 + elapsed
 
+      if (!elapsed) return
+
       this.ctx.lineWidth = this.progressWidth
       this.ctx.strokeStyle = this.progressColor
 

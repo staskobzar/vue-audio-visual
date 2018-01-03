@@ -1,8 +1,5 @@
 import { createLocalVue, mount } from 'vue-test-utils'
 import Plugin from '@/'
-import './utils'
-
-window.requestAnimationFrame = jest.fn()
 
 const localVue = createLocalVue()
 localVue.use(Plugin)

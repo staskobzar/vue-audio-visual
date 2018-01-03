@@ -1,14 +1,10 @@
 import { createLocalVue, mount } from 'vue-test-utils'
 import Plugin from '@/'
-import './utils'
-
-window.requestAnimationFrame = jest.fn()
 
 const localVue = createLocalVue()
 localVue.use(Plugin)
 
 describe('AvCircle component insert', () => {
-/*
   it('should create audio element with source', () => {
     const App = { template: `<av-circle audio-src="/assets/foo.mp3"></av-circle>` }
     const Comp = mount(App, { localVue })
@@ -48,9 +44,9 @@ describe('AvCircle component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
-          .toEqual('300')
+          .toEqual('100')
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('height'))
-          .toEqual('80')
+          .toEqual('100')
   })
 
   it('should set width and height canvas properties', () => {
@@ -93,5 +89,4 @@ describe('AvCircle component insert', () => {
     expect(divs[0].firstChild instanceof HTMLCanvasElement).toBeTruthy()
     expect(divs[1].firstChild instanceof HTMLAudioElement).toBeTruthy()
   })
-*/
 })

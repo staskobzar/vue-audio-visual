@@ -1,6 +1,7 @@
-/**
- * Mock AudioContext
- */
+/* Mock animation frame */
+window.requestAnimationFrame = jest.fn()
+
+/* Mock Audio Context */
 
 window.AudioContext = jest.fn().mockImplementation(() => {
   return {
@@ -19,4 +20,3 @@ window.AudioContext = jest.fn().mockImplementation(() => {
   }
 })
 
-export default window.AudioContext

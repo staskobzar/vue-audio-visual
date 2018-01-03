@@ -1,8 +1,5 @@
 import { mount } from 'vue-test-utils'
 import AvBars from '@/components/AvBars'
-import './utils'
-
-window.requestAnimationFrame = jest.fn()
 
 describe('AvBars canvas build', () => {
   beforeEach(() => {
@@ -41,6 +38,15 @@ describe('AvBars canvas build', () => {
       audioSrc: '/assets/foo.mp3',
       canvFillColor: ['black', '#CCC', 'rgb(255,255,255)']
     }
+    /*
+    const ce = window.document.createElement
+    window.document.createElement = (param) => {
+      if (param === 'canvas' ) {
+        console.log('Create canvas')
+      }
+      return ce.call(window.document, param)
+    }
+    */
     AvBars.methods.fillGradient = jest.fn()
     const Comp = mount(AvBars, { propsData: props })
     expect(AvBars.methods.fillGradient.mock.calls.length).toBe(1)

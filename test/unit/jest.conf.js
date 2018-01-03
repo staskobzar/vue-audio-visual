@@ -15,7 +15,7 @@ module.exports = {
     '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest'
   },
   snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue'],
-  setupFiles: ['<rootDir>/test/unit/setup',"jest-canvas-mock"],
+  setupFiles: ['<rootDir>/test/unit/setup', '<rootDir>/test/unit/mock'],
   mapCoverage: true,
   coverageDirectory: '<rootDir>/test/unit/coverage',
   collectCoverageFrom: [
