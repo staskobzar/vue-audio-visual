@@ -4,7 +4,7 @@
 
 # vue-audio-visual
 
-[![Build Status](https://travis-ci.org/staskobzar/amiws_queue.svg?branch=master)](https://travis-ci.org/staskobzar/vue-audio-visual)
+[![Build Status](https://travis-ci.org/staskobzar/vue-audio-visual.svg?branch=master)](https://travis-ci.org/staskobzar/vue-audio-visual)
 [![codecov](https://codecov.io/gh/staskobzar/vue-audio-visual/branch/master/graph/badge.svg)](https://codecov.io/gh/staskobzar/vue-audio-visual)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bcc7e911360b4ef4a4d987ca5a846caa)](https://www.codacy.com/app/staskobzar/vue-audio-visual?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=staskobzar/vue-audio-visual&amp;utm_campaign=Badge_Grade)
 ![GPL](https://img.shields.io/badge/license-GPL_3-green.svg "License")
