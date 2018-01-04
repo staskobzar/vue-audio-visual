@@ -1,6 +1,5 @@
 .DS_Store
 node_modules/
-/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -13,3 +12,15 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+*~

@@ -1,0 +1,11 @@
+/test
+/dist
+/build
+/config
+/doc
+.editorconfig
+.eslintignore
+.eslintrc.js
+.postcssrc.js
+.travis.yml
+.codecov.yml

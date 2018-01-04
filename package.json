@@ -5,8 +5,6 @@
   "author": "Stas Kobzar <stas@modulis.ca>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "unit:watch": "jest --config test/unit/jest.conf.js --watch",
     "test": "npm run unit",
