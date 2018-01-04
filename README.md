@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="/static/logo.png?raw=true"/>
+</p>
+
 # vue-audio-visual
 
 > Vue audio visualization components

@@ -2,7 +2,7 @@
 /dist
 /build
 /config
-/doc
+/static
 .editorconfig
 .eslintignore
 .eslintrc.js
