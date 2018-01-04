@@ -311,7 +311,7 @@ const AvCircle = {
      */
     _drawPlaytime: function (cx, cy) {
       const m = Math.floor(this.audio.currentTime / 60)
-      const sec = Math.round(this.audio.currentTime) % 60
+      const sec = Math.floor(this.audio.currentTime) % 60
       const s = sec < 10 ? `0${sec}` : `${sec}`
       const text = `${m}:${s}`
       const tsizew = Math.ceil(this.ctx.measureText(text).width)
