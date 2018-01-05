@@ -2,7 +2,7 @@
   "name": "vue-audio-visual",
   "version": "1.0.1",
   "description": "Vue audio visualization components",
-  "author": "Stas Kobzar <stas@modulis.ca>",
+  "author": "Stas Kobzar <staskobzar@gmail.com>",
   "private": false,
   "scripts": {
     "codecov": "codecov -t f0d3221e-ebf9-482e-938a-db04b1fdbc4e",

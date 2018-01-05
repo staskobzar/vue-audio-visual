@@ -9,3 +9,5 @@
 .postcssrc.js
 .travis.yml
 .codecov.yml
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
