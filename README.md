@@ -35,7 +35,7 @@ Component **AvLine**. Vue template name **&lt;av-line&gt;**
 ```
 This will create following element:
 
-![AvLine Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-line.png)
+![AvLine Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-line.png?raw=true)
 
 Component **AvBars**. Vue template name **&lt;av-bars&gt;**
 ```html
@@ -49,7 +49,7 @@ Component **AvBars**. Vue template name **&lt;av-bars&gt;**
 ```
 This will create following element:
 
-![AvBars Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-bars.png)
+![AvBars Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-bars.png?raw=true)
 
 Component **AvCircle**. Vue template name **&lt;av-circle&gt;**
 ```html
@@ -64,7 +64,7 @@ Component **AvCircle**. Vue template name **&lt;av-circle&gt;**
 ```
 This will create following element:
 
-![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png)
+![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png?raw=true)
 
 ## Install and setup
 
@@ -305,7 +305,7 @@ There are props that are common for all components and special props for each co
       <td><code>0</code></td>
       <td>Draw bar as bricks when height is set and not zero.<br/>
           Example: <code>:brick-height="6"</code><br/>
-          <img src="https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-bars-bricks.png" />
+          <img src="https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-bars-bricks.png?raw=true" />
       </td>
     </tr>
     <tr>
@@ -321,7 +321,7 @@ There are props that are common for all components and special props for each co
       <td><code>false</code></td>
       <td>Draw bars symmetric to canvas vertical center.
           Example: <code>:symmetric="true"</code><br/>
-          <img src="https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-bars-symm.png" />
+          <img src="https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-bars-symm.png?raw=true" />
       </td>
     </tr>
     <tr>
