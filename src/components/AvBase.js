@@ -136,5 +136,11 @@ const methods = {
 
 export default {
   props,
+  render: h => h('div'),
+  mounted () {
+    this.createHTMLElements()
+    this.setAnalyser()
+    this.mainLoop()
+  },
   methods
 }

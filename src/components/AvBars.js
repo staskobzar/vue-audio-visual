@@ -106,32 +106,21 @@ const AvBars = {
       audio: null,
       analyser: null,
       ctx: null,
-      caps: null
+      caps: Array.apply(null, Array(this.fftSize / 2)).map(() => 0)
     }
-  },
-  render: h => h('div'),
-  mounted () {
-    this.createHTMLElements()
-    this.setAnalyser()
-    if (this.capsHeight) {
-      this._setCapsArray()
-    }
-    this.mainLoop()
   },
   methods: {
     /**
      * Main loop. Draws visualization.
      */
     mainLoop: function () {
-      const w = this.canvWidth
-      const h = this.canvHeight
       const frqBits = this.analyser.frequencyBinCount
       const data = new Uint8Array(frqBits)
       const barWidth = this.barWidth >= this.canvWidth ? this.canvWidth : this.barWidth
-      const step = Math.round((barWidth + this.barSpace) / frqBits * w)
+      const step = Math.round((barWidth + this.barSpace) / frqBits * this.canvWidth)
       const barFill = Array.isArray(this.barColor)
-                      ? this.fillGradient(this.barColor)
-                      : this.barColor
+        ? this.fillGradient(this.barColor)
+        : this.barColor
       let x = 0
 
       this.analyser.getByteFrequencyData(data)
@@ -140,8 +129,8 @@ const AvBars = {
       data.forEach((_, index) => {
         if (index % step) return
         const bits = Math.round(data.slice(index, index + step)
-                          .reduce((v, t) => t + v, 0) / step)
-        const barHeight = bits / 255 * h
+          .reduce((v, t) => t + v, 0) / step)
+        const barHeight = bits / 255 * this.canvHeight
         if (this.capsHeight) {
           this._drawCap(index, barWidth, x, bits)
         }
@@ -161,8 +150,8 @@ const AvBars = {
       this.ctx.clearRect(0, 0, w, h)
       if (this.canvFillColor) {
         this.ctx.fillStyle = Array.isArray(this.canvFillColor)
-                             ? this.fillGradient(this.canvFillColor)
-                             : this.canvFillColor
+          ? this.fillGradient(this.canvFillColor)
+          : this.canvFillColor
         this.ctx.fillRect(0, 0, w, h)
       }
     },
@@ -198,28 +187,18 @@ const AvBars = {
      */
     _drawCap: function (index, barwidth, barX, barY) {
       const cap = this.caps[index] <= barY
-                           ? barY
-                           : this.caps[index] - this.capsDropSpeed
+        ? barY
+        : this.caps[index] - this.capsDropSpeed
       const y = (cap / 255.0 * this.canvHeight)
       const capY = this.canvHeight - y - this.capsHeight - this._symAlign(y)
       this.ctx.fillStyle = this.capsColor
-      this.ctx.fillRect(
-          barX, capY,
-          barwidth, this.capsHeight)
+      this.ctx.fillRect(barX, capY, barwidth, this.capsHeight)
       if (this.symmetric) {
         this.ctx.fillRect(
-          barX, this.canvHeight - capY - this.capsHeight,
-          barwidth, this.capsHeight)
+        barX, this.canvHeight - capY - this.capsHeight,
+        barwidth, this.capsHeight)
       }
       this.caps[index] = cap
-    },
-    /**
-     * Set and init caps array
-     */
-    _setCapsArray: function () {
-      // set caps array and fill with zeros
-      this.caps = Array.apply(null, Array(this.analyser.frequencyBinCount))
-                       .map(() => 0)
     },
     /**
      * Shift for symmetric alignment

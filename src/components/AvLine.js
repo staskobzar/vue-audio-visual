@@ -47,22 +47,14 @@ const AvLine = {
       ctx: null
     }
   },
-  render: h => h('div'),
-  mounted () {
-    this.createHTMLElements()
-    this.setAnalyser()
-    this.mainLoop()
-  },
   methods: {
     /**
      * Main loop. Draws visualization.
      */
     mainLoop: function () {
-      const w = +this.canvWidth
-      const h = +this.canvHeight
       const frqBits = this.analyser.frequencyBinCount
+      const step = (this.canvWidth / 2.0) / frqBits
       const data = new Uint8Array(frqBits)
-      const step = (w / 2.0) / frqBits
       let x = 0
 
       this._setCanvas()
@@ -70,16 +62,16 @@ const AvLine = {
 
       this.ctx.lineWidth = this.lineWidth
       this.ctx.strokeStyle = Array.isArray(this.lineColor)
-                             ? this.fillGradient(this.lineColor)
-                             : this.lineColor
+        ? this.fillGradient(this.lineColor)
+        : this.lineColor
       this.ctx.beginPath()
 
       data.reverse()
-      this.ctx.moveTo(x, h / 2)
+      this.ctx.moveTo(x, this.canvHeight / 2)
       x = this._drawLine(data, x, step)
       data.reverse()
       x = this._drawLine(data, x, step)
-      this.ctx.lineTo(w, h / 2)
+      this.ctx.lineTo(+this.canvWidth, this.canvHeight / 2)
       this.ctx.stroke()
 
       requestAnimationFrame(this.mainLoop)

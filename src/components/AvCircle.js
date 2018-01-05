@@ -199,22 +199,14 @@ const AvCircle = {
       ctx: null
     }
   },
-  render: h => h('div'),
-  mounted () {
-    this.createHTMLElements()
-    this.setAnalyser()
-    this.mainLoop()
-  },
   methods: {
     /**
      * Main loop. Draws visualization.
      */
     mainLoop: function () {
-      const w = +this.canvWidth
-      const h = +this.canvHeight
-      const cx = w / 2 // center X
-      const cy = h / 2 // center Y
-      const r = this.radius ? this.radius : Math.round(w / 2 * 0.7)
+      const cx = this.canvWidth / 2 // center X
+      const cy = this.canvHeight / 2 // center Y
+      const r = this.radius ? this.radius : Math.round(this.canvWidth / 2 * 0.7)
       const lineWidth = this.lineWidth
       const lineSpace = this.lineSpace
       const arcStep = Math.ceil(lineWidth + lineSpace)
@@ -222,8 +214,8 @@ const AvCircle = {
       const data = new Uint8Array(frqBits)
       const step = ((lineWidth + lineSpace) / data.length) * (2 * Math.PI)
       const barLen = this.barLength > 0
-                     ? this.barLength
-                     : (w / 2) - r
+        ? this.barLength
+        : (this.canvWidth / 2) - r
       let angle = Math.PI * this._rotate() // start from top
 
       this._setCanvas()
@@ -254,7 +246,7 @@ const AvCircle = {
           return
         }
         const bits = Math.round(data.slice(index, index + arcStep)
-                          .reduce((v, t) => t + v, 0) / arcStep)
+          .reduce((v, t) => t + v, 0) / arcStep)
 
         const blen = r + (bits / 255.0 * barLen)
         this.ctx.beginPath()
@@ -275,8 +267,8 @@ const AvCircle = {
       if (!this.canvFillColor) return
 
       this.ctx.fillStyle = Array.isArray(this.canvFillColor)
-                           ? this.fillGradient(this.canvFillColor)
-                           : this.canvFillColor
+        ? this.fillGradient(this.canvFillColor)
+        : this.canvFillColor
       this.ctx.fillRect(0, 0, this.canvWidth, this.canvHeight)
     },
     /**
@@ -293,7 +285,7 @@ const AvCircle = {
 
       this.ctx.beginPath()
       this.ctx.arc(cx, cy, r - this.outlineWidth - this.outlineMeterSpace,
-                  1.5 * Math.PI, angleEnd, this.progressClockwise)
+        1.5 * Math.PI, angleEnd, this.progressClockwise)
       this.ctx.stroke()
     },
     /**
