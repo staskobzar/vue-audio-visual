@@ -11,6 +11,15 @@
 
 > Vue HTML5 audio visualization components
 
+- [Overview](#overview)
+- [Install and setup](#install-and-setup)
+- [API](#api)
+  * [Common props](#common-props)
+  * [AvLine props](#avline-props)
+  * [AvBars props](#avbars-props)
+  * [AvCircle props](#avcircle-props)
+- [License](#license)
+
 ## Overview
 An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework. It is built with HTML5
 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API.
@@ -92,7 +101,420 @@ audio-src="http://example.com/media/song.mp3"
 
 Plugin will generate "audio" to control media playback and "canvas" element for visualization.
 
+There are props that are common for all components and special props for each component.
 
+### Common props
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>audio-controls</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>
+        Audio element controls attribute. When provided should
+        display audio element with controls.
+      </td>
+    </tr>
+    <tr>
+      <td>audio-class</td>
+      <td><code>String</code></td>
+      <td><code>null</code></td>
+      <td>Audio element css class name.</td>
+    </tr>
+    <tr>
+      <td>canv-class</td>
+      <td><code>String</code></td>
+      <td><code>null</code></td>
+      <td>Canvas element css class name.</td>
+    </tr>
+    <tr>
+      <td>canv-top</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>By default plugin creates "audio" element wrapped in "div"
+          and puts "canvas" element below. When "canv-top" is "true" then
+          "canvas" element is set on top. Example:
+          <code> :canv-top="true"</code> or
+          <code> v-bind:canv-top="true"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-fill-color</td>
+      <td><code>String</code>, <code>Array</code></td>
+      <td><code>null</code></td>
+      <td>Canvas fill background color. Can be string RGB color or Array of RGB color.
+          When Array is given, plugin creates linear gradient and set it as background.
+          Array value should be binded.
+          Default is null, which makes background transperent.
+          Examples:<br/>
+          <code>canv-fill-color="#00AAFF"</code><br/>
+          <code>:canv-fill-color="['#FFF', 'rgb(0,255,127)', '#00f']"</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### AvLine props
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>canv-width</td>
+      <td><code>Number</code></td>
+      <td><code>300</code></td>
+      <td>Canvas element width. Default 300.
+          Example: <code>:canv-width="600"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-height</td>
+      <td><code>Number</code></td>
+      <td><code>80</code></td>
+      <td>Canvas element height. Default 80.
+          Example: <code>:canv-height="120"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>line-width</td>
+      <td><code>Number</code></td>
+      <td><code>2</code></td>
+      <td>Graph line width in px. Integer or float number.
+          Example: <code>:line-width="0.5"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>line-color</td>
+      <td><code>String</code>, <code>Array</code></td>
+      <td><code>#9F9</code></td>
+      <td>Graph line color. Can be string RGB color or Array of RGB color.
+          When Array is given, plugin creates linear gradient and set it as background.
+          Array value should be binded.
+          Examples:<br/>
+          <code>line-color="#00AAFF"</code><br/>
+          <code>:line-color="['#FFF', 'rgb(0,255,127)', '#00f']"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>fft-size</td>
+      <td><code>Number</code></td>
+      <td><code>128</code></td>
+      <td>Represents the window size in samples that is used when performing
+          a Fast Fourier Transform (FFT) to get frequency domain data.<br/>
+          Must be power of 2 between 2<sup>5</sup> and 2<sup>15</sup>.
+          Example: <code>:fft-size="512"</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### AvBars props
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>canv-width</td>
+      <td><code>Number</code></td>
+      <td><code>300</code></td>
+      <td>Canvas element width. Default 300.
+          Example: <code>:canv-width="600"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-height</td>
+      <td><code>Number</code></td>
+      <td><code>80</code></td>
+      <td>Canvas element height. Default 80.
+          Example: <code>:canv-height="120"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>bar-width</td>
+      <td><code>Number</code></td>
+      <td><code>5</code></td>
+      <td>Width of bars in pixels. Example: <code>:bar-width="12"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>bar-space</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Space between bars. Example: <code>:bar-space="1.6"</code></td>
+    </tr>
+    <tr>
+      <td>bar-color</td>
+      <td><code>String</code>, <code>Array</code></td>
+      <td><code>#0A0AFF</code></td>
+      <td>Bar fill color. Can be string RGB color or canvas gradients array.<br/>
+          Examples:<br/>
+          <code>bar-color="#00AAFF"</code><br/>
+          <code>:bar-color="['#FFF', 'rgb(0,255,127)', 'green']"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>caps-height</td>
+      <td><code>Number</code></td>
+      <td><code>0</code></td>
+      <td>Create caps on bars with given height in pixels.
+          When zero no caps created. Example: <code>:caps-height="2"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>caps-drop-speed</td>
+      <td><code>Number</code></td>
+      <td><code>0.9</code></td>
+      <td>Caps drop down animation speed. The higher nubmer the faster caps are going down.
+          Example: <code>:caps-drop-speed="0.5"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>caps-color</td>
+      <td><code>String</code></td>
+      <td><code>#A0A0FF</code></td>
+      <td>Caps rectangles RGB color.
+          Example: <code>caps-color="lime"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>brick-height</td>
+      <td><code>Number</code></td>
+      <td><code>0</code></td>
+      <td>Draw bar as bricks when height is set and not zero.<br/>
+          Example: <code>:brick-height="6"</code><br/>
+          <img src="/static/vav-bars-bricks.png" />
+      </td>
+    </tr>
+    <tr>
+      <td>brick-space</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Space between bricks. Example: <code>:brick-space="2"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>symmetric</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>Draw bars symmetric to canvas vertical center.
+          Example: <code>:symmetric="true"</code><br/>
+          <img src="/static/vav-bars-symm.png" />
+      </td>
+    </tr>
+    <tr>
+      <td>fft-size</td>
+      <td><code>Number</code></td>
+      <td><code>1024</code></td>
+      <td>Represents the window size in samples that is used when performing
+          a Fast Fourier Transform (FFT) to get frequency domain data.<br/>
+          Must be power of 2 between 2<sup>5</sup> and 2<sup>15</sup>.
+          Example: <code>:fft-size="2048"</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### AvCircle props
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>canv-width</td>
+      <td><code>Number</code></td>
+      <td><code>100</code></td>
+      <td>Canvas element width.
+          Example: <code>:canv-width="600"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-height</td>
+      <td><code>Number</code></td>
+      <td><code>100</code></td>
+      <td>Canvas element height.
+          Example: <code>:canv-height="120"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>radius</td>
+      <td><code>Number</code></td>
+      <td><code>0</code></td>
+      <td>Base circle radius. If zero, then will be calculated from canvas
+          width: (canv-width / 2) * 0.7
+          Example: <code>:radius="20"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>line-width</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Frequency bit line width to draw.
+          Example: <code>:line-width="0.4"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>line-space</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Space between lines to draw.
+          Example: <code>:line-space="2"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>outline-color</td>
+      <td><code>String</code></td>
+      <td><code>#0000FF</code></td>
+      <td>Outline (contour) style RGB color.
+          Example: <code>outline-color="rgb(0,255,0)"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>outline-width</td>
+      <td><code>Number</code></td>
+      <td><code>0.3</code></td>
+      <td>Outline (contour) line width. Float value.
+          Example: <code>:outline-width="1"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>bar-width</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Frequency graph bar width.
+          Example: <code>:bar-width="1"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>bar-length</td>
+      <td><code>Number</code></td>
+      <td><code>0</code></td>
+      <td>Frequency graph bar length/height.
+          Default is a difference between radius and canvas width.
+          Example: <code>:bar-length="27"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>bar-color</td>
+      <td><code>String</code>, <code>Array</code></td>
+      <td><code>[#FFF,#00F]</code></td>
+      <td>Bar style RGB color or radient gradient when array.
+          Example: <code>:bar-color="#12AA55"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>progress</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>Draw playtime progress meter.
+          Example: <code>:progress="false"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>progress-width</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Playtime progress meter width.
+          Example: <code>:progress-width="2.4"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>progress-color</td>
+      <td><code>String</code></td>
+      <td><code>#0000FF</code></td>
+      <td>Playtime progress meter color.
+          Example: <code>:progress-color="green"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>progress-clockwise</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>Playtime progress meter arc draw direction.
+          Example: <code>:progress-clockwise="true"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>outline-meter-space</td>
+      <td><code>Number</code></td>
+      <td><code>3</code></td>
+      <td>Space between outline and progress meter. The bigger the closer to the circle centre.
+          Example: <code>:outline-meter-space="1"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>Draw played time as text in the center of the circle.
+          Example: <code>:playtime="true"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-font</td>
+      <td><code>String</code></td>
+      <td><code>14px Monaco</code></td>
+      <td>Played time print font.
+          Example: <code>playtime-font="18px monospace"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>rotate-graph</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>Rotate graph clockwise enable.
+          Example: <code>:rotate-graph="true"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>rotate-speed</td>
+      <td><code>Number</code></td>
+      <td><code>0.001</code></td>
+      <td>Rotate graph speed.
+          Example: <code>:rotate-speed="0.2"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>fft-size</td>
+      <td><code>Number</code></td>
+      <td><code>1024</code></td>
+      <td>Represents the window size in samples that is used when performing
+          a Fast Fourier Transform (FFT) to get frequency domain data.<br/>
+          Must be power of 2 between 2<sup>5</sup> and 2<sup>15</sup>.
+          Example: <code>:fft-size="2048"</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## License
 
