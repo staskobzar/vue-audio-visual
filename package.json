@@ -1,6 +1,6 @@
 {
   "name": "vue-audio-visual",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue audio visualization components",
   "author": "Stas Kobzar <stas@modulis.ca>",
   "private": false,
