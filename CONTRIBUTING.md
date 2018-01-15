@@ -1,10 +1,10 @@
 # Contributing to vue-audio-visual
 
-Thank you for taking time to contribute to vue-audio-vidual project.
+Thank you for taking time to contribute to vue-audio-visual project.
 
 To report bugs or ask questions, please, use [issues](https://github.com/staskobzar/vue-audio-visual/issues) tab to create new issue.
 
-Bugfix and code contribute can be provided as with any github project using [pull requests](https://help.github.com/articles/creating-a-pull-request/). 
+Bugfix and code contribute can be provided as with any github project using [pull requests](https://help.github.com/articles/creating-a-pull-request/).
 
 This is Vue plugin so follow [Vue style guide](https://vuejs.org/v2/style-guide/).
 

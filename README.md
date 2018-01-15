@@ -491,6 +491,14 @@ There are props that are common for all components and special props for each co
       </td>
     </tr>
     <tr>
+      <td>playtime-color</td>
+      <td><code>String</code></td>
+      <td><code>#00f</code></td>
+      <td>Played time font color.
+          Example: <code>playtime-color="green"</code>
+      </td>
+    </tr>
+    <tr>
       <td>rotate-graph</td>
       <td><code>Boolean</code></td>
       <td><code>false</code></td>
