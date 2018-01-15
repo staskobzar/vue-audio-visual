@@ -165,6 +165,15 @@ const props = {
     default: '14px Monaco'
   },
   /**
+  * prop: 'playtime-color'
+  * Played time font color.
+  * Default: '#00f'
+  */
+ playtimeColor: {
+   type: String,
+   default: '#00f'
+ },
+  /**
    * prop: 'rotate-graph'
    * Rotate graph clockwise enable.
    * Default: false
@@ -309,7 +318,7 @@ const AvCircle = {
       const tsizew = Math.ceil(this.ctx.measureText(text).width)
 
       this.ctx.font = this.playtimeFont
-      this.ctx.fillStyle = '#00f'
+      this.ctx.fillStyle = this.playtimeColor
       this.ctx.fillText(text, cx - Math.round(tsizew / 2), cy + 0.25 * parseInt(this.playtimeFont))
     },
     /**
