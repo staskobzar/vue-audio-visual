@@ -10,7 +10,7 @@ describe('AvBars component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
     expect(Comp.vm.$el.querySelector('audio').src)
-          .toEqual('/assets/foo.mp3')
+      .toEqual('/assets/foo.mp3')
   })
 
   it('should create audio with controls enabled', () => {
@@ -20,7 +20,7 @@ describe('AvBars component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
     expect(Comp.vm.$el.querySelector('audio').hasAttribute('controls'))
-          .toBe(true)
+      .toBe(true)
   })
 
   it('should create audio element with css class attribute', () => {
@@ -30,7 +30,7 @@ describe('AvBars component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
     expect(Comp.vm.$el.querySelector('audio').getAttribute('class'))
-          .toEqual('my-class0')
+      .toEqual('my-class0')
   })
 
   it('should create canvas element for visualization', () => {
@@ -44,9 +44,9 @@ describe('AvBars component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
-          .toEqual('300')
+      .toEqual('300')
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('height'))
-          .toEqual('80')
+      .toEqual('80')
   })
 
   it('should set width and height canvas properties', () => {
@@ -57,9 +57,9 @@ describe('AvBars component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
-          .toEqual('600')
+      .toEqual('600')
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('height'))
-          .toEqual('100')
+      .toEqual('100')
   })
 
   it('should create canvas element with css class attribute', () => {
@@ -69,7 +69,7 @@ describe('AvBars component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('class'))
-          .toEqual('my-class')
+      .toEqual('my-class')
   })
 
   it('should create canvas element below the audio element by default', () => {

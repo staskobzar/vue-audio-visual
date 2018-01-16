@@ -195,8 +195,8 @@ const AvBars = {
       this.ctx.fillRect(barX, capY, barwidth, this.capsHeight)
       if (this.symmetric) {
         this.ctx.fillRect(
-        barX, this.canvHeight - capY - this.capsHeight,
-        barwidth, this.capsHeight)
+          barX, this.canvHeight - capY - this.capsHeight,
+          barwidth, this.capsHeight)
       }
       this.caps[index] = cap
     },

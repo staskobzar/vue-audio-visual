@@ -23,7 +23,7 @@ describe('AvBars canvas build', () => {
     AvBars.methods._drawCap = jest.fn()
     mount(AvBars, { propsData: {capsHeight: 4} })
     expect(AvBars.methods._drawCap.mock.calls.length)
-          .toBe(1)
+      .toBe(1)
   })
 
   it('canvas draw rectangle bricks for each bar', () => {

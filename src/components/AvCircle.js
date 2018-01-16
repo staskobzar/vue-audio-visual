@@ -169,10 +169,10 @@ const props = {
   * Played time font color.
   * Default: '#00f'
   */
- playtimeColor: {
-   type: String,
-   default: '#00f'
- },
+  playtimeColor: {
+    type: String,
+    default: '#00f'
+  },
   /**
    * prop: 'rotate-graph'
    * Rotate graph clockwise enable.
