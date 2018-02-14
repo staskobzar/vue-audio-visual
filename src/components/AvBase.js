@@ -24,6 +24,16 @@ const props = {
     default: true
   },
   /**
+   * prop: 'cors-anonym'
+   * CORS requests for this element will not have the credentials flag set.
+   * Set crossOrigin property of audio element to 'anonymous'.
+   * Default: null
+   */
+  corsAnonym: {
+    type: Boolean,
+    default: false
+  },
+  /**
    * prop: 'audio-class'
    * Audio element css class name.
    */
@@ -90,6 +100,7 @@ const methods = {
     audio.setAttribute('src', this.audioSrc)
     if (this.audioControls) audio.setAttribute('controls', true)
     if (this.audioClass) audio.setAttribute('class', this.audioClass)
+    if (this.corsAnonym) audio.crossOrigin = 'anonymous'
     audioDiv.appendChild(audio)
     this.$el.appendChild(audioDiv)
 

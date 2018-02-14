@@ -128,6 +128,16 @@ There are props that are common for all components and special props for each co
       </td>
     </tr>
     <tr>
+      <td>cors-anonym</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>
+        Set CORS attribute for audio element. Set this attribute when using
+        audio source is pointing to different host/domain. When set, parameter
+        crossOrigin of audio element will be set to 'anonymous'.
+      </td>
+    </tr>
+    <tr>
       <td>audio-class</td>
       <td><code>String</code></td>
       <td><code>null</code></td>
