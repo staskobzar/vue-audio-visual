@@ -14,6 +14,10 @@ const props = {
     type: String,
     default: null
   },
+  audioElement: {
+    type: HTMLAudioElement,
+    default: null
+  },
   /**
    * prop: 'audio-controls'
    * Audio element controls attribute. When provided should
@@ -92,24 +96,26 @@ const methods = {
    * which and lead to infinit loops.
    */
   createHTMLElements: function () {
-    const audio = document.createElement('audio')
+    const audio = this.audioElement || document.createElement('audio')
     const audioDiv = document.createElement('div')
     const canv = document.createElement('canvas')
     const canvDiv = document.createElement('div')
 
-    audio.setAttribute('src', this.audioSrc)
-    if (this.audioControls) audio.setAttribute('controls', true)
-    if (this.audioClass) audio.setAttribute('class', this.audioClass)
-    if (this.corsAnonym) audio.crossOrigin = 'anonymous'
-    audioDiv.appendChild(audio)
-    this.$el.appendChild(audioDiv)
+    if (!this.audioElement) {
+      audio.setAttribute('src', this.audioSrc)
+      if (this.audioControls) audio.setAttribute('controls', true)
+      if (this.audioClass) audio.setAttribute('class', this.audioClass)
+      if (this.corsAnonym) audio.crossOrigin = 'anonymous'
+      audioDiv.appendChild(audio)
+      this.$el.appendChild(audioDiv)
+    }
 
     if (this.canvClass) canv.setAttribute('class', this.canvClass)
     if (this.canvWidth) canv.setAttribute('width', this.canvWidth)
     if (this.canvHeight) canv.setAttribute('height', this.canvHeight)
     canvDiv.appendChild(canv)
 
-    if (this.canvTop) {
+    if (this.canvTop && !this.audioElement) {
       this.$el.insertBefore(canvDiv, audioDiv)
     } else {
       this.$el.appendChild(canvDiv)
