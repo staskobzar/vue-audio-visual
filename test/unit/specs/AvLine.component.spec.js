@@ -5,6 +5,19 @@ const localVue = createLocalVue()
 localVue.use(Plugin)
 
 describe('AvLine component insert', () => {
+  it('should use a preexisting audio element', () => {
+    let audio = new Audio()
+    audio.src = '/assets/foo.mp3'
+    const App = {
+      template: `<av-line v-bind:audio-element="audio"></av-line>`,
+      data: () => ({
+        audio: audio
+      })
+    }
+    const Comp = mount(App, { localVue })
+    expect(Comp.contains('audio')).toBe(false)
+  })
+
   it('should create audio element with source', () => {
     const App = { template: `<av-line audio-src="/assets/foo.mp3"></av-line>` }
     const Comp = mount(App, { localVue })
