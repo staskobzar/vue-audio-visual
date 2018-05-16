@@ -1,4 +1,4 @@
-import { createLocalVue, mount } from 'vue-test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import Plugin from '@/'
 
 const localVue = createLocalVue()
@@ -52,7 +52,7 @@ describe('AvBars component insert', () => {
   it('should set width and height canvas properties', () => {
     const App = { template: `
       <av-bars audio-class="my-class0"
-          canv-width="600" canv-height="100"
+          :canv-width="600" :canv-height="100"
           audio-src="/assets/foo.mp3"></av-bars>` }
     const Comp = mount(App, { localVue })
     expect(Comp.contains('canvas')).toBe(true)

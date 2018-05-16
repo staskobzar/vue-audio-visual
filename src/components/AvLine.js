@@ -71,7 +71,7 @@ const AvLine = {
       x = this._drawLine(data, x, step)
       data.reverse()
       x = this._drawLine(data, x, step)
-      this.ctx.lineTo(+this.canvWidth, this.canvHeight / 2)
+      this.ctx.lineTo(this.canvWidth, this.canvHeight / 2)
       this.ctx.stroke()
 
       requestAnimationFrame(this.mainLoop)
@@ -106,7 +106,7 @@ const AvLine = {
      * @private
      */
     _drawLine: function (data, x, step) {
-      const h = +this.canvHeight
+      const h = this.canvHeight
       let y = 0
       data.forEach((v, i) => {
         // (h / 2) - v / 255 * (h / 2)

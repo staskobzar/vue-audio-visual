@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import mockCanvas from './mockCanvas'
 import AvBars from '@/components/AvBars'
 

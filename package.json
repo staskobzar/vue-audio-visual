@@ -16,6 +16,7 @@
     "vue": "^2.5.2"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.16",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
@@ -58,12 +59,11 @@
     "semver": "^5.3.0",
     "shelljs": "^0.7.8",
     "uglifyjs-webpack-plugin": "^1.1.1",
-    "url-loader": "^0.5.8",
+    "url-loader": "^1.0.1",
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
-    "vue-test-utils": "^1.0.0-beta.8",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
