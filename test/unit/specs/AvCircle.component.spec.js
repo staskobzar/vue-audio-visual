@@ -1,4 +1,4 @@
-import { createLocalVue, mount } from '@vue/test-utils'
+import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import AvCircle from '@/components/AvCircle'
 import Plugin from '@/'
 
@@ -63,7 +63,6 @@ describe('AvCircle component insert', () => {
       .toEqual('100')
   })
 
-/*
   it('should create canvas element with css class attribute', () => {
     const App = { template: `
       <av-circle canv-class="my-class"
@@ -98,7 +97,8 @@ describe('AvCircle component insert', () => {
       canvFillColor: ['black', '#CCC', 'rgb(255,255,255)']
     }
     AvCircle.methods.fillGradient = jest.fn()
-    mount(AvCircle, { propsData: props })
+    // mount(AvCircle, { propsData: props })
+    shallowMount(AvCircle, { propsData: props })
     expect(AvCircle.methods.fillGradient.mock.calls.length).toBe(1)
   })
 
@@ -108,7 +108,7 @@ describe('AvCircle component insert', () => {
       playtime: true
     }
     AvCircle.methods._drawPlaytime = jest.fn()
-    mount(AvCircle, { propsData: props })
+    shallowMount(AvCircle, { propsData: props })
     expect(AvCircle.methods._drawPlaytime.mock.calls.length).toBe(1)
   })
 
@@ -118,7 +118,7 @@ describe('AvCircle component insert', () => {
       rotateGraph: true,
       rotateSpeed: 1
     }
-    const Comp = mount(AvCircle, { propsData: props })
+    const Comp = shallowMount(AvCircle, { propsData: props })
     expect(Comp.vm.rotate).toBe(2.5)
   })
 
@@ -127,8 +127,7 @@ describe('AvCircle component insert', () => {
       audioSrc: '/assets/foo.mp3',
       barColor: '#00FFAA'
     }
-    const Comp = mount(AvCircle, { propsData: props })
+    const Comp = shallowMount(AvCircle, { propsData: props })
     expect(Comp.vm.barColor).toEqual('#00FFAA')
   })
-  */
 })
