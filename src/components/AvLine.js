@@ -44,7 +44,8 @@ const AvLine = {
     return {
       audio: null,
       analyser: null,
-      ctx: null
+      ctx: null,
+      audioCtx: null
     }
   },
   methods: {

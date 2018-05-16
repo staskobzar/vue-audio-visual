@@ -128,6 +128,8 @@ const methods = {
     src.connect(this.analyser)
     this.analyser.fftSize = this.fftSize
     this.analyser.connect(ctx.destination)
+
+    this.audioCtx = ctx;
   },
   /**
    * Canvas gradient. Vertical, from top down
@@ -152,6 +154,9 @@ export default {
     this.createHTMLElements()
     this.setAnalyser()
     this.mainLoop()
+  },
+  beforeDestroy () {
+      this.audioCtx.close()
   },
   methods
 }

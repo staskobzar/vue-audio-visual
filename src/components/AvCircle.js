@@ -205,7 +205,8 @@ const AvCircle = {
       rotate: 1.5,
       audio: null,
       analyser: null,
-      ctx: null
+      ctx: null,
+      audioCtx: null
     }
   },
   methods: {
