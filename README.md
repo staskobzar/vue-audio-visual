@@ -100,6 +100,7 @@ Also, multiple components can connect to the same audio element by using Vue ref
 ```
 
 Will look like this:
+
 ![Ref links](https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-ref-links.png?raw=true)
 
 ## Install and setup
