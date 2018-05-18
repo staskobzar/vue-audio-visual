@@ -138,6 +138,13 @@ audio-src="http://example.com/media/song.mp3"
 
 Plugin will generate "audio" to control media playback and "canvas" element for visualization.
 
+Another way is to link to existing Vue element using "ref-link" property. When "ref-link" property is set, then "audio-src" property is ignored.
+```html
+<audio ref="foo" src="music.mp3"></audio>
+<av-bars ref-link="foo" />
+<av-line ref-link="foo" />
+```
+
 There are props that are common for all components and special props for each component.
 
 ### Common props
