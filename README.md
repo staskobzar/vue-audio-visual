@@ -144,6 +144,7 @@ Another way is to link to existing Vue element using "ref-link" property. When "
 <av-bars ref-link="foo" />
 <av-line ref-link="foo" />
 ```
+However, it will reference **only** parent component elements.
 
 There are props that are common for all components and special props for each component.
 
