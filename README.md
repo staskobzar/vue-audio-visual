@@ -69,6 +69,39 @@ This will create following element:
 
 ![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png?raw=true)
 
+
+Also, multiple components can connect to the same audio element by using Vue ref element parameter and "ref-link" property.
+```html
+<table>
+   <tr>
+     <td rowspan="2">
+       <av-bars ref-link="foo"
+         :bar-color="['#f00', '#ff0', '#0f0']"
+         canv-fill-color="#000"
+         :canv-width="26"
+         :bar-space="1"
+         :bar-width="12"
+         :brick-height="6"
+         />
+     </td>
+     <td>
+       <audio src="/static/music_4.mp3" ref="foo" controls="true"> </audio>
+     </td>
+     <td rowspan="2">
+       <av-circle ref-link="foo" :playtime="true" />
+     </td>
+   </tr>
+   <tr>
+     <td>
+       <av-line ref-link="foo" :canv-height="40" />
+     </td>
+   </tr>
+ </table>
+```
+
+Will look like this:
+![Ref links](https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-ref-links.png?raw=true)
+
 ## Install and setup
 
 Install using npm
