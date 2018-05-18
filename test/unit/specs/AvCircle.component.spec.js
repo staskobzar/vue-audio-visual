@@ -14,6 +14,21 @@ describe('AvCircle component insert', () => {
       .toEqual('/assets/foo.mp3')
   })
 
+  it('should use reference to audio element', () => {
+    const App = {
+      template: `
+      <div>
+        <audio ref="circ" audio-src="/assets/foo.mp3"/>
+        <av-circle ref-link="circ"></av-circle>
+      </div>`
+        }
+    const Comp = mount(App, { localVue })
+    expect(Comp.vm.$avAudioRefs).not.toBeUndefined()
+    expect(Comp.vm.$avAudioRefs.circ).not.toBeUndefined()
+    expect(Comp.vm.$avAudioRefs.circ.src).not.toBeUndefined()
+    expect(Comp.vm.$avAudioRefs['circ'].ctx).not.toBeUndefined()
+  })
+
   it('should create audio with controls enabled', () => {
     const App = { template: `
       <av-circle audio-controls

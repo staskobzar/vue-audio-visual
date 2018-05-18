@@ -15,6 +15,16 @@ const props = {
     default: null
   },
   /**
+   * prop: 'ref-link'
+   * Refrence to Audio element. When provided, then local audio element
+   * is not created and use refrence to the element. Component will
+   * search only for its parent refs.
+   */
+  refLink: {
+    type: String,
+    default: null
+  },
+  /**
    * prop: 'audio-controls'
    * Audio element controls attribute. When provided should
    * display audio element with controls
@@ -89,20 +99,26 @@ const methods = {
   /**
    * Create audio and canvas elements and insert in the HTML template.
    * Using document.createElement to avoid Vue virtual DOM re-rendering
-   * which and lead to infinit loops.
+   * which can lead to infinit loops.
    */
   createHTMLElements: function () {
-    const audio = document.createElement('audio')
-    const audioDiv = document.createElement('div')
     const canv = document.createElement('canvas')
     const canvDiv = document.createElement('div')
+    let audioDiv = null
+    let audio = null
 
-    audio.setAttribute('src', this.audioSrc)
-    if (this.audioControls) audio.setAttribute('controls', true)
-    if (this.audioClass) audio.setAttribute('class', this.audioClass)
-    if (this.corsAnonym) audio.crossOrigin = 'anonymous'
-    audioDiv.appendChild(audio)
-    this.$el.appendChild(audioDiv)
+    if (this.refLink) {
+      audio = this.$parent.$refs[this.refLink]
+    } else {
+      audio = document.createElement('audio')
+      audioDiv = document.createElement('div')
+      audio.setAttribute('src', this.audioSrc)
+      if (this.audioControls) audio.setAttribute('controls', true)
+      if (this.audioClass) audio.setAttribute('class', this.audioClass)
+      if (this.corsAnonym) audio.crossOrigin = 'anonymous'
+      audioDiv.appendChild(audio)
+      this.$el.appendChild(audioDiv)
+    }
 
     if (this.canvClass) canv.setAttribute('class', this.canvClass)
     if (this.canvWidth) canv.setAttribute('width', this.canvWidth)
@@ -115,21 +131,37 @@ const methods = {
       this.$el.appendChild(canvDiv)
     }
     this.ctx = canv.getContext('2d')
+
     this.audio = audio
   },
   /**
    * Set audio context analyser.
    */
   setAnalyser: function () {
-    const ctx = new AudioContext()
-    const src = ctx.createMediaElementSource(this.audio)
-    this.analyser = ctx.createAnalyser()
+    let src = null
+    let ctx = null
+    if (this.refLink) {
+      if (this.$avAudioRefs[this.refLink]) {
+        src = this.$avAudioRefs[this.refLink].src
+        ctx = this.$avAudioRefs[this.refLink].ctx
+        this.analyser = ctx.createAnalyser()
+      } else {
+        ctx = new AudioContext()
+        this.analyser = ctx.createAnalyser()
+        src = ctx.createMediaElementSource(this.audio)
+        this.$avAudioRefs[this.refLink] = {src: src, ctx: ctx}
+      }
+    } else {
+      ctx = new AudioContext()
+      this.analyser = ctx.createAnalyser()
+      src = ctx.createMediaElementSource(this.audio)
+    }
 
     src.connect(this.analyser)
     this.analyser.fftSize = this.fftSize
     this.analyser.connect(ctx.destination)
 
-    this.audioCtx = ctx;
+    this.audioCtx = ctx
   },
   /**
    * Canvas gradient. Vertical, from top down
