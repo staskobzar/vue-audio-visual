@@ -580,8 +580,6 @@ There are props that are common for all components and special props for each co
 </table>
 
 ## Todo
-- Using Vue refs to parent audio element as alternative to "audio-src".
-  This will allow to use single audio element with many different plugin components.
 - Pre-load media source and create waveform graph.
 
 ## License
