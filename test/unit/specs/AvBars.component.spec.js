@@ -20,7 +20,7 @@ describe('AvBars component insert', () => {
         <audio ref="bar" audio-src="/assets/foo.mp3"/>
         <av-bars ref-link="bar"></av-bars>
       </div>`
-        }
+    }
     const Comp = mount(App, { localVue })
     expect(Comp.vm.$avAudioRefs).not.toBeUndefined()
     expect(Comp.vm.$avAudioRefs.bar).not.toBeUndefined()

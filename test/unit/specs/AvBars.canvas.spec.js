@@ -9,8 +9,8 @@ describe('AvBars canvas build', () => {
     const d = document
     const f = document.createElement
     document.createElement = (param) => param === 'canvas'
-                                        ? mockCanvas()
-                                        : f.call(d, param)
+      ? mockCanvas()
+      : f.call(d, param)
   })
 
   it('should not draw caps by default', () => {

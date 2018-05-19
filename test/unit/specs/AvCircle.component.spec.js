@@ -21,7 +21,7 @@ describe('AvCircle component insert', () => {
         <audio ref="circ" audio-src="/assets/foo.mp3"/>
         <av-circle ref-link="circ"></av-circle>
       </div>`
-        }
+    }
     const Comp = mount(App, { localVue })
     expect(Comp.vm.$avAudioRefs).not.toBeUndefined()
     expect(Comp.vm.$avAudioRefs.circ).not.toBeUndefined()

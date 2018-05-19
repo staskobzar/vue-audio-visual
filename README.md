@@ -161,6 +161,26 @@ There are props that are common for all components and special props for each co
   </thead>
   <tbody>
     <tr>
+      <td>audio-src</td>
+      <td><code>String</code></td>
+      <td><code>null</code></td>
+      <td>
+        Audio element src attribute. When provided creates audio element
+        wrapped in "div".
+      </td>
+    </tr>
+    <tr>
+      <td>ref-link</td>
+      <td><code>String</code></td>
+      <td><code>null</code></td>
+      <td>
+        Reference to parent audio element via Vue "ref" attribute. When set,
+        then local audio element is not created and the plugin will connect
+        audio analyser to parent audio element. Multiple plugin instances
+        can connect to the same audio element (see example above).
+      </td>
+    </tr>
+    <tr>
       <td>audio-controls</td>
       <td><code>Boolean</code></td>
       <td><code>true</code></td>

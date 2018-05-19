@@ -188,7 +188,7 @@ export default {
     this.mainLoop()
   },
   beforeDestroy () {
-      this.audioCtx.close()
+    this.audioCtx.close()
   },
   methods
 }
