@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import AvLine from '@/components/AvLine'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Plugin from '@/'
 
@@ -103,5 +105,36 @@ describe('AvLine component insert', () => {
     const divs = Comp.vm.$el.querySelectorAll('div')
     expect(divs[0].firstChild instanceof HTMLCanvasElement).toBeTruthy()
     expect(divs[1].firstChild instanceof HTMLAudioElement).toBeTruthy()
+  })
+
+  it('set canvas with gradient color', () => {
+    const Line = Vue.extend(AvLine)
+    const vm = new Line()
+    vm.canvFillColor = ['red', 'green', 'blue']
+    const addcolor = jest.fn()
+    vm.ctx = {
+      createLinearGradient: () => ({
+        addColorStop: addcolor
+      }),
+      clearRect: jest.fn(),
+      fillRect: jest.fn()
+    }
+    vm._setCanvas()
+    expect(addcolor).toHaveBeenCalledTimes(3)
+  })
+
+  it('set canvas with color', () => {
+    const Line = Vue.extend(AvLine)
+    const vm = new Line()
+    vm.canvFillColor = 'green'
+    vm.ctx = {
+      createLinearGradient: () => ({
+        addColorStop: () => {}
+      }),
+      clearRect: jest.fn(),
+      fillRect: jest.fn()
+    }
+    vm._setCanvas()
+    expect(vm.ctx.fillStyle).toBe('green')
   })
 })

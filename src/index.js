@@ -1,6 +1,7 @@
 import AvBars from './components/AvBars'
 import AvLine from './components/AvLine'
 import AvCircle from './components/AvCircle'
+import AvWaveform from './components/AvWaveform'
 
 const AVPlugin = {}
 
@@ -12,6 +13,7 @@ AVPlugin.install = function (Vue) {
   Vue.component(AvBars.name, AvBars)
   Vue.component(AvLine.name, AvLine)
   Vue.component(AvCircle.name, AvCircle)
+  Vue.component(AvWaveform.name, AvWaveform)
   Vue.prototype.$avAudioRefs = {}
 }
 

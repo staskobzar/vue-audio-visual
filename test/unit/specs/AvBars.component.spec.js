@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import AvBars from '@/components/AvBars'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Plugin from '@/'
 
@@ -103,5 +105,34 @@ describe('AvBars component insert', () => {
     const divs = Comp.vm.$el.querySelectorAll('div')
     expect(divs[0].firstChild instanceof HTMLCanvasElement).toBeTruthy()
     expect(divs[1].firstChild instanceof HTMLAudioElement).toBeTruthy()
+  })
+
+  describe('#_drawCap', () => {
+    it('draw caps on bars', () => {
+      const Bars = Vue.extend(AvBars)
+      const vm = new Bars()
+      vm.caps = [1, 255, 3]
+      vm.capsDropSpeed = 0
+      vm.canvHeight = 100
+      vm.ctx = {
+        fillStyle: null,
+        fillRect: jest.fn(),
+      }
+      vm._drawCap(1, 2, 1, 1)
+      expect(vm.ctx.fillRect).toHaveBeenCalledWith(1, 0, 2, 0)
+      expect(vm.ctx.fillRect).toHaveBeenCalledTimes(1)
+    })
+    it('symetric draw caps on bars', () => {
+      const Bars = Vue.extend(AvBars)
+      const vm = new Bars()
+      vm.caps = [1, 255, 3]
+      vm.symmetric = true
+      vm.ctx = {
+        fillStyle: null,
+        fillRect: jest.fn(),
+      }
+      vm._drawCap(1, 2, 1, 1)
+      expect(vm.ctx.fillRect).toHaveBeenCalledTimes(2)
+    })
   })
 })

@@ -19,6 +19,7 @@
   * [AvLine props](#avline-props)
   * [AvBars props](#avbars-props)
   * [AvCircle props](#avcircle-props)
+  * [AvWaveform props](#avwaveform-props)
 - [Todo](#todo)
 - [License](#license)
 
@@ -68,6 +69,15 @@ This will create following element:
 
 ![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png?raw=true)
 
+Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
+```html
+    <av-waveform
+      audio-src="/static/bar.mp3"
+    ></av-waveform>
+```
+This will create following element:
+
+![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
 
 Also, multiple components can connect to the same audio element by using Vue ref element parameter and "ref-link" property.
 ```html
@@ -598,8 +608,148 @@ There are props that are common for all components and special props for each co
   </tbody>
 </table>
 
-## Todo
-- Pre-load media source and create waveform graph.
+### AvWaveform props
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>canv-width</td>
+      <td><code>Number</code></td>
+      <td><code>100</code></td>
+      <td>Canvas element width.
+          Example: <code>:canv-width="500"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-height</td>
+      <td><code>Number</code></td>
+      <td><code>80</code></td>
+      <td>Canvas element height.
+          Example: <code>:canv-height="120"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>played-line-width</td>
+      <td><code>Number</code></td>
+      <td><code>0.5</code></td>
+      <td>Waveform line width for played segment of audio.
+          Example: <code>:playtime-line-width="0.8"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>played-line-color</td>
+      <td><code>String</code></td>
+      <td><code>navy</code></td>
+      <td>Waveform line color for played segment of audio.
+          Example: <code>:playtime-line-color="#ABC123"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>noplayed-line-width</td>
+      <td><code>Number</code></td>
+      <td><code>0.5</code></td>
+      <td>Waveform line width for not yet played segment of audio
+          Example: <code>:noplayed-line-width="1"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>noplayed-line-color</td>
+      <td><code>String</code></td>
+      <td><code>lime</code></td>
+      <td>Waveform line color for not yet played segment of audio.
+          Example: <code>:noplayed-line-color="grey"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>Display played time next to progress slider.
+          Example: <code>:playtime="false"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-with-ms</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>Display milliseconds in played when true. For example: 02:55.054.
+          Example: <code>:playtime-with-ms="false"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-font-size</td>
+      <td><code>Number</code></td>
+      <td><code>12</code></td>
+      <td>Played time print font size in pixels.
+          Example: <code>:playtime-font-size="14"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-font-family</td>
+      <td><code>String</code></td>
+      <td><code>monospace</code></td>
+      <td>Played time print font family.
+          Example: <code>:playtime-font-family="monaco"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-font-color</td>
+      <td><code>String</code></td>
+      <td><code>grey</code></td>
+      <td>Played time print font RGB color string.
+          Example: <code>:playtime-font-color="#00f"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-text-bottom</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>Position playtime text bottom. Default on top.
+          Example: <code>playtime-text-bottom</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-slider</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>Draw played time slider on the waveform.
+          Example: <code>:playtime-slider="false"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-slider-color</td>
+      <td><code>String</code></td>
+      <td><code>red</code></td>
+      <td>Played slider color.
+          Example: <code>:playtime-slider-color="#fafafa"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-slider-width</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>Played slider width.
+          Example: <code>:playtime-slider-width="2.5"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>playtime-clickable</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>Allow click on waveform to change playtime.
+          Example: <code>:playtime-clickable="false"</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## License
 

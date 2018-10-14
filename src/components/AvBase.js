@@ -130,6 +130,7 @@ const methods = {
     } else {
       this.$el.appendChild(canvDiv)
     }
+    this.ctxWrapper = canv
     this.ctx = canv.getContext('2d')
 
     this.audio = audio

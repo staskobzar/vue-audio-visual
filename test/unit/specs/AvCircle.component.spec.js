@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import AvCircle from '@/components/AvCircle'
 import Plugin from '@/'
@@ -144,5 +145,21 @@ describe('AvCircle component insert', () => {
     }
     const Comp = shallowMount(AvCircle, { propsData: props })
     expect(Comp.vm.barColor).toEqual('#00FFAA')
+  })
+
+  it('#_drawProgress', () => {
+    const Circle = Vue.extend(AvCircle)
+    const vm = new Circle()
+    vm.audio = {currentTime: 2, duration: 6}
+    vm.ctx = {
+      lineWidth: null,
+      strokeStyle: null,
+      fillStyle: null,
+      beginPath: jest.fn(),
+      arc: jest.fn(),
+      stroke: jest.fn()
+    }
+    vm._drawProgress(2, 3, 3)
+    expect(vm.ctx.arc).toHaveBeenCalled()
   })
 })
