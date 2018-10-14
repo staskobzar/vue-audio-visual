@@ -116,7 +116,7 @@ describe('AvBars component insert', () => {
       vm.canvHeight = 100
       vm.ctx = {
         fillStyle: null,
-        fillRect: jest.fn(),
+        fillRect: jest.fn()
       }
       vm._drawCap(1, 2, 1, 1)
       expect(vm.ctx.fillRect).toHaveBeenCalledWith(1, 0, 2, 0)
@@ -129,7 +129,7 @@ describe('AvBars component insert', () => {
       vm.symmetric = true
       vm.ctx = {
         fillStyle: null,
-        fillRect: jest.fn(),
+        fillRect: jest.fn()
       }
       vm._drawCap(1, 2, 1, 1)
       expect(vm.ctx.fillRect).toHaveBeenCalledTimes(2)

@@ -142,8 +142,8 @@ const props = {
   },
   /**
    * prop: 'playtime-clickable'
-   * Played slider width
-   * Default: 1
+   * Allow click on waveform to change playtime.
+   * Default: true
    */
   playtimeClickable: {
     type: Boolean,

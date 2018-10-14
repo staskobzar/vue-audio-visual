@@ -44,7 +44,7 @@ describe('AvWaveform component', () => {
 
       const decode = jest.fn()
       AvWaveform.methods.decode = decode
-      const Comp = mount(AvWaveform, { localVue })
+      mount(AvWaveform, { localVue })
 
       localVue.nextTick(() => {
         expect(decode).toHaveBeenCalledWith('foo bar')
