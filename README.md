@@ -75,9 +75,12 @@ Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
       audio-src="/static/bar.mp3"
     ></av-waveform>
 ```
-This will create following element:
+This will create following waveform element:
 
 ![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
+
+Component will pre-load audio content and generate clickable waveform. 
+
 
 Also, multiple components can connect to the same audio element by using Vue ref element parameter and "ref-link" property.
 ```html
