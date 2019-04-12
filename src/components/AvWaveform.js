@@ -221,7 +221,7 @@ const AvWaveform = {
       const segSize = Math.ceil(buffer.length / this.canvWidth)
       const width = this.canvWidth
       const height = this.canvHeight
-      this.duration = this.audio.duration
+      this.duration = buffer.duration // while we have buffer why we don't use it ?
 
       for (let c = 0; c < buffer.numberOfChannels; c++) {
         const data = buffer.getChannelData(c)
