@@ -12,7 +12,7 @@ describe('AvCircle component insert', () => {
     const Comp = mount(App, { localVue })
     expect(Comp.contains('audio')).toBe(true)
     expect(Comp.vm.$el.querySelector('audio').src)
-      .toEqual('/assets/foo.mp3')
+      .toMatch('/assets/foo.mp3')
   })
 
   it('should use reference to audio element', () => {
