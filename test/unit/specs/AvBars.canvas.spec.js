@@ -1,18 +1,8 @@
+import 'jest-canvas-mock'
 import { mount } from '@vue/test-utils'
-import mockCanvas from './mockCanvas'
 import AvBars from '@/components/AvBars'
 
 describe('AvBars canvas build', () => {
-  beforeEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
-    const d = document
-    const f = document.createElement
-    document.createElement = (param) => param === 'canvas'
-      ? mockCanvas()
-      : f.call(d, param)
-  })
-
   it('should not draw caps by default', () => {
     AvBars.methods._drawCap = jest.fn()
     mount(AvBars)

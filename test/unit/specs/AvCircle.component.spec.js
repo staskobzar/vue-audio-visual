@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'jest-canvas-mock'
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import AvCircle from '@/components/AvCircle'
 import Plugin from '@/'

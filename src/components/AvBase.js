@@ -135,6 +135,7 @@ const methods = {
 
     this.audio = audio
   },
+
   /**
    * Set audio context analyser.
    */
@@ -163,7 +164,9 @@ const methods = {
     this.analyser.connect(ctx.destination)
 
     this.audioCtx = ctx
+    this.audioCtx.suspend()
   },
+
   /**
    * Canvas gradient. Vertical, from top down
    */
@@ -187,9 +190,22 @@ export default {
     this.createHTMLElements()
     this.setAnalyser()
     this.mainLoop()
+    this.audio.onplay = () => {
+      if (this.audioCtx) { // not defined for waveform
+        this.audioCtx.resume()
+      }
+    }
+    this.audio.onpause = () => {
+      if (this.audioCtx) {
+        this.audioCtx.suspend()
+        cancelAnimationFrame(this.mainLoop)
+      }
+    }
   },
   beforeDestroy () {
-    this.audioCtx.close()
+    if (this.audioCtx) {
+      this.audioCtx.close()
+    }
   },
   methods
 }

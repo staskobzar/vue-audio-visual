@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'jest-canvas-mock'
 import AvLine from '@/components/AvLine'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Plugin from '@/'

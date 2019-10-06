@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'jest-canvas-mock'
 import AvBars from '@/components/AvBars'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Plugin from '@/'

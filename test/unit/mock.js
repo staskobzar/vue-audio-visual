@@ -8,6 +8,8 @@ window.AudioContext = jest.fn().mockImplementation(() => {
     createMediaElementSource: () => {
       return { connect: () => {} }
     },
+    suspend: () => {},
+    resume: () => {},
     createAnalyser: () => {
       return {
         connect: () => {},
