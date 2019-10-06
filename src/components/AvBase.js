@@ -204,7 +204,7 @@ export default {
   },
   beforeDestroy () {
     if (this.audioCtx) {
-      this.audioCtx.close()
+      this.audioCtx.suspend()
     }
   },
   methods
