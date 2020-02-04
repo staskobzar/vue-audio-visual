@@ -202,6 +202,7 @@ const AvCircle = {
   props,
   data () {
     return {
+      animId: null,
       rotate: 1.5,
       audio: null,
       analyser: null,
@@ -265,7 +266,7 @@ const AvCircle = {
         this.ctx.stroke()
       })
 
-      requestAnimationFrame(this.mainLoop)
+      this.animId = requestAnimationFrame(this.mainLoop)
     },
     /**
      * Canvas clear background fill

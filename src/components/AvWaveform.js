@@ -160,6 +160,7 @@ const AvWaveform = {
   props,
   data () {
     return {
+      animId: null,
       ctxWrapper: null,
       ctx: null,
       audio: null,
@@ -178,6 +179,13 @@ const AvWaveform = {
         console.error(`Failed to get file '${this.audio.src}'`)
         console.log(err)
       })
+    this.audio.onplay = () => {
+      this.animId = requestAnimationFrame(this.waveformAnim)
+    }
+    this.audio.onpause = () => {
+      cancelAnimationFrame(this.animId)
+      this.animId = null
+    }
   },
   methods: {
     // Stub set analyser method from Mixin AvBase
@@ -270,9 +278,16 @@ const AvWaveform = {
       this.draw(peaks.slice(playX), this.noplayedLineWidth, this.noplayedLineColor, x)
       this.drawSlider(time)
       this.drawTime(time)
-
-      requestAnimationFrame(this.waveform)
     },
+
+    /**
+     * Waveform animation proxy
+     */
+    waveformAnim: function () {
+      this.waveform()
+      this.animId = requestAnimationFrame(this.waveformAnim)
+    },
+
     /**
      * Draw segment.
      */
@@ -360,6 +375,10 @@ const AvWaveform = {
      */
     updateTime: function (e) {
       this.audio.currentTime = e.offsetX / this.canvWidth * this.duration
+      if (!this.animId) {
+        // re-draw if animation is not running
+        this.waveform()
+      }
     },
     /**
      * Audio source download progress

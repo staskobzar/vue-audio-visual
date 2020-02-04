@@ -42,6 +42,7 @@ const AvLine = {
   props,
   data () {
     return {
+      animId: null,
       audio: null,
       analyser: null,
       ctx: null,
@@ -75,7 +76,7 @@ const AvLine = {
       this.ctx.lineTo(this.canvWidth, this.canvHeight / 2)
       this.ctx.stroke()
 
-      requestAnimationFrame(this.mainLoop)
+      this.animId = requestAnimationFrame(this.mainLoop)
     },
     /**
      * Canvas clear background fill

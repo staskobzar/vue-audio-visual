@@ -14,7 +14,6 @@ AVPlugin.install = function (Vue) {
   Vue.component(AvLine.name, AvLine)
   Vue.component(AvCircle.name, AvCircle)
   Vue.component(AvWaveform.name, AvWaveform)
-  Vue.prototype.$avAudioRefs = {}
 }
 
 export default AVPlugin

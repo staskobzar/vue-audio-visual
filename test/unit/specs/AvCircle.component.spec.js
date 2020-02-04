@@ -16,21 +16,6 @@ describe('AvCircle component insert', () => {
       .toMatch('/assets/foo.mp3')
   })
 
-  it('should use reference to audio element', () => {
-    const App = {
-      template: `
-      <div>
-        <audio ref="circ" audio-src="/assets/foo.mp3"/>
-        <av-circle ref-link="circ"></av-circle>
-      </div>`
-    }
-    const Comp = mount(App, { localVue })
-    expect(Comp.vm.$avAudioRefs).not.toBeUndefined()
-    expect(Comp.vm.$avAudioRefs.circ).not.toBeUndefined()
-    expect(Comp.vm.$avAudioRefs.circ.src).not.toBeUndefined()
-    expect(Comp.vm.$avAudioRefs['circ'].ctx).not.toBeUndefined()
-  })
-
   it('should create audio with controls enabled', () => {
     const App = { template: `
       <av-circle audio-controls
@@ -54,12 +39,16 @@ describe('AvCircle component insert', () => {
   it('should create canvas element for visualization', () => {
     const App = { template: `<av-circle audio-src="/assets/foo.mp3"></av-circle>` }
     const Comp = mount(App, { localVue })
+    Comp.vm.$children[0].setAnalyser()
+    Comp.vm.$children[0].mainLoop()
     expect(Comp.contains('canvas')).toBe(true)
   })
 
   it('should create canvas with default width and hight', () => {
     const App = { template: `<av-circle audio-src="/assets/foo.mp3"></av-circle>` }
     const Comp = mount(App, { localVue })
+    Comp.vm.$children[0].setAnalyser()
+    Comp.vm.$children[0].mainLoop()
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
       .toEqual('100')
@@ -73,6 +62,8 @@ describe('AvCircle component insert', () => {
           :canv-width="600" :canv-height="100"
           audio-src="/assets/foo.mp3"></av-circle>` }
     const Comp = mount(App, { localVue })
+    Comp.vm.$children[0].setAnalyser()
+    Comp.vm.$children[0].mainLoop()
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('width'))
       .toEqual('600')
@@ -85,6 +76,8 @@ describe('AvCircle component insert', () => {
       <av-circle canv-class="my-class"
           audio-src="/assets/foo.mp3"></av-circle>` }
     const Comp = mount(App, { localVue })
+    Comp.vm.$children[0].setAnalyser()
+    Comp.vm.$children[0].mainLoop()
     expect(Comp.contains('canvas')).toBe(true)
     expect(Comp.vm.$el.querySelector('canvas').getAttribute('class'))
       .toEqual('my-class')
@@ -115,7 +108,9 @@ describe('AvCircle component insert', () => {
     }
     AvCircle.methods.fillGradient = jest.fn()
     // mount(AvCircle, { propsData: props })
-    shallowMount(AvCircle, { propsData: props })
+    const cmp = shallowMount(AvCircle, { propsData: props })
+    cmp.vm.setAnalyser()
+    cmp.vm.mainLoop()
     expect(AvCircle.methods.fillGradient.mock.calls.length).toBe(1)
   })
 
@@ -125,7 +120,9 @@ describe('AvCircle component insert', () => {
       playtime: true
     }
     AvCircle.methods._drawPlaytime = jest.fn()
-    shallowMount(AvCircle, { propsData: props })
+    const cmp = shallowMount(AvCircle, { propsData: props })
+    cmp.vm.setAnalyser()
+    cmp.vm.mainLoop()
     expect(AvCircle.methods._drawPlaytime.mock.calls.length).toBe(1)
   })
 
@@ -136,6 +133,8 @@ describe('AvCircle component insert', () => {
       rotateSpeed: 1
     }
     const Comp = shallowMount(AvCircle, { propsData: props })
+    Comp.vm.setAnalyser()
+    Comp.vm.mainLoop()
     expect(Comp.vm.rotate).toBe(2.5)
   })
 

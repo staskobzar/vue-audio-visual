@@ -16,21 +16,6 @@ describe('AvBars component insert', () => {
       .toMatch('/assets/foo.mp3')
   })
 
-  it('should use reference to audio element', () => {
-    const App = {
-      template: `
-      <div>
-        <audio ref="bar" audio-src="/assets/foo.mp3"/>
-        <av-bars ref-link="bar"></av-bars>
-      </div>`
-    }
-    const Comp = mount(App, { localVue })
-    expect(Comp.vm.$avAudioRefs).not.toBeUndefined()
-    expect(Comp.vm.$avAudioRefs.bar).not.toBeUndefined()
-    expect(Comp.vm.$avAudioRefs.bar.src).not.toBeUndefined()
-    expect(Comp.vm.$avAudioRefs['bar'].ctx).not.toBeUndefined()
-  })
-
   it('should create audio with controls enabled', () => {
     const App = { template: `
       <av-bars audio-controls

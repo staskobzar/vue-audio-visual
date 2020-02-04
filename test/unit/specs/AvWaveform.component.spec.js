@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vue from 'vue'
+import 'jest-canvas-mock'
 import AvWaveform from '@/components/AvWaveform'
 
 import Plugin from '@/'
@@ -83,7 +84,6 @@ describe('AvWaveform component', () => {
 
       vm.waveform()
 
-      expect(requestAnimationFrame).toHaveBeenCalled()
       expect(vm.draw).toHaveBeenCalledTimes(2)
       expect(vm.draw).toHaveBeenCalledWith([[1.5, 2.5], [1.5, 2.5]], 0.5, 'navy', 0)
     })

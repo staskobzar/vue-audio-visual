@@ -103,6 +103,7 @@ const AvBars = {
   props,
   data () {
     return {
+      animId: null,
       audio: null,
       analyser: null,
       ctx: null,
@@ -139,7 +140,7 @@ const AvBars = {
         this._drawBar(barWidth, barHeight, x)
         x += barWidth + this.barSpace
       })
-      requestAnimationFrame(this.mainLoop)
+      this.animId = requestAnimationFrame(this.mainLoop)
     },
     /**
      * Canvas background fill

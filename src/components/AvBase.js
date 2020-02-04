@@ -134,37 +134,20 @@ const methods = {
     this.ctx = canv.getContext('2d')
 
     this.audio = audio
+    this.audio.load()
   },
 
   /**
    * Set audio context analyser.
    */
   setAnalyser: function () {
-    let src = null
-    let ctx = null
-    if (this.refLink) {
-      if (this.$avAudioRefs[this.refLink]) {
-        src = this.$avAudioRefs[this.refLink].src
-        ctx = this.$avAudioRefs[this.refLink].ctx
-        this.analyser = ctx.createAnalyser()
-      } else {
-        ctx = new AudioContext()
-        this.analyser = ctx.createAnalyser()
-        src = ctx.createMediaElementSource(this.audio)
-        this.$avAudioRefs[this.refLink] = {src: src, ctx: ctx}
-      }
-    } else {
-      ctx = new AudioContext()
-      this.analyser = ctx.createAnalyser()
-      src = ctx.createMediaElementSource(this.audio)
-    }
+    this.audioCtx = new AudioContext()
+    this.analyser = this.audioCtx.createAnalyser()
+    const src = this.audioCtx.createMediaElementSource(this.audio)
 
     src.connect(this.analyser)
     this.analyser.fftSize = this.fftSize
-    this.analyser.connect(ctx.destination)
-
-    this.audioCtx = ctx
-    this.audioCtx.suspend()
+    this.analyser.connect(this.audioCtx.destination)
   },
 
   /**
@@ -188,24 +171,28 @@ export default {
   render: h => h('div'),
   mounted () {
     this.createHTMLElements()
-    this.setAnalyser()
-    this.mainLoop()
+
     this.audio.onplay = () => {
+      if (!this.audioCtx) this.setAnalyser()
+      this.mainLoop()
       if (this.audioCtx) { // not defined for waveform
         this.audioCtx.resume()
       }
     }
+
     this.audio.onpause = () => {
       if (this.audioCtx) {
         this.audioCtx.suspend()
-        cancelAnimationFrame(this.mainLoop)
+        cancelAnimationFrame(this.animId)
       }
     }
   },
+
   beforeDestroy () {
     if (this.audioCtx) {
       this.audioCtx.suspend()
     }
+    cancelAnimationFrame(this.animId)
   },
   methods
 }
