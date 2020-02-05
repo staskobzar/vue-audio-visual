@@ -209,13 +209,14 @@ const AvWaveform = {
       /* istanbul ignore next */
       const ctx = new AudioContext()
       /* istanbul ignore next */
-      ctx.decodeAudioData(response.data)
-        .then(audioBuffer => this.setPeaks(audioBuffer))
-        .catch(err => {
-          console.error('Failed to decode audio data.')
-          console.log(err)
-        })
+      ctx.decodeAudioData(response.data, (audioBuffer) => {
+        this.setPeaks(audioBuffer)
+      }, (err) => {
+        console.error('Failed to decode audio data.')
+        console.log(err)
+      })
     },
+
     /**
      * Set peaks array for waveform.
      * For now use only one channel
