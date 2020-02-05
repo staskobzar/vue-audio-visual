@@ -3,6 +3,7 @@
 /build
 /config
 /static
+/coverage
 .editorconfig
 .eslintignore
 .eslintrc.js

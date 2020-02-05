@@ -13,7 +13,7 @@ describe('AvBars canvas build', () => {
 
   it('should draw caps when caps-height property is set', () => {
     AvBars.methods._drawCap = jest.fn()
-    const cmp = mount(AvBars, { propsData: {capsHeight: 4} })
+    const cmp = mount(AvBars, { propsData: { capsHeight: 4 } })
     cmp.vm.setAnalyser()
     cmp.vm.mainLoop()
     expect(AvBars.methods._drawCap.mock.calls.length)
@@ -56,7 +56,7 @@ describe('AvBars canvas build', () => {
   it('should draw brick bar by when brick-height is set', () => {
     AvBars.methods._drawBrickBar = jest.fn()
     // const frqBitCount = AudioContext().createAnalyser().frequencyBinCount
-    const cmp = mount(AvBars, { propsData: {brickHeight: 4} })
+    const cmp = mount(AvBars, { propsData: { brickHeight: 4 } })
     cmp.vm.setAnalyser()
     cmp.vm.mainLoop()
     expect(AvBars.methods._drawBrickBar.mock.calls.length).toBe(1)

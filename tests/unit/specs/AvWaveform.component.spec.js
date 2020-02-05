@@ -4,7 +4,7 @@ import Vue from 'vue'
 import 'jest-canvas-mock'
 import AvWaveform from '@/components/AvWaveform'
 
-import Plugin from '@/'
+import Plugin from 'Plugin'
 
 const localVue = createLocalVue()
 localVue.use(Plugin)
@@ -162,7 +162,7 @@ describe('AvWaveform component', () => {
 
   describe('#downloadProgress', () => {
     it('draw progress callbeck for axios get', () => {
-      vm.downloadProgress({loaded: 5, total: 10})
+      vm.downloadProgress({ loaded: 5, total: 10 })
       expect(mockCanv.clearRect).toHaveBeenCalled()
       expect(mockCanv.lineTo).toHaveBeenCalledWith(250, 40)
     })

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import 'jest-canvas-mock'
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import AvCircle from '@/components/AvCircle'
-import Plugin from '@/'
+import Plugin from 'Plugin'
 
 const localVue = createLocalVue()
 localVue.use(Plugin)
@@ -150,7 +150,7 @@ describe('AvCircle component insert', () => {
   it('#_drawProgress', () => {
     const Circle = Vue.extend(AvCircle)
     const vm = new Circle()
-    vm.audio = {currentTime: 2, duration: 6}
+    vm.audio = { currentTime: 2, duration: 6 }
     vm.ctx = {
       lineWidth: null,
       strokeStyle: null,
