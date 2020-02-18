@@ -2,6 +2,7 @@ import AvBars from './components/AvBars'
 import AvLine from './components/AvLine'
 import AvCircle from './components/AvCircle'
 import AvWaveform from './components/AvWaveform'
+import AvMedia from './components/AvMedia'
 
 const AVPlugin = {}
 
@@ -14,6 +15,7 @@ AVPlugin.install = function (Vue) {
   Vue.component(AvLine.name, AvLine)
   Vue.component(AvCircle.name, AvCircle)
   Vue.component(AvWaveform.name, AvWaveform)
+  Vue.component(AvMedia.name, AvMedia)
 }
 
 export default AVPlugin
