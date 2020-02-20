@@ -195,6 +195,7 @@ const AvWaveform = {
       /* istanbul ignore next */
       return null
     },
+
     // Stub mainLoop method from Mixin AvBase as
     // here different init method will be used.
     // This method is called from mixin mounted()
@@ -202,6 +203,7 @@ const AvWaveform = {
       /* istanbul ignore next */
       return null
     },
+
     /**
      * Decode audio source response array buffer
      */
@@ -266,6 +268,7 @@ const AvWaveform = {
       }
       this.waveform()
     },
+
     /**
      * Draw wave form.
      */
@@ -304,6 +307,7 @@ const AvWaveform = {
       this.ctx.stroke()
       return x
     },
+
     /**
      * Formatted string of current play time.
      * @param {Number} Current play time
@@ -328,6 +332,7 @@ const AvWaveform = {
 
       return frmStr
     },
+
     /**
      * Draw play time next to slider.
      * @param {Number} Played time sec.millisec.
@@ -348,6 +353,7 @@ const AvWaveform = {
       this.ctx.font = `${this.playtimeFontSize}px ${this.playtimeFontFamily}`
       this.ctx.fillText(timeStr, textX, textY)
     },
+
     /**
      * Draw played slider.
      * @param {Number} Played time sec.millisec.
@@ -362,6 +368,7 @@ const AvWaveform = {
       this.ctx.lineTo(playX, this.canvHeight)
       this.ctx.stroke()
     },
+
     /**
      * Get x coodrinate for play time.
      * @param {Number}
@@ -370,6 +377,7 @@ const AvWaveform = {
     playX: function (time) {
       return ~~(time / this.duration * this.canvWidth)
     },
+
     /**
      * Audio playback update time callback.
      * @param event
@@ -381,6 +389,7 @@ const AvWaveform = {
         this.waveform()
       }
     },
+
     /**
      * Audio source download progress
      */

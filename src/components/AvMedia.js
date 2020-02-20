@@ -21,6 +21,16 @@ const props = {
     type: Number,
     default: 300
   },
+
+  /**
+   * prop: 'canv-class'
+   * Canvas element css class name.
+   */
+  canvClass: {
+    type: String,
+    default: null
+  },
+
   /**
    * prop: 'canv-height'
    * Canvas element height. Default 80
@@ -31,15 +41,78 @@ const props = {
   },
 
   /**
+   * prop: 'canv-fill-color'
+   * Canvas fill background RGB color.
+   * Default is transperent.
+   */
+  canvFillColor: {
+    type: String,
+    default: null
+  },
+
+  /**
    * prop: 'fft-size'
    * Represents the window size in samples that is used when performing
    * a Fast Fourier Transform (FFT) to get frequency domain data.
    * Must be power of 2 between 2^5 and 2^15
-   * Default: 128
+   * Default: 8192 for 'wform' 1024 for 'freq'
    */
   fftSize: {
     type: Number,
-    default: 1024 // 8192
+    default: null // 1024 // 8192
+  },
+
+  /**
+   * prop: 'type'
+   * Type of visualisation.
+   * wform - using byte time domaine data
+   * frequ - using byte frequency data
+   * wform when not recognized.
+   * Default: wform
+   */
+  type: {
+    type: String,
+    default: 'wform'
+  },
+
+  /**
+   * prop: 'frequ-lnum'
+   * Vertical lines number for frequ type.
+   * Default: 60
+   */
+  frequLnum: {
+    type: Number,
+    default: 60
+  },
+
+  /**
+   * prop: 'frequ-line-cap'
+   * Draw line with rounded end caps.
+   * Default: false
+   */
+  frequLineCap: {
+    type: Boolean,
+    default: false
+  },
+
+  /**
+   * prop: 'line-color'
+   * Line color.
+   * Default: lime
+   */
+  lineColor: {
+    type: String,
+    default: 'lime'
+  },
+
+  /**
+   * prop: 'line-width'
+   * Line width.
+   * Default: 0.5 for wform and 3 for frequ
+   */
+  lineWidth: {
+    type: Number,
+    default: null
   }
 }
 
@@ -63,7 +136,6 @@ const AvMedia = {
   watch: {
     media: function (newVal, oldVal) {
       if (newVal) this.setAnalyser()
-      console.log(this.media)
       this.draw()
     }
   },
@@ -75,45 +147,52 @@ const AvMedia = {
       const canv = document.createElement('canvas')
       canv.width = this.canvWidth
       canv.height = this.canvHeight
-      canv.style.border = '1px solid'
+      if (this.canvClass) canv.setAttribute('class', this.canvClass)
       this.ctx = canv.getContext('2d')
       this.$el.appendChild(canv)
     },
 
+    /**
+     * Set analyser
+     */
     setAnalyser: function () {
       this.audioCtx = new AudioContext()
       this.analyser = this.audioCtx.createAnalyser()
       const src = this.audioCtx.createMediaStreamSource(this.media)
 
       src.connect(this.analyser)
-      this.analyser.fftSize = this.fftSize
+      if (this.fftSize) {
+        this.analyser.fftSize = this.fftSize
+      } else {
+        this.analyser.fftSize = this.type === 'frequ' ? 1024 : 8192
+      }
       this.analyser.connect(this.audioCtx.destination)
     },
 
     draw: function () {
-      const w = this.canvWidth
-      const h = this.canvHeight
-      const frqBits = this.analyser.fftSize
-      const data = new Uint8Array(frqBits)
-      const step = w / frqBits
+      const data = new Uint8Array(this.analyser.fftSize)
 
-      // this.analyser.getByteTimeDomainData(data)
-      this.analyser.getByteFrequencyData(data)
-
-      // this.ctx.save()
-      // this.ctx.scale(1, 1)
-      this.ctx.clearRect(0, 0, w, h)
+      if (this.canvFillColor) this.ctx.fillStyle = this.canvFillColor
+      this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight)
       this.ctx.beginPath()
+      this.ctx.strokeStyle = this.lineColor
 
-      // this._line(data, step, h)
-      this._chunk(data)
-      // this.ctx.restore()
+      if (this.type === 'frequ') {
+        this.analyser.getByteFrequencyData(data)
+        this.frequ(data)
+      } else {
+        this.analyser.getByteTimeDomainData(data)
+        this.wform(data)
+      }
 
       requestAnimationFrame(this.draw)
     },
 
-    _line: function (data, step, h) {
+    wform: function (data) {
+      const h = this.canvHeight
+      const step = this.canvWidth / this.analyser.fftSize
       let x = 0
+      this.ctx.lineWidth = this.lineWidth || 0.5
       data.forEach(v => {
         const y = (v / 255.0) * h
         this.ctx.lineTo(x, y)
@@ -122,19 +201,19 @@ const AvMedia = {
       this.ctx.stroke()
     },
 
-    _chunk: function (data) {
-      const c = 50
+    frequ: function (data) {
+      const c = this.frequLnum
       const step = this.canvWidth / c
       const h = this.canvHeight
+      const lw = this.lineWidth || 2
       for (let i = 0; i < c; i++) {
-        const x = i * step
-        const avg = data.slice(x, x + step).reduce((sum, v) => sum + (v / 255.0 * h), 0) / step
-        const v = avg
-        // const space = (v === 0 ? h - 5 : (v * h)) / 2.0 // (h - avg) / 2.0
-        const space = h - v // h * (255 - v) / 510
-        this.ctx.lineWidth = 2
+        const x = i * step + lw
+        const v = data.slice(x, x + step).reduce((sum, v) => sum + (v / 255.0 * h), 0) / step
+        const space = (h - v) / 2 + 2 // + 2 is space for caps
+        this.ctx.lineWidth = lw
+        this.ctx.lineCap = this.frequLineCap ? 'round' : 'butt'
         this.ctx.moveTo(x, space)
-        this.ctx.lineTo(x, h - space) // + space)
+        this.ctx.lineTo(x, h - space)
         this.ctx.stroke()
       }
     }

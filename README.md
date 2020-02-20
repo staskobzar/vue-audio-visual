@@ -20,7 +20,8 @@
   * [AvBars props](#avbars-props)
   * [AvCircle props](#avcircle-props)
   * [AvWaveform props](#avwaveform-props)
-- [Todo](#todo)
+  * [AvMedia props](#avmedia-props)
+- [Issues](#issues)
 - [License](#license)
 
 ## Overview
@@ -77,43 +78,19 @@ Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
 ```
 This will create following waveform element:
 
-![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
+![AvWaveform Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
 
 Component will pre-load audio content and generate clickable waveform. 
 
-
-Also, multiple components can connect to the same audio element by using Vue ref element parameter and "ref-link" property.
+Component **AvMedia**. Vue template name **&lt;av-media&gt;**
 ```html
-<table>
-   <tr>
-     <td rowspan="2">
-       <av-bars ref-link="foo"
-         :bar-color="['#f00', '#ff0', '#0f0']"
-         canv-fill-color="#000"
-         :canv-width="26"
-         :bar-space="1"
-         :bar-width="12"
-         :brick-height="6"
-         />
-     </td>
-     <td>
-       <audio src="/static/music_4.mp3" ref="foo" controls="true"> </audio>
-     </td>
-     <td rowspan="2">
-       <av-circle ref-link="foo" :playtime="true" />
-     </td>
-   </tr>
-   <tr>
-     <td>
-       <av-line ref-link="foo" :canv-height="40" />
-     </td>
-   </tr>
- </table>
+    <av-media
+      :media="mediaObject"
+    ></av-media>
 ```
+This will create following media element:
+![AvMedia Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-media.png?raw=true)
 
-Will look like this:
-
-![Ref links](https://github.com/staskobzar/vue-audio-visual/blob/master/static/vav-ref-links.png?raw=true)
 
 ## Install and setup
 
@@ -236,15 +213,12 @@ There are props that are common for all components and special props for each co
     </tr>
     <tr>
       <td>canv-fill-color</td>
-      <td><code>String</code>, <code>Array</code></td>
+      <td><code>String</code></td>
       <td><code>null</code></td>
-      <td>Canvas fill background color. Can be string RGB color or Array of RGB color.
-          When Array is given, plugin creates linear gradient and set it as background.
-          Array value should be binded.
+      <td>Canvas fill background RGB color.
           Default is null, which makes background transperent.
           Examples:<br/>
           <code>canv-fill-color="#00AAFF"</code><br/>
-          <code>:canv-fill-color="['#FFF', 'rgb(0,255,127)', '#00f']"</code>
       </td>
     </tr>
   </tbody>
@@ -753,6 +727,137 @@ There are props that are common for all components and special props for each co
     </tr>
   </tbody>
 </table>
+
+### AvMedia props
+
+Please note that common pros are not usable for that element.
+
+Vue component example with media from user device.
+```vue
+<template>
+  <audio ref="player" controls />
+  <av-media :media="media" />
+</template>
+<script>
+export default {
+    name: 'HelloWorld',
+    data() {
+        return {
+            media: null
+        }
+    },
+    mounted () {
+      const constraints = { audio: true, video: false }
+      navigator.mediaDevices.getUserMedia(constraints).
+        then(media => {
+          this.media = media
+          this.$refs.player.srcObject = media
+        })
+    }
+}
+</script>
+```
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>media</td>
+      <td><code>MediaStream</code></td>
+      <td><code>none</code></td>
+      <td>Required property. See example above.</td>
+    </tr>
+    <tr>
+      <td>canv-width</td>
+      <td><code>Number</code></td>
+      <td><code>300</code></td>
+      <td>Canvas element width. Default 300.
+          Example: <code>:canv-width="600"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-height</td>
+      <td><code>Number</code></td>
+      <td><code>80</code></td>
+      <td>Canvas element height. Default 80.
+          Example: <code>:canv-height="120"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>canv-class</td>
+      <td><code>String</code></td>
+      <td><code>null</code></td>
+      <td>Canvas element css class name.</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td><code>String</code></td>
+      <td><code>wform</code></td>
+      <td>Type of media visualization. Currently supplies two types: 'wform' and 'frequ'.
+      If not set or not recognized then 'wform' is set. <br/>
+          Example: <code>:type="frequ"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>fft-size</td>
+      <td><code>Number</code></td>
+      <td><code>1024/8192</code></td>
+      <td>Represents the window size in samples that is used when performing
+          a Fast Fourier Transform (FFT) to get frequency domain data.
+          Default 8192 for the type 'wform' or 1024 for 'frequ'
+          <br/>
+          Example: <code>:fft-size="512"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>frequ-lnum</td>
+      <td><code>Number</code></td>
+      <td><code>60</code></td>
+      <td>Number of vertical lines for 'frequ' type.
+          Example: <code>:frequ-lnum="30"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>frequ-line-cap</td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+      <td>Draw lines of 'frequ' type with rounded caps.
+          Example: <code>:frequ-line-cap="true"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>line-color</td>
+      <td><code>String</code></td>
+      <td><code>#9F9</code></td>
+      <td>Graph line RGB color.
+          Examples:<br/>
+          <code>line-color="#00AAFF"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>line-width</td>
+      <td><code>Number</code></td>
+      <td><code>0.5 / 3</code></td>
+      <td>Graph line width in px. Integer or float number.
+      If not set then 0.5 for 'wform' type and 3 for 'frequ'
+          Example: <code>:line-width="0.8"</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Issues
+There is an issue with Safari browser. So far solution is not found.
+Any help or contribution is welcome.
+
+Multiple components per single audio element is deprecated.
 
 ## License
 
