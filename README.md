@@ -89,6 +89,7 @@ Component **AvMedia**. Vue template name **&lt;av-media&gt;**
     ></av-media>
 ```
 This will create following media element:
+
 ![AvMedia Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-media.png?raw=true)
 
 
