@@ -4,6 +4,8 @@
 /config
 /static
 /coverage
+/demo
+/docs
 .editorconfig
 .eslintignore
 .eslintrc.js
