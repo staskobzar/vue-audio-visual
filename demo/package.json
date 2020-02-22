@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --https",
     "build": "vue-cli-service build --dest ../docs",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.5.0",
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
     "vue-audio-visual": "file:.."

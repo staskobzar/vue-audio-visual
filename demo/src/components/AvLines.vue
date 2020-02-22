@@ -1,20 +1,19 @@
 <template>
   <div>
-    <h3>Demo of av-line component</h3>
-    <pre>
-    See source code in file demo/src/components/AvLines.vue
-    </pre>
+    <h4><code>av-line</code> component</h4>
+    <a target="blank" href="https://github.com/staskobzar/vue-audio-visual/blob/master/demo/src/components/AvLines.vue">
+    Example source code</a>
     <av-line
       :line-width="2"
       line-color="lime"
-      audio-src="/file_example_MP3_1MG.mp3"
+      audio-src="file_example_MP3_1MG.mp3"
     ></av-line>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'av-lines'
+  name: 'av-line-demo'
 }
 </script>
 
