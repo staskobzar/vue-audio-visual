@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="logo" src="logo.png">
+    <h1>vue-audio-visual demo</h1>
+    <blockquote>
+      Audio source is from https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3
+    </blockquote>
+    <hr/>
+    <AvLines />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AvLines from './components/AvLines.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AvLines
   }
 }
 </script>
