@@ -26,7 +26,7 @@
 
 ## Overview
 An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework. It is built with HTML5
-[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API (though some components has problems in Safari).
+[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API.
 It provides several Vue components that allows to draw light and nice visualization for "audio" HTML elements.
 
 There is a [DEMO](https://staskobzar.github.io/vue-audio-visual/) available.
