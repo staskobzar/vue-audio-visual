@@ -172,6 +172,10 @@ export default {
   mounted () {
     this.createHTMLElements()
 
+    this.audio.onclick = () => {
+      if (!this.audioCtx) this.setAnalyser()
+    }
+
     this.audio.onplay = () => {
       if (!this.audioCtx) this.setAnalyser()
       this.mainLoop()
