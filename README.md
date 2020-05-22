@@ -853,6 +853,15 @@ export default {
           Example: <code>:line-width="0.8"</code>
       </td>
     </tr>
+    <tr>
+      <td>connect-distination</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>Analyser to connect to audio context's destination.
+      Avoid echo during playback.
+          Example: <code>:connect-destination="false"</code>
+      </td>
+    </tr>
   </tbody>
 </table>
 
