@@ -113,6 +113,16 @@ const props = {
   lineWidth: {
     type: Number,
     default: null
+  },
+
+  /**
+   * prop: 'connect-distination'
+   * Analyser to connect to audio context's destination
+   * Default: true
+   */
+  connectDistination: {
+    type: Boolean,
+    default: true
   }
 }
 
@@ -166,7 +176,9 @@ const AvMedia = {
       } else {
         this.analyser.fftSize = this.type === 'frequ' ? 1024 : 8192
       }
-      this.analyser.connect(this.audioCtx.destination)
+      if (this.connectDistination) {
+        this.analyser.connect(this.audioCtx.destination)
+      }
     },
 
     draw: function () {
