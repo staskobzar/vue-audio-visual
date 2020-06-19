@@ -856,10 +856,10 @@ export default {
     <tr>
       <td>connect-destination</td>
       <td><code>Boolean</code></td>
-      <td><code>true</code></td>
+      <td><code>false</code></td>
       <td>Analyser to connect to audio context's destination.
       Avoid echo during playback.
-          Example: <code>:connect-destination="false"</code>
+          Example: <code>:connect-destination="true"</code>
       </td>
     </tr>
   </tbody>

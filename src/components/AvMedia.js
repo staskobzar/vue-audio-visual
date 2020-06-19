@@ -116,13 +116,13 @@ const props = {
   },
 
   /**
-   * prop: 'connect-distination'
+   * prop: 'connect-destination'
    * Analyser to connect to audio context's destination
-   * Default: true
+   * Default: false
    */
-  connectDistination: {
+  connectDestination: {
     type: Boolean,
-    default: true
+    default: false
   }
 }
 
@@ -176,7 +176,7 @@ const AvMedia = {
       } else {
         this.analyser.fftSize = this.type === 'frequ' ? 1024 : 8192
       }
-      if (this.connectDistination) {
+      if (this.connectDestination) {
         this.analyser.connect(this.audioCtx.destination)
       }
     },
