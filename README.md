@@ -854,7 +854,7 @@ export default {
       </td>
     </tr>
     <tr>
-      <td>connect-distination</td>
+      <td>connect-destination</td>
       <td><code>Boolean</code></td>
       <td><code>true</code></td>
       <td>Analyser to connect to audio context's destination.
