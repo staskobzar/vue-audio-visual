@@ -873,12 +873,6 @@ export default {
   </tbody>
 </table>
 
-## Issues
-There is an issue with Safari browser. So far solution is not found.
-Any help or contribution is welcome.
-
-Multiple components per single audio element is deprecated.
-
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
