@@ -803,7 +803,7 @@ export default {
       <td>type</td>
       <td><code>String</code></td>
       <td><code>wform</code></td>
-      <td>Type of media visualization. Currently supplies two types: 'wform' and 'frequ'.
+      <td>Type of media visualization. Currently supplies two types: 'wform', 'circle' and 'frequ'.
       If not set or not recognized then 'wform' is set. <br/>
           Example: <code>:type="frequ"</code>
       </td>
@@ -851,6 +851,14 @@ export default {
       <td>Graph line width in px. Integer or float number.
       If not set then 0.5 for 'wform' type and 3 for 'frequ'
           Example: <code>:line-width="0.8"</code>
+      </td>
+    </tr>
+     <tr>
+      <td>radius</td>
+      <td><code>Number</code></td>
+      <td><code>0</code></td>
+      <td>Base 'circle' radius.
+          Example: <code>:radius="4"</code>
       </td>
     </tr>
     <tr>

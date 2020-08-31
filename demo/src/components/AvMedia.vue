@@ -11,6 +11,10 @@
       :canv-width="30" :canv-height="30"
       :frequ-line-cap="true" :frequ-lnum="3"
       :line-width="6"/>
+    <small>AvMedia type="circle" with line-width="3"</small>
+    <av-media :media="media" type="circle"
+      :canv-width="100" :canv-height="100"
+      :line-width="3"/>
   </div>
 </template>
 
