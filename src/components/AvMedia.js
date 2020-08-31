@@ -243,44 +243,40 @@ const AvMedia = {
       }
     },
 
-    circle: function(data) {
-      const cx = this.canvWidth / 2; // center X
-      const cy = this.canvHeight / 2; // center Y
-      const h = this.canvHeight;
-      const r = this.radius || 4;
-      const lineWidth = this.lineWidth;
-      const lineSpace = 10;
-      const arcStep = Math.ceil(lineWidth + lineSpace);
-      const frqBits = this.analyser.frequencyBinCount;
-      const step = ((lineWidth + lineSpace) / data.length) * (2 * Math.PI);
-      const barLen = this.canvWidth / 1.2 - r;
-      let angle = Math.PI;
+    circle: function (data) {
+      const cx = this.canvWidth / 2 // center X
+      const cy = this.canvHeight / 2 // center Y
+      const r = this.radius || 4
+      const lineWidth = this.lineWidth
+      const lineSpace = 10
+      const arcStep = Math.ceil(lineWidth + lineSpace)
+      const step = ((lineWidth + lineSpace) / data.length) * (2 * Math.PI)
+      const barLen = this.canvWidth / 1.2 - r
+      let angle = Math.PI
 
-      let x = 0;
-
-      this.ctx.lineWidth = this.lineWidth || 0.5;
+      this.ctx.lineWidth = this.lineWidth || 0.5
 
       data.forEach((_, index) => {
-        angle += step;
+        angle += step
         if (index % arcStep) {
-          return;
+          return
         }
 
         const bits = Math.round(
           data.slice(index, index + arcStep).reduce((v, t) => t + v, 0) /
             arcStep
-        );
+        )
 
-        const blen = r + (bits / 255.0) * barLen;
-        this.ctx.beginPath();
-        this.ctx.lineCap = "round";
-        this.ctx.moveTo(r * Math.cos(angle) + cx, r * Math.sin(angle) + cy);
+        const blen = r + (bits / 255.0) * barLen
+        this.ctx.beginPath()
+        this.ctx.lineCap = 'round'
+        this.ctx.moveTo(r * Math.cos(angle) + cx, r * Math.sin(angle) + cy)
         this.ctx.lineTo(
           blen * Math.cos(angle) + cx,
           blen * Math.sin(angle) + cy
-        );
-        this.ctx.stroke();
-      });
+        )
+        this.ctx.stroke()
+      })
     }
   }
 }
