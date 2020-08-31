@@ -176,8 +176,8 @@ const AvMedia = {
      * Set analyser
      */
     setAnalyser: function () {
-      this.audioCtx = new AudioContext()
-      this.analyser = this.audioCtx.createAnalyser()
+      this.audioCtx = this.audioCtx || new AudioContext()
+      this.analyser = this.analyser || this.audioCtx.createAnalyser()
       const src = this.audioCtx.createMediaStreamSource(this.media)
 
       src.connect(this.analyser)

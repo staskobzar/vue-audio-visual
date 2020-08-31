@@ -141,8 +141,8 @@ const methods = {
    * Set audio context analyser.
    */
   setAnalyser: function () {
-    this.audioCtx = new AudioContext()
-    this.analyser = this.audioCtx.createAnalyser()
+    this.audioCtx = this.audioCtx || new AudioContext()
+    this.analyser = this.analyser || this.audioCtx.createAnalyser()
     const src = this.audioCtx.createMediaElementSource(this.audio)
 
     src.connect(this.analyser)
