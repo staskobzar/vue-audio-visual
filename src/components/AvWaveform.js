@@ -167,7 +167,7 @@ const AvWaveform = {
   name: 'av-waveform',
   mixins: [BaseMixin],
   props,
-  data() {
+  data () {
     return {
       animId: null,
       ctxWrapper: null,
@@ -177,7 +177,7 @@ const AvWaveform = {
       peaks: []
     }
   },
-  mounted() {
+  mounted () {
     const conf = {
       responseType: 'arraybuffer',
       onDownloadProgress: this.downloadProgress
