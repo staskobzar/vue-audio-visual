@@ -148,6 +148,15 @@ const props = {
   playtimeClickable: {
     type: Boolean,
     default: true
+  },
+  /**
+   * prop: 'requester'
+   * Allow set a custom requester (axios/fetch) to be used.
+   * Default: new axios instance
+   */
+  requester: {
+    type: Object,
+    default: axios
   }
 }
 
@@ -156,9 +165,9 @@ const props = {
  */
 const AvWaveform = {
   name: 'av-waveform',
-  mixins: [ BaseMixin ],
+  mixins: [BaseMixin],
   props,
-  data () {
+  data() {
     return {
       animId: null,
       ctxWrapper: null,
@@ -168,12 +177,12 @@ const AvWaveform = {
       peaks: []
     }
   },
-  mounted () {
+  mounted() {
     const conf = {
       responseType: 'arraybuffer',
       onDownloadProgress: this.downloadProgress
     }
-    axios.get(this.audio.src, conf)
+    this.requester.get(this.audio.src, conf)
       .then(response => this.decode(response))
       .catch(err => {
         console.error(`Failed to get file '${this.audio.src}'`)
