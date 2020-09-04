@@ -728,6 +728,14 @@ There are props that are common for all components and special props for each co
           Example: <code>:playtime-clickable="false"</code>
       </td>
     </tr>
+    <tr>
+      <td>requester</td>
+      <td><code>Object</code></td>
+      <td><code>new axios instance</code></td>
+      <td>Allow set a custom requester (axios/fetch) to be used.
+          Example: <code>:requester="myCustomRequesterInstance"</code>
+      </td>
+    </tr>
   </tbody>
 </table>
 
