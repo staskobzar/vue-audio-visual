@@ -155,7 +155,7 @@ const props = {
    * Default: new axios instance
    */
   requester: {
-    type: Object,
+    type: Function,
     default: axios
   }
 }
