@@ -263,7 +263,7 @@ const AvWaveform = {
         }
       }
       // set peaks relativelly to canvas dimensions
-      for (let i = 0; i < peaks.length; i++) {
+      for (var i = 0; i < peaks.length; i++) {
         max = peaks[i][0]
         min = peaks[i][1]
         top = ((height / 2) - (max * height / 2))
