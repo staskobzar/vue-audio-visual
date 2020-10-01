@@ -8,7 +8,7 @@ const props = {
    * Web Audio API functions like getUserMedia or RTCPeerConnection
    */
   media: {
-    type: MediaStream,
+    // type: MediaStream,
     required: false,
     default: null
   },
