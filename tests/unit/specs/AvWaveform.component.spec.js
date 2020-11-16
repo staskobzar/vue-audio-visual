@@ -142,7 +142,17 @@ describe('AvWaveform component', () => {
     })
     it('skipped when disabled playtime', () => {
       vm.playtime = false
-      expect(mockCanv.fillText).not.toHaveBeenCalled()
+
+      vm.peaks = [[1.5, 2.5], [1.5, 2.5], [3.5, 0.5], [3.5, 0.5]]
+      vm.audio = { currentTime: 100 }
+      vm.playX = jest.fn(() => 2)
+      vm.draw = jest.fn()
+      vm.drawSlider = jest.fn()
+      vm.drawTime = jest.fn()
+
+      vm.waveform()
+
+      expect(vm.drawTime).not.toHaveBeenCalled()
     })
   })
 
