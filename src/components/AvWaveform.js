@@ -290,7 +290,7 @@ const AvWaveform = {
       x = this.draw(peaks.slice(0, playX), this.playedLineWidth, this.playedLineColor, x)
       this.draw(peaks.slice(playX), this.noplayedLineWidth, this.noplayedLineColor, x)
       this.drawSlider(time)
-      this.drawTime(time)
+      if (this.playtime) this.drawTime(time)
     },
 
     /**
