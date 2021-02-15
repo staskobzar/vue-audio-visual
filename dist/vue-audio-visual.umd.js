@@ -1800,7 +1800,7 @@ var store = __webpack_require__("c6cd");
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.6.4',
+  version: '3.6.5',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 });
@@ -3213,6 +3213,84 @@ module.exports = function (object, key, value) {
 module.exports = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
+
+
+/***/ }),
+
+/***/ "8875":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// addapted from the document.currentScript polyfill by Adam Miller
+// MIT license
+// source: https://github.com/amiller-gh/currentScript-polyfill
+
+// added support for Firefox https://bugzilla.mozilla.org/show_bug.cgi?id=1620505
+
+(function (root, factory) {
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+}(typeof self !== 'undefined' ? self : this, function () {
+  function getCurrentScript () {
+    if (document.currentScript) {
+      return document.currentScript
+    }
+  
+    // IE 8-10 support script readyState
+    // IE 11+ & Firefox support stack trace
+    try {
+      throw new Error();
+    }
+    catch (err) {
+      // Find the second match for the "at" string to get file src url from stack.
+      var ieStackRegExp = /.*at [^(]*\((.*):(.+):(.+)\)$/ig,
+        ffStackRegExp = /@([^@]*):(\d+):(\d+)\s*$/ig,
+        stackDetails = ieStackRegExp.exec(err.stack) || ffStackRegExp.exec(err.stack),
+        scriptLocation = (stackDetails && stackDetails[1]) || false,
+        line = (stackDetails && stackDetails[2]) || false,
+        currentLocation = document.location.href.replace(document.location.hash, ''),
+        pageSource,
+        inlineScriptSourceRegExp,
+        inlineScriptSource,
+        scripts = document.getElementsByTagName('script'); // Live NodeList collection
+  
+      if (scriptLocation === currentLocation) {
+        pageSource = document.documentElement.outerHTML;
+        inlineScriptSourceRegExp = new RegExp('(?:[^\\n]+?\\n){0,' + (line - 2) + '}[^<]*<script>([\\d\\D]*?)<\\/script>[\\d\\D]*', 'i');
+        inlineScriptSource = pageSource.replace(inlineScriptSourceRegExp, '$1').trim();
+      }
+  
+      for (var i = 0; i < scripts.length; i++) {
+        // If ready state is interactive, return the script tag
+        if (scripts[i].readyState === 'interactive') {
+          return scripts[i];
+        }
+  
+        // If src matches, return the script tag
+        if (scripts[i].src === scriptLocation) {
+          return scripts[i];
+        }
+  
+        // If inline source matches, return the script tag
+        if (
+          scriptLocation === currentLocation &&
+          scripts[i].innerHTML &&
+          scripts[i].innerHTML.trim() === inlineScriptSource
+        ) {
+          return scripts[i];
+        }
+      }
+  
+      // If no match, return null
+      return null;
+    }
+  };
+
+  return getCurrentScript
+}));
 
 
 /***/ }),
@@ -6053,49 +6131,6 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ "f6fd":
-/***/ (function(module, exports) {
-
-// document.currentScript polyfill by Adam Miller
-
-// MIT license
-
-(function(document){
-  var currentScript = "currentScript",
-      scripts = document.getElementsByTagName('script'); // Live NodeList collection
-
-  // If browser needs currentScript polyfill, add get currentScript() to the document object
-  if (!(currentScript in document)) {
-    Object.defineProperty(document, currentScript, {
-      get: function(){
-
-        // IE 6-10 supports script readyState
-        // IE 10+ support stack trace
-        try { throw new Error(); }
-        catch (err) {
-
-          // Find the second match for the "at" string to get file src url from stack.
-          // Specifically works with the format of stack traces in IE.
-          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
-
-          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
-          for(i in scripts){
-            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
-              return scripts[i];
-            }
-          }
-
-          // If no match, return null
-          return null;
-        }
-      }
-    });
-  }
-})(document);
-
-
-/***/ }),
-
 /***/ "f772":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6129,19 +6164,27 @@ module.exports = function (it) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
 
 if (typeof window !== 'undefined') {
+  var currentScript = window.document.currentScript
   if (true) {
-    __webpack_require__("f6fd")
+    var getCurrentScript = __webpack_require__("8875")
+    currentScript = getCurrentScript()
+
+    // for backward compatibility, because previously we directly included the polyfill
+    if (!('currentScript' in document)) {
+      Object.defineProperty(document, 'currentScript', { get: getCurrentScript })
+    }
   }
 
-  var i
-  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
-    __webpack_require__.p = i[1] // eslint-disable-line
+  var src = currentScript && currentScript.src.match(/(.+\/)[^/]+\.js(\?.*)?$/)
+  if (src) {
+    __webpack_require__.p = src[1] // eslint-disable-line
   }
 }
 
@@ -6406,8 +6449,8 @@ var methods = {
    * Set audio context analyser.
    */
   setAnalyser: function setAnalyser() {
-    this.audioCtx = new AudioContext();
-    this.analyser = this.audioCtx.createAnalyser();
+    this.audioCtx = this.audioCtx || new AudioContext();
+    this.analyser = this.analyser || this.audioCtx.createAnalyser();
     var src = this.audioCtx.createMediaElementSource(this.audio);
     src.connect(this.analyser);
     this.analyser.fftSize = this.fftSize;
@@ -6438,6 +6481,10 @@ var methods = {
     var _this = this;
 
     this.createHTMLElements();
+
+    this.audio.onclick = function () {
+      if (!_this.audioCtx) _this.setAnalyser();
+    };
 
     this.audio.onplay = function () {
       if (!_this.audioCtx) _this.setAnalyser();
@@ -7486,6 +7533,16 @@ var AvWaveform_props = {
   playtimeClickable: {
     type: Boolean,
     default: true
+  },
+
+  /**
+   * prop: 'requester'
+   * Allow set a custom requester (axios/fetch) to be used.
+   * Default: new axios instance
+   */
+  requester: {
+    type: Function,
+    default: axios_default.a
   }
 };
 /**
@@ -7513,7 +7570,7 @@ var AvWaveform = {
       responseType: 'arraybuffer',
       onDownloadProgress: this.downloadProgress
     };
-    axios_default.a.get(this.audio.src, conf).then(function (response) {
+    this.requester.get(this.audio.src, conf).then(function (response) {
       return _this.decode(response);
     }).catch(function (err) {
       console.error("Failed to get file '".concat(_this.audio.src, "'"));
@@ -7555,9 +7612,9 @@ var AvWaveform = {
       var ctx = new AudioContext();
       /* istanbul ignore next */
 
-      ctx.decodeAudioData(response.data).then(function (audioBuffer) {
-        return _this2.setPeaks(audioBuffer);
-      }).catch(function (err) {
+      ctx.decodeAudioData(response.data, function (audioBuffer) {
+        _this2.setPeaks(audioBuffer);
+      }, function (err) {
         console.error('Failed to decode audio data.');
         console.log(err);
       });
@@ -7636,7 +7693,7 @@ var AvWaveform = {
       x = this.draw(peaks.slice(0, playX), this.playedLineWidth, this.playedLineColor, x);
       this.draw(peaks.slice(playX), this.noplayedLineWidth, this.noplayedLineColor, x);
       this.drawSlider(time);
-      this.drawTime(time);
+      if (this.playtime) this.drawTime(time);
     },
 
     /**
@@ -7762,7 +7819,335 @@ var AvWaveform = {
   }
 };
 /* harmony default export */ var components_AvWaveform = (AvWaveform);
+// CONCATENATED MODULE: ./src/components/AvMedia.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Component props
+ */
+var AvMedia_props = {
+  /**
+   * prop: 'media'
+   * MediaStream object for visualisation. Can be delivered by
+   * Web Audio API functions like getUserMedia or RTCPeerConnection
+   */
+  media: {
+    type: MediaStream,
+    required: false,
+    default: null
+  },
+
+  /**
+   * prop: 'canv-width'
+   * Canvas element width. Default 300
+   */
+  canvWidth: {
+    type: Number,
+    default: 300
+  },
+
+  /**
+   * prop: 'canv-class'
+   * Canvas element css class name.
+   */
+  canvClass: {
+    type: String,
+    default: null
+  },
+
+  /**
+   * prop: 'canv-height'
+   * Canvas element height. Default 80
+   */
+  canvHeight: {
+    type: Number,
+    default: 80
+  },
+
+  /**
+   * prop: 'canv-fill-color'
+   * Canvas fill background RGB color.
+   * Default is transperent.
+   */
+  canvFillColor: {
+    type: String,
+    default: null
+  },
+
+  /**
+   * prop: 'fft-size'
+   * Represents the window size in samples that is used when performing
+   * a Fast Fourier Transform (FFT) to get frequency domain data.
+   * Must be power of 2 between 2^5 and 2^15
+   * Default: 8192 for 'wform' 1024 for 'freq'
+   */
+  fftSize: {
+    type: Number,
+    default: null // 1024 // 8192
+
+  },
+
+  /**
+   * prop: 'type'
+   * Type of visualisation.
+   * wform - using byte time domaine data
+   * frequ - using byte frequency data
+   * wform when not recognized.
+   * Default: wform
+   */
+  type: {
+    type: String,
+    default: 'wform'
+  },
+
+  /**
+   * prop: 'frequ-lnum'
+   * Vertical lines number for frequ type.
+   * Default: 60
+   */
+  frequLnum: {
+    type: Number,
+    default: 60
+  },
+
+  /**
+   * prop: 'frequ-line-cap'
+   * Draw line with rounded end caps.
+   * Default: false
+   */
+  frequLineCap: {
+    type: Boolean,
+    default: false
+  },
+
+  /**
+   * prop: 'line-color'
+   * Line color.
+   * Default: lime
+   */
+  lineColor: {
+    type: String,
+    default: 'lime'
+  },
+
+  /**
+   * prop: 'line-width'
+   * Line width.
+   * Default: 0.5 for wform and 3 for frequ
+   */
+  lineWidth: {
+    type: Number,
+    default: null
+  },
+
+  /**
+   * prop: 'radius'
+   * Circle radius.
+   * Default: 4 for circle
+   */
+  radius: {
+    type: Number,
+    default: 4
+  },
+
+  /**
+   * prop: 'connect-destination'
+   * Analyser to connect to audio context's destination
+   * Default: false
+   */
+  connectDestination: {
+    type: Boolean,
+    default: false
+  }
+};
+/**
+ * Component AvMedia
+ */
+
+var AvMedia = {
+  name: 'av-media',
+  data: function data() {
+    return {
+      ctx: null,
+      audioCtx: null,
+      analyser: null
+    };
+  },
+  props: AvMedia_props,
+  render: function render(h) {
+    return h('div');
+  },
+  mounted: function mounted() {
+    this.createCanvas();
+  },
+  watch: {
+    media: function media(newVal, oldVal) {
+      if (newVal) this.setAnalyser();
+      this.draw();
+    }
+  },
+  methods: {
+    /**
+     * Create Canvas inside div
+     */
+    createCanvas: function createCanvas() {
+      var canv = document.createElement('canvas');
+      canv.width = this.canvWidth;
+      canv.height = this.canvHeight;
+      if (this.canvClass) canv.setAttribute('class', this.canvClass);
+      this.ctx = canv.getContext('2d');
+      this.$el.appendChild(canv);
+    },
+
+    /**
+     * Set analyser
+     */
+    setAnalyser: function setAnalyser() {
+      this.audioCtx = this.audioCtx || new AudioContext();
+      this.analyser = this.analyser || this.audioCtx.createAnalyser();
+      var src = this.audioCtx.createMediaStreamSource(this.media);
+      src.connect(this.analyser);
+
+      if (this.fftSize) {
+        this.analyser.fftSize = this.fftSize;
+      } else {
+        this.analyser.fftSize = this.type === 'frequ' ? 1024 : 8192;
+      }
+
+      if (this.connectDestination) {
+        this.analyser.connect(this.audioCtx.destination);
+      }
+    },
+    draw: function draw() {
+      var data = new Uint8Array(this.analyser.fftSize);
+      if (this.canvFillColor) this.ctx.fillStyle = this.canvFillColor;
+      this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = this.lineColor;
+
+      if (this.type === 'frequ') {
+        this.analyser.getByteFrequencyData(data);
+        this.frequ(data);
+      } else if (this.type === 'circle') {
+        this.analyser.getByteFrequencyData(data);
+        this.circle(data);
+      } else {
+        this.analyser.getByteTimeDomainData(data);
+        this.wform(data);
+      }
+
+      requestAnimationFrame(this.draw);
+    },
+    wform: function wform(data) {
+      var _this = this;
+
+      var h = this.canvHeight;
+      var step = this.canvWidth / this.analyser.fftSize;
+      var x = 0;
+      this.ctx.lineWidth = this.lineWidth || 0.5;
+      data.forEach(function (v) {
+        var y = v / 255.0 * h;
+
+        _this.ctx.lineTo(x, y);
+
+        x += step;
+      });
+      this.ctx.stroke();
+    },
+    frequ: function frequ(data) {
+      var c = this.frequLnum;
+      var step = this.canvWidth / c;
+      var h = this.canvHeight;
+      var lw = this.lineWidth || 2;
+
+      for (var i = 0; i < c; i++) {
+        var x = i * step + lw;
+        var v = data.slice(x, x + step).reduce(function (sum, v) {
+          return sum + v / 255.0 * h;
+        }, 0) / step;
+        var space = (h - v) / 2 + 2; // + 2 is space for caps
+
+        this.ctx.lineWidth = lw;
+        this.ctx.lineCap = this.frequLineCap ? 'round' : 'butt';
+        this.ctx.moveTo(x, space);
+        this.ctx.lineTo(x, h - space);
+        this.ctx.stroke();
+      }
+    },
+    circle: function circle(data) {
+      var _this2 = this;
+
+      var cx = this.canvWidth / 2; // center X
+
+      var cy = this.canvHeight / 2; // center Y
+
+      var r = this.radius || 4;
+      var lineWidth = this.lineWidth;
+      var lineSpace = 10;
+      var arcStep = Math.ceil(lineWidth + lineSpace);
+      var step = (lineWidth + lineSpace) / data.length * (2 * Math.PI);
+      var barLen = this.canvWidth / 1.2 - r;
+      var angle = Math.PI;
+      this.ctx.lineWidth = this.lineWidth || 0.5;
+      data.forEach(function (_, index) {
+        angle += step;
+
+        if (index % arcStep) {
+          return;
+        }
+
+        var bits = Math.round(data.slice(index, index + arcStep).reduce(function (v, t) {
+          return t + v;
+        }, 0) / arcStep);
+        var blen = r + bits / 255.0 * barLen;
+
+        _this2.ctx.beginPath();
+
+        _this2.ctx.lineCap = 'round';
+
+        _this2.ctx.moveTo(r * Math.cos(angle) + cx, r * Math.sin(angle) + cy);
+
+        _this2.ctx.lineTo(blen * Math.cos(angle) + cx, blen * Math.sin(angle) + cy);
+
+        _this2.ctx.stroke();
+      });
+    }
+  }
+};
+/* harmony default export */ var components_AvMedia = (AvMedia);
 // CONCATENATED MODULE: ./src/plugin.js
+
 
 
 
@@ -7779,6 +8164,7 @@ AVPlugin.install = function (Vue) {
   Vue.component(components_AvLine.name, components_AvLine);
   Vue.component(components_AvCircle.name, components_AvCircle);
   Vue.component(components_AvWaveform.name, components_AvWaveform);
+  Vue.component(components_AvMedia.name, components_AvMedia);
 };
 
 /* harmony default export */ var src_plugin = (AVPlugin);
