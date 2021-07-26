@@ -139,6 +139,7 @@ const props = {
 /**
  * Component AvMedia
  */
+import { h } from "vue";
 const AvMedia = {
   name: 'av-media',
   data () {
@@ -149,7 +150,9 @@ const AvMedia = {
     }
   },
   props,
-  render: h => h('div'),
+  render () {
+    return h('div')
+  },
   mounted () {
     this.createCanvas()
   },
@@ -264,7 +267,7 @@ const AvMedia = {
 
         const bits = Math.round(
           data.slice(index, index + arcStep).reduce((v, t) => t + v, 0) /
-            arcStep
+          arcStep
         )
 
         const blen = r + (bits / 255.0) * barLen
