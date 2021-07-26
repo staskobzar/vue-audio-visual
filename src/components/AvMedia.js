@@ -1,10 +1,11 @@
+import { h } from "vue";
 /**
  * Component props
  */
 const props = {
   /**
    * prop: 'media'
-   * MediaStream object for visualisation. Can be delivered by
+   * MediaStream object for visualization. Can be delivered by
    * Web Audio API functions like getUserMedia or RTCPeerConnection
    */
   media: {
@@ -139,7 +140,6 @@ const props = {
 /**
  * Component AvMedia
  */
-import { h } from "vue";
 const AvMedia = {
   name: 'av-media',
   data () {
