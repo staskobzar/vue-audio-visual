@@ -1,3 +1,4 @@
+import { h } from 'vue'
 /**
  * Mixin component with base and common properties and functions.
  */
@@ -168,7 +169,14 @@ const methods = {
 
 export default {
   props,
-  render: h => h('div'),
+  render (hv2) {
+    if (h) {
+      // Vue3 render
+      return h('div')
+    }
+    // Vue2 render
+    return hv2('div')
+  },
   mounted () {
     this.createHTMLElements()
 

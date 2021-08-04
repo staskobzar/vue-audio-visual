@@ -1,3 +1,4 @@
+import { h } from 'vue'
 /**
  * Component props
  */
@@ -149,7 +150,14 @@ const AvMedia = {
     }
   },
   props,
-  render: h => h('div'),
+  render (hv2) {
+    if (h) {
+      // Vue3 render
+      return h('div')
+    }
+    // Vue2 render
+    return hv2('div')
+  },
   mounted () {
     this.createCanvas()
   },
