@@ -163,8 +163,12 @@ const AvMedia = {
   },
   watch: {
     media: function (newVal, oldVal) {
-      if (newVal) this.setAnalyser()
-      this.draw()
+      try {
+        if (newVal) this.setAnalyser()
+        this.draw()
+      } catch (err) {
+        console.log('Failed create analyser', err)
+      }
     }
   },
   methods: {
