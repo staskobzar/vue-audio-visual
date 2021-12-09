@@ -3,6 +3,10 @@
     <audio ref="player"></audio>
     <small>AvMedia type="frequ"</small>
     <av-media type="frequ" :media="media" line-color="darkorange"/>
+    <small>AvMedia type="frequ" with frequ-direction="mo"</small>
+    <av-media type="frequ" :media="media" line-color="darkorange"
+      frequ-direction="mo"
+      :frequ-lnum="60"/>
     <small>AvMedia type="wfrom"</small>
     <av-media type="wform" :media="media" line-color="blue"
       :canv-width="200" :canv-height="40"/>
