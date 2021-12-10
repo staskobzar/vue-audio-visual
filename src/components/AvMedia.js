@@ -97,6 +97,19 @@ const props = {
   },
 
   /**
+   * prop: 'frequ-direction'
+   * Direction for frequency visualization.
+   * lr - from left to right
+   * mo - from middle out
+   * lr when not recognized.
+   * Default: wform
+   */
+  frequDirection: {
+    type: String,
+    default: 'lr'
+  },
+
+  /**
    * prop: 'line-color'
    * Line color.
    * Default: lime
@@ -239,19 +252,27 @@ const AvMedia = {
     },
 
     frequ: function (data) {
-      const c = this.frequLnum
-      const step = this.canvWidth / c
+      const middleOut = this.frequDirection === 'mo'
+      const start = middleOut ? this.canvWidth / 2 : 0
+      const c = middleOut ? this.frequLnum / 2 : this.frequLnum
+      const step = middleOut ? this.canvWidth / c / 2 : this.canvWidth / c
       const h = this.canvHeight
       const lw = this.lineWidth || 2
       for (let i = 0; i < c; i++) {
-        const x = i * step + lw
+        const x = middleOut ? i * step : i * step + lw
         const v = data.slice(x, x + step).reduce((sum, v) => sum + (v / 255.0 * h), 0) / step
         const space = (h - v) / 2 + 2 // + 2 is space for caps
         this.ctx.lineWidth = lw
         this.ctx.lineCap = this.frequLineCap ? 'round' : 'butt'
-        this.ctx.moveTo(x, space)
-        this.ctx.lineTo(x, h - space)
+        this.ctx.moveTo(start + x, space)
+        this.ctx.lineTo(start + x, h - space)
         this.ctx.stroke()
+
+        if (middleOut && i > 0) {
+          this.ctx.moveTo(start - x, space)
+          this.ctx.lineTo(start - x, h - space)
+          this.ctx.stroke()
+        }
       }
     },
 

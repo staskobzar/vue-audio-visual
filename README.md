@@ -844,6 +844,15 @@ export default {
       </td>
     </tr>
     <tr>
+      <td>frequ-direction</td>
+      <td><code>String</code></td>
+      <td><code>lr</code></td>
+      <td>Direction to draw the frequency. Available values: 'lr' or 'mo' (left to right or middle out).
+      If not set or not recognized then 'lr' is set. <br/>
+          Example: <code>frequ-direction="mo"</code>
+      </td>
+    </tr>    
+    <tr>
       <td>line-color</td>
       <td><code>String</code></td>
       <td><code>#9F9</code></td>
