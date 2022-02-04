@@ -164,9 +164,10 @@ const AvMedia = {
   },
   props,
   render (hv2) {
-    if (vue.h) {
+    const { h } = vue;
+    if (h) {
       // Vue3 render
-      return vue.h('div')
+      return h('div')
     }
     // Vue2 render
     return hv2('div')
