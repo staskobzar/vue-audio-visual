@@ -1,4 +1,4 @@
-import { h } from 'vue'
+import * as vue from 'vue'
 /**
  * Component props
  */
@@ -164,9 +164,9 @@ const AvMedia = {
   },
   props,
   render (hv2) {
-    if (h) {
+    if (vue.h) {
       // Vue3 render
-      return h('div')
+      return vue.h('div')
     }
     // Vue2 render
     return hv2('div')
