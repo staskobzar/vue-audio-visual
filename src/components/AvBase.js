@@ -167,10 +167,12 @@ const methods = {
   }
 }
 
+// A fix for webpack warnings across vue2 & vue3
+const h = vue['h'[0]]
+
 export default {
   props,
   render (hv2) {
-    const { h } = vue
     if (h) {
       // Vue3 render
       return h('div')
