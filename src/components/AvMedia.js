@@ -1,4 +1,4 @@
-import { h } from 'vue'
+import * as vue from 'vue'
 /**
  * Component props
  */
@@ -149,6 +149,9 @@ const props = {
     default: false
   }
 }
+
+// A fix for webpack warnings across vue2 & vue3
+const h = vue['h'[0]]
 
 /**
  * Component AvMedia

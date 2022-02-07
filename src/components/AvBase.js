@@ -1,4 +1,4 @@
-import { h } from 'vue'
+import * as vue from 'vue'
 /**
  * Mixin component with base and common properties and functions.
  */
@@ -166,6 +166,9 @@ const methods = {
     return gradient
   }
 }
+
+// A fix for webpack warnings across vue2 & vue3
+const h = vue['h'[0]]
 
 export default {
   props,
