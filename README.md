@@ -813,7 +813,7 @@ export default {
       <td><code>wform</code></td>
       <td>Type of media visualization. Currently supplies two types: 'wform', 'circle' and 'frequ'.
       If not set or not recognized then 'wform' is set. <br/>
-          Example: <code>:type="frequ"</code>
+          Example: <code>type="frequ"</code>
       </td>
     </tr>
     <tr>
