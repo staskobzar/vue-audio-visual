@@ -16,6 +16,14 @@ const props = {
     default: null
   },
   /**
+   * prop: 'audio-sink-id'
+   * Audio element sink id. When provided sets audio element sink id.
+   */
+  audioSinkId: {
+    type: String,
+    default: null
+  },
+  /**
    * prop: 'ref-link'
    * Refrence to Audio element. When provided, then local audio element
    * is not created and use refrence to the element. Component will
@@ -141,14 +149,22 @@ const methods = {
   /**
    * Set audio context analyser.
    */
-  setAnalyser: function () {
+  async setAnalyser () {
     this.audioCtx = this.audioCtx || new AudioContext()
     this.analyser = this.analyser || this.audioCtx.createAnalyser()
     const src = this.audioCtx.createMediaElementSource(this.audio)
+    const destination = this.audioCtx.createMediaStreamDestination()
 
     src.connect(this.analyser)
     this.analyser.fftSize = this.fftSize
-    this.analyser.connect(this.audioCtx.destination)
+    this.analyser.connect(destination)
+
+    const audio = new Audio()
+    audio.srcObject = destination.stream
+    if (this.audioSinkId) {
+      await audio.setSinkId(this.audioSinkId)
+    }
+    audio.play()
   },
 
   /**
@@ -164,6 +180,13 @@ const methods = {
       offset += (1 / colorsArray.length)
     })
     return gradient
+  },
+
+  /**
+   * Return the inner audio element.
+   */
+  getAudioElement: function () {
+    return this.audio
   }
 }
 
@@ -172,6 +195,9 @@ const h = vue['h'[0]]
 
 export default {
   props,
+  expose: [
+    'getAudioElement'
+  ],
   render (hv2) {
     if (h) {
       // Vue3 render
@@ -188,6 +214,7 @@ export default {
     }
 
     this.audio.onplay = () => {
+      this.$emit('playing')
       if (!this.audioCtx) this.setAnalyser()
       this.mainLoop()
       if (this.audioCtx) { // not defined for waveform
@@ -196,10 +223,15 @@ export default {
     }
 
     this.audio.onpause = () => {
+      this.$emit('paused')
       if (this.audioCtx) {
         this.audioCtx.suspend()
         cancelAnimationFrame(this.animId)
       }
+    }
+
+    this.audio.onended = () => {
+      this.$emit('ended')
     }
   },
 
