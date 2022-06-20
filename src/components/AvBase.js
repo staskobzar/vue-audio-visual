@@ -16,10 +16,10 @@ const props = {
     default: null
   },
   /**
-   * prop: 'audio-sink-id'
-   * Audio element sink id. When provided sets audio element sink id.
+   * prop: 'audio-sink-device-id'
+   * Audio sink device id. When provided sets audio output device.
    */
-  audioSinkId: {
+  audioSinkDeviceId: {
     type: String,
     default: null
   },
@@ -161,8 +161,8 @@ const methods = {
 
     const audio = new Audio()
     audio.srcObject = destination.stream
-    if (this.audioSinkId) {
-      await audio.setSinkId(this.audioSinkId)
+    if (this.audioSinkDeviceId) {
+      await audio.setSinkId(this.audioSinkDeviceId)
     }
     audio.play()
   },

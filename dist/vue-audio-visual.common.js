@@ -9135,10 +9135,10 @@ var props = {
   },
 
   /**
-   * prop: 'audio-sink-id'
-   * Audio element sink id. When provided sets audio element sink id.
+   * prop: 'audio-sink-device-id'
+   * Audio sink device id. When provided sets audio output device.
    */
-  audioSinkId: {
+  audioSinkDeviceId: {
     type: String,
     default: null
   },
@@ -9297,13 +9297,13 @@ var methods = {
               audio = new Audio();
               audio.srcObject = destination.stream;
 
-              if (!_this.audioSinkId) {
+              if (!_this.audioSinkDeviceId) {
                 _context.next = 12;
                 break;
               }
 
               _context.next = 12;
-              return audio.setSinkId(_this.audioSinkId);
+              return audio.setSinkId(_this.audioSinkDeviceId);
 
             case 12:
               audio.play();
