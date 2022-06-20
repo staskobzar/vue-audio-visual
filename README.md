@@ -16,6 +16,7 @@
 - [Install and setup](#install-and-setup)
 - [API](#api)
   * [Common props](#common-props)
+  * [Common events](#common-events)
   * [AvLine props](#avline-props)
   * [AvBars props](#avbars-props)
   * [AvCircle props](#avcircle-props)
@@ -162,6 +163,14 @@ There are props that are common for all components and special props for each co
       </td>
     </tr>
     <tr>
+      <td>audio-sink-device-id</td>
+      <td><code>String</code></td>
+      <td><code>null</code></td>
+      <td>
+        Id of the audio output device to be used as sink. When provided sets audio output device.
+      </td>
+    </tr>
+    <tr>
       <td>ref-link</td>
       <td><code>String</code></td>
       <td><code>null</code></td>
@@ -225,6 +234,37 @@ There are props that are common for all components and special props for each co
       </td>
     </tr>
   </tbody>
+</table>
+
+### Common events
+
+<table>
+  <thead>
+    <tr>
+      <th width="150">Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>playing</td>
+      <td>
+        Emitted when audio starts playing.
+      </td>
+    </tr>
+    <tr>
+      <td>paused</td>
+      <td>
+        Emitted when audio is paused.
+      </td>
+    </tr>
+    <tr>
+      <td>ended</td>
+      <td>
+        Emitted when audio is ended.
+      </td>
+    </tr>
+    </tbody>
 </table>
 
 ### AvLine props
