@@ -8,7 +8,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript/recommended'
   ],
-  'ignorePatterns': ['demo/'],
+  'ignorePatterns': ['docs/'],
   'parserOptions': {
     'ecmaVersion': 'latest'
   },
