@@ -18,7 +18,7 @@
     "build": "run-p type-check build-demo build-dist",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
-    "build-demo": "vite build",
+    "build-demo": "vite build --base=/vue-audio-visual/",
     "build-dist": "vite build --config vite.config.dist.ts",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
