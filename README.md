@@ -4,7 +4,7 @@
 
 # vue-audio-visual
 
-[![Build Status](https://travis-ci.org/staskobzar/vue-audio-visual.svg?branch=master)](https://travis-ci.org/staskobzar/vue-audio-visual)
+[![Node.js CI](https://github.com/staskobzar/vue-audio-visual/actions/workflows/node.js.yml/badge.svg)](https://github.com/staskobzar/vue-audio-visual/actions/workflows/node.js.yml)
 [![codecov](https://codecov.io/gh/staskobzar/vue-audio-visual/branch/master/graph/badge.svg)](https://codecov.io/gh/staskobzar/vue-audio-visual)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bcc7e911360b4ef4a4d987ca5a846caa)](https://www.codacy.com/app/staskobzar/vue-audio-visual?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=staskobzar/vue-audio-visual&amp;utm_campaign=Badge_Grade)
 [![MIT](https://img.shields.io/npm/l/vue-audio-visual.svg?maxAge=2592000)](https://github.com/staskobzar/vue-audio-visual/blob/master/LICENSE)
@@ -89,7 +89,7 @@ This will create following waveform element:
 
 ![AvWaveform Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
 
-Component will pre-load audio content and generate clickable waveform. 
+Component will pre-load audio content and generate clickable waveform.
 
 Component **AvMedia**. Vue template name **&lt;av-media&gt;**
 ```html
@@ -900,7 +900,7 @@ export default {
       If not set or not recognized then 'lr' is set. <br/>
           Example: <code>frequ-direction="mo"</code>
       </td>
-    </tr>    
+    </tr>
     <tr>
       <td>line-color</td>
       <td><code>String</code></td>
