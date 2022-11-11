@@ -25,6 +25,12 @@
 - [Issues](#issues)
 - [License](#license)
 
+---
+###UPDATE NOTES!!!
+
+Plugin current version is compatibale only with Vue v3. For Vue2 use plugin version 2.5.0. See [install](#install-and-setup) chapter for details.
+---
+
 ## Overview
 An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework. It is built with HTML5
 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API.
@@ -102,7 +108,10 @@ Install using npm
 ```
 npm install --save vue-audio-visual
 ```
-
+for Vue 2 install version 2.5.0
+```
+npm i -S vue-audio-visual@2.5.0
+```
 Enable plugin in main.js:
 ```javascript
 import Vue from 'vue'
