@@ -7,7 +7,7 @@ import AVWaveform from '@/components/AVWaveform.vue'
 import AVMedia from '@/components/AVMedia.vue'
 import { useUserMedia } from '@vueuse/core'
 
-const audioSrc = ref('./music.mp3')
+const audioSrc = ref('./file_example_MP3_1MG.mp3')
 const showMedia = ref(false)
 const { stream, enabled } = useUserMedia()
 
@@ -22,7 +22,10 @@ watch(enabled, () => {
     <div class="row mb-5">
       <div class="col text-center">
         <img alt="Plugin logo" class="logo" src="./assets/logo.png" />
-        <h1> <small> Vue-Audio-Visual Vue plugin demo </small> </h1>
+        <h2> <a href="">Vue-Audio-Visual</a> Vue plugin demo </h2>
+        <figcaption class="blockquote-footer mt-2">
+          Audio source: https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3
+        </figcaption>
       </div>
     </div>
 
