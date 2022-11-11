@@ -25,8 +25,9 @@
 - [Issues](#issues)
 - [License](#license)
 
+## New docs work in progress
 ---
-###UPDATE NOTES!!!
+## UPDATE NOTES!!!
 
 Plugin current version is compatibale only with Vue v3. For Vue2 use plugin version 2.5.0. See [install](#install-and-setup) chapter for details.
 ---
