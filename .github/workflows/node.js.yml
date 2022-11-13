@@ -30,5 +30,4 @@ jobs:
     - run: npm run lint
     - run: npm run build --if-present
     - run: npm run test:ci
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+    - uses: codecov/codecov-action@v3
