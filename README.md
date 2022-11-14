@@ -13,8 +13,12 @@
 > Vue HTML5 audio visualization components
 
 - [Overview](#overview)
-- [Install and setup](#install-and-setup)
-- [API](#api)
+- [Get started](#get-started)
+  * [Install](#install)
+  * [Use plugin](#use-plugin)
+  * [Use component](#use-component)
+  * [Composable functions](#composable-functions)
+- [API details](#api)
   * [Common props](#common-props)
   * [Common events](#common-events)
   * [AvLine props](#avline-props)
@@ -25,19 +29,19 @@
 - [Issues](#issues)
 - [License](#license)
 
-## New docs work in progress
----
-## UPDATE NOTES!!!
-
-Plugin current version is compatibale only with Vue v3. For Vue2 use plugin version 2.5.0. See [install](#install-and-setup) chapter for details.
----
+## UPDATE NOTES
+:warning: Plugin current version is compatibale only with **Vue v3**. For Vue2 use plugin version 2.5.0. See [install](#install-and-setup) chapter for details.
 
 ## Overview
 An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework. It is built with HTML5
 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API.
-It provides several Vue components that allows to draw light and nice visualization for "audio" HTML elements. This plugin is compatible with Vue2 and Vue3 frameworks.
+It provides several Vue components that allows to draw light and nice visualization for "audio" HTML elements.
 
-> There is a [**DEMO**](https://staskobzar.github.io/vue-audio-visual/) available.
+---
+> :heavy_exclamation_mark: Visit [**DEMO page**](https://staskobzar.github.io/vue-audio-visual/) for working examples.
+---
+
+_Usage examples_:
 
 Component **AvLine**. Vue template name **&lt;av-line&gt;**
 ```html
@@ -92,19 +96,22 @@ This will create following waveform element:
 
 Component will pre-load audio content and generate clickable waveform.
 
-Component **AvMedia**. Vue template name **&lt;av-media&gt;**
+Component **AvMedia**. Vue component **&lt;AvMedia&gt;**
 ```html
-    <av-media
-      :media="mediaObject"
-    ></av-media>
+    <AvMedia
+      :media="mediaObject" type="vbar"
+    ></AvMedia>
 ```
 This will create following media element:
 
-![AvMedia Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-media.png?raw=true)
+![AvMedia Intro](https://user-images.githubusercontent.com/147280/201538832-e20b12bc-ac6f-4137-9346-cd6d9e30bdd1.png)
+
+There are more media types. See details below.
 
 
-## Install and setup
+## :gear: Get started
 
+### Install
 Install using npm
 ```
 npm install --save vue-audio-visual
@@ -113,43 +120,87 @@ for Vue 2 install version 2.5.0
 ```
 npm i -S vue-audio-visual@2.5.0
 ```
-Enable plugin in main.js:
-```javascript
-import Vue from 'vue'
-import AudioVisual from 'vue-audio-visual'
 
-Vue.use(AudioVisual)
+### Use plugin
+
+Install plugin in main.js:
+```typescript
+import { createApp } from 'vue'
+import App from './App.vue'
+import { AVPlugin } from 'vue-audio-visual'
+
+const app = createApp(App)
+app.use(AVPlugin)
+
+app.mount('#app')
 ```
 
-Example of usage in App.vue or any other Vue component:
+Then anywhere is your app you can use it like this:
 ```html
   <av-bars
-    audio-src="/static/bach.mp3">
+    src="/static/bach.mp3"
+    bar-color="#CCC">
   </av-bars>
 ```
 
-## API
+### Use component
 
-There are three components that comes with plugin: av-line, av-bars, av-circle.
+Single component can be imported and used
+```ts
+<script setup lang="ts">
+import { AVWaveform } from 'vue-audio-visual'
+</script>
 
-There are a lot of **props** available to configurate each component.
-The only mandatory "prop" to pass to component: **audio-src**.
-Prop **audio-src** value should contain URL to media file. Example:
+<template>
+  <AVWaveform :src="http://foo.com/music.ogg" />
+</template>
 ```
-audio-src="http://example.com/media/song.mp3"
+
+### Composable functions
+
+Plugin provides composable "use" functions for each plugin component.
+Actually, each component uses composable function inside. See, for example,
+[line component](https://github.com/staskobzar/vue-audio-visual/blob/master/src/components/AVLine.vue).
+
+Composable functions use audio and canvas element refs. It is handy when you need full access
+to audio or canvas elements. In the same time it is easy to use:
+
+```ts
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useAVBars } from 'vue-audio-visual'
+
+const player = ref(null)
+const canvas = ref(null)
+const mySource = "./symphony.mp3"
+
+// composable function useAVBars
+useAVBars(player, canvas, { src: mySource, canvHeight: 40, canvWidth: 200, barColor: 'lime' })
+</script>
+
+<template>
+  <div>
+    <audio ref="player" :src="mySource" controls />
+    <canvas ref="canvas" />
+  </div>
+</template>
 ```
 
-Plugin will generate "audio" to control media playback and "canvas" element for visualization.
+## :gear: API
 
-Another way is to link to existing Vue element using "ref-link" property. When "ref-link" property is set, then "audio-src" property is ignored.
-```html
-<audio ref="foo" src="music.mp3"></audio>
-<av-bars ref-link="foo" />
-<av-line ref-link="foo" />
-```
-However, it will reference **only** parent component elements.
+There are several components that comes with plugin. Here is the list of available plugins:
+|  Name       | Component name | Composable function |
+| ----------- | -------------- | ------------------- |
+| av-bars     | AVBars         | useAVBars           |
+| av-circle   | AvCircle       | useAVCircle         |
+| av-line     | AVLine         | useAVLine           |
+| av-media    | AVMedia        | useAVMedia          |
+| av-waveform | AVWaveform     | useAVWaveform       |
 
 There are props that are common for all components and special props for each component.
+All props for components' names follow vue specs when using wiht composable functions.
+Meaning when prop's name is "_foo-bar_" then in composable function parameter it is expected
+to be "_fooBar_".
 
 ### Common props
 
@@ -164,31 +215,35 @@ There are props that are common for all components and special props for each co
   </thead>
   <tbody>
     <tr>
-      <td>audio-src</td>
+      <td>src</td>
       <td><code>String</code></td>
       <td><code>null</code></td>
       <td>
-        Audio element src attribute. When provided creates audio element
+        URL of Audio element src attribute. When provided creates audio element
         wrapped in "div".
       </td>
     </tr>
     <tr>
-      <td>audio-sink-device-id</td>
-      <td><code>String</code></td>
-      <td><code>null</code></td>
+      <td><del>audio-sink-device-id</del></td>
+      <td><del><code>String</code></del></td>
+      <td><del><code>null</code></del></td>
       <td>
-        Id of the audio output device to be used as sink. When provided sets audio output device.
+        <strong>Deprecated</strong>. Use composable function with direct access to audio element.
+        <br/>
+        <del>Id of the audio output device to be used as sink. When provided sets audio output device.</del>
       </td>
     </tr>
     <tr>
-      <td>ref-link</td>
-      <td><code>String</code></td>
-      <td><code>null</code></td>
+      <td><del>ref-link</del></td>
+      <td><del><code>String</code></del></td>
+      <td><del><code>null</code></del></td>
       <td>
+        <strong>Deprecated</strong><br/>
+        <del>
         Reference to parent audio element via Vue "ref" attribute. When set,
         then local audio element is not created and the plugin will connect
         audio analyser to parent audio element. Multiple plugin instances
-        can connect to the same audio element (see example above).
+        can connect to the same audio element (see example above).</del>
       </td>
     </tr>
     <tr>
@@ -201,36 +256,48 @@ There are props that are common for all components and special props for each co
       </td>
     </tr>
     <tr>
-      <td>cors-anonym</td>
-      <td><code>Boolean</code></td>
-      <td><code>false</code></td>
+      <td><del>cors-anonym</del></td>
+      <td><del><code>Boolean</code></del></td>
+      <td><del><code>false</code></del></td>
       <td>
+        <strong>Deprecated</strong>. Use composable function with direct access to audio element.
+        <br/><del>
         Set CORS attribute for audio element. Set this attribute when using
         audio source is pointing to different host/domain. When set, parameter
-        crossOrigin of audio element will be set to 'anonymous'.
+        crossOrigin of audio element will be set to 'anonymous'.</del>
       </td>
     </tr>
     <tr>
-      <td>audio-class</td>
-      <td><code>String</code></td>
-      <td><code>null</code></td>
-      <td>Audio element css class name.</td>
+      <td><del>audio-class</del></td>
+      <td><del><code>String</code></del></td>
+      <td><del><code>null</code></del></td>
+      <td>
+      <strong>Deprecated</strong>. Use composable function with direct access to audio element.
+      <br/>
+      <del>Audio element css class name.</del>
+      </td>
     </tr>
     <tr>
-      <td>canv-class</td>
-      <td><code>String</code></td>
-      <td><code>null</code></td>
-      <td>Canvas element css class name.</td>
+      <td><del>canv-class</del></td>
+      <td><del><code>String</code></del></td>
+      <td><del><code>null</code></del></td>
+      <td>
+      <strong>Deprecated</strong>. Use composable function with direct access to audio element.
+      <br/>
+      <del>Canvas element css class name.</del></td>
     </tr>
     <tr>
-      <td>canv-top</td>
-      <td><code>Boolean</code></td>
-      <td><code>false</code></td>
-      <td>By default plugin creates "audio" element wrapped in "div"
+      <td><del>canv-top</del></td>
+      <td><del><code>Boolean</code></del></td>
+      <td><del><code>false</code></del></td>
+      <td>
+      <strong>Deprecated</strong>. Use composable function with direct access to audio element.
+      <br/>
+      <del>By default plugin creates "audio" element wrapped in "div"
           and puts "canvas" element below. When "canv-top" is "true" then
           "canvas" element is set on top. Example:
           <code> :canv-top="true"</code> or
-          <code> v-bind:canv-top="true"</code>
+          <code> v-bind:canv-top="true"</code></del>
       </td>
     </tr>
     <tr>
@@ -248,6 +315,9 @@ There are props that are common for all components and special props for each co
 
 ### Common events
 
+**Deprecated**. Use composable function with direct access to audio element.
+
+<del>
 <table>
   <thead>
     <tr>
@@ -276,8 +346,9 @@ There are props that are common for all components and special props for each co
     </tr>
     </tbody>
 </table>
+</del>
 
-### AvLine props
+### AVLine props
 
 <table>
   <thead>
@@ -338,7 +409,16 @@ There are props that are common for all components and special props for each co
   </tbody>
 </table>
 
-### AvBars props
+Composable function:
+```ts
+function useAVLine<T extends object>(
+  player: Ref<HTMLAudioElement | null>,
+  canvas: Ref<HTMLCanvasElement | null>,
+  props: T
+)
+```
+
+### AVBars props
 
 <table>
   <thead>
@@ -451,7 +531,16 @@ There are props that are common for all components and special props for each co
   </tbody>
 </table>
 
-### AvCircle props
+Composable function
+```ts
+function useAVBars<T extends object>(
+  player: Ref<HTMLAudioElement | null>,
+  canvas: Ref<HTMLCanvasElement | null>,
+  props: T
+)
+```
+
+### AVCircle props
 
 <table>
   <thead>
@@ -638,7 +727,16 @@ There are props that are common for all components and special props for each co
   </tbody>
 </table>
 
-### AvWaveform props
+Composable function
+```ts
+function useAVCircle<T extends object>(
+  player: Ref<HTMLAudioElement | null>,
+  canvas: Ref<HTMLCanvasElement | null>,
+  props: T
+)
+```
+
+### AVWaveform props
 
 <table>
   <thead>
@@ -653,9 +751,9 @@ There are props that are common for all components and special props for each co
     <tr>
       <td>canv-width</td>
       <td><code>Number</code></td>
-      <td><code>100</code></td>
+      <td><code>500</code></td>
       <td>Canvas element width.
-          Example: <code>:canv-width="500"</code>
+          Example: <code>:canv-width="600"</code>
       </td>
     </tr>
     <tr>
@@ -789,34 +887,38 @@ There are props that are common for all components and special props for each co
   </tbody>
 </table>
 
-### AvMedia props
+Composable function is using [useFetch](https://vueuse.org/core/usefetch/) from [@vueuse/core](https://vueuse.org/) package.
+```useAVWaveform``` last argument is options for useFetch function.
 
-Please note that common pros are not usable for that element.
+```ts
+export function useAVWaveform<T extends object>(
+  player: Ref<HTMLAudioElement | null>,
+  canvas: Ref<HTMLCanvasElement | null>,
+  props: T,
+  fetchOpts: UseFetchOptions = {}
+)
+```
 
-Vue component example with media from user device.
-```vue
-<template>
-  <audio ref="player" controls />
-  <av-media :media="media" />
-</template>
-<script>
-export default {
-    name: 'HelloWorld',
-    data() {
-        return {
-            media: null
-        }
-    },
-    mounted () {
-      const constraints = { audio: true, video: false }
-      navigator.mediaDevices.getUserMedia(constraints).
-        then(media => {
-          this.media = media
-          this.$refs.player.srcObject = media
-        })
-    }
-}
+### AVMedia props
+
+Component expects ```MediaStream``` object. You can get it directly from ```navigator.mediaDevices``` or
+from @vueuse/core library function [useUserMedia](https://vueuse.org/core/useUserMedia/). Live example
+can be found in [App.vue](https://github.com/staskobzar/vue-audio-visual/blob/master/src/App.vue).
+
+```ts
+<script setup lang="ts">
+import { AVMedia } from 'vue-audio-visual'
+import { useUserMedia } from '@vueuse/core'
+...
+const { stream } = useUserMedia()
+...
 </script>
+
+<template>
+...
+<AVMedia :media="stream" type="circle" />
+...
+</template>
 ```
 
 <table>
@@ -836,18 +938,40 @@ export default {
       <td>Required property. See example above.</td>
     </tr>
     <tr>
+      <td>type</td>
+      <td><code>String</code></td>
+      <td><code>wform</code></td>
+      <td>Type of media visualization. Available types: 'wform', 'circle', 'frequ' and 'vbar'.
+      If not set or not recognized then 'wform' is set. See examples in demo. <br/>
+          Example: <code>type="frequ"</code>
+      </td>
+    </tr>
+    <tr>
       <td>canv-width</td>
       <td><code>Number</code></td>
-      <td><code>300</code></td>
-      <td>Canvas element width. Default 300.
-          Example: <code>:canv-width="600"</code>
+      <td><code>null</code></td>
+      <td>
+        Canvas element width. Default value depends on plugin type:
+        <ul>
+          <li>circle: 80</li>
+          <li>frequ: 300</li>
+          <li>vbar: 50</li>
+          <li>wform: 200</li>
+        </ul>
+        Example: <code>:canv-width="600"</code>
       </td>
     </tr>
     <tr>
       <td>canv-height</td>
       <td><code>Number</code></td>
-      <td><code>80</code></td>
-      <td>Canvas element height. Default 80.
+      <td><code>null</code></td>
+      <td>Canvas element height. Default value depends on plugin type:
+        <ul>
+          <li>circle: 80</li>
+          <li>frequ: 80</li>
+          <li>vbar: 20</li>
+          <li>wform: 40</li>
+        </ul>
           Example: <code>:canv-height="120"</code>
       </td>
     </tr>
@@ -856,15 +980,6 @@ export default {
       <td><code>String</code></td>
       <td><code>null</code></td>
       <td>Canvas element css class name.</td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td><code>String</code></td>
-      <td><code>wform</code></td>
-      <td>Type of media visualization. Currently supplies two types: 'wform', 'circle' and 'frequ'.
-      If not set or not recognized then 'wform' is set. <br/>
-          Example: <code>type="frequ"</code>
-      </td>
     </tr>
     <tr>
       <td>fft-size</td>
@@ -937,9 +1052,64 @@ export default {
           Example: <code>:connect-destination="true"</code>
       </td>
     </tr>
+    <tr>
+      <td>vbar-bg-color</td>
+      <td><code>String</code></td>
+      <td><code>#e1e1e1</code></td>
+      <td>
+      Background canvas color for 'vbar' type
+      </td>
+    </tr>
+    <tr>
+      <td>vbar-caps</td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+      <td>
+      Rounded bars for 'vbar' types
+      </td>
+    </tr>
+    <tr>
+      <td>vbar-space</td>
+      <td><code>Number</code></td>
+      <td><code>1</code></td>
+      <td>
+      Space between bars in 'vbar' type
+      </td>
+    </tr>
+    <tr>
+      <td>vbar-width</td>
+      <td><code>Number</code></td>
+      <td><code>4</code></td>
+      <td>
+      Width of bars in 'vbar' type
+      </td>
+    </tr>
+    <tr>
+      <td>vbar-fill-color</td>
+      <td><code>String</code></td>
+      <td><code>lime</code></td>
+      <td>
+      Color of bars in 'vbar' type
+      </td>
+    </tr>
+    <tr>
+      <td>vbar-right-color</td>
+      <td><code>String</code></td>
+      <td><code>#c0c0c0</code></td>
+      <td>
+      Color of bars on right side in 'vbar' type
+      </td>
+    </tr>
   </tbody>
 </table>
 
+Composable function:
+```ts
+function useAVMedia<T extends object>(
+  canvas: Ref<HTMLCanvasElement | null>,
+  props: T
+)
+```
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
