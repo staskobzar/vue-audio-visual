@@ -26,6 +26,11 @@ watch(enabled, () => {
         <figcaption class="blockquote-footer mt-2">
           Audio source: https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3
         </figcaption>
+        <div class="text-muted small">
+          See source this page
+          <a href="https://github.com/staskobzar/vue-audio-visual/blob/master/src/App.vue">source code</a>
+          for details
+        </div>
       </div>
     </div>
 
@@ -102,6 +107,7 @@ watch(enabled, () => {
 
             <p class="font-monospace text-muted mb-0 mt-2">type="circle"</p>
             <AVMedia :media="stream" type="circle" />
+            <AVMedia :media="stream" type="vbar"></AVMedia>
           </div>
         </div>
       </div>
