@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import { watchEffect, type Ref } from 'vue'
 import { useCanvasContext } from '@/composables/useCanvasContext'
 import { Waveform, type PropsWaveformType } from '@/composables/useProps'
 import { resolveUnref, useEventListener, useFetch, useRafFn, type UseFetchOptions } from '@vueuse/core'
@@ -56,17 +56,20 @@ export function draw(canvas: Ref<CanvasRenderingContext2D | null>, p: Waveform) 
   x = waveform(x, p.playX, p.playedLineWidth, p.playedLineColor)
   waveform(x, peaks.length, p.noplayedLineWidth, p.noplayedLineColor)
 
-  // draw slider
+  drawSlider(ctx, p)
+
+  if (p.playtime) {
+    drawTime(ctx, p)
+  }
+}
+
+function drawSlider(ctx: CanvasRenderingContext2D, p: Waveform) {
   ctx.lineWidth = p.playtimeSliderWidth
   ctx.strokeStyle = p.playtimeSliderColor
   ctx.beginPath()
   ctx.moveTo(p.playX, 0)
   ctx.lineTo(p.playX, p.canvHeight)
   ctx.stroke()
-
-  if (p.playtime) {
-    drawTime(ctx, p)
-  }
 }
 
 function drawTime(ctx: CanvasRenderingContext2D, p: Waveform) {
@@ -105,6 +108,20 @@ function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetc
     }).catch(err => {
       console.error('Failed to decode audio array buffer:', err)
     })
+  })
+  watchEffect(() => {
+    const ctx = resolveUnref(canv)
+    if (!ctx) return
+    ctx.lineWidth = p.noplayedLineWidth
+    ctx.strokeStyle = p.noplayedLineColor
+    ctx.beginPath()
+    ctx.moveTo(0, p.canvHeight / 2)
+    ctx.lineTo(p.canvWidth, p.canvHeight / 2)
+    ctx.stroke()
+    drawSlider(ctx, p)
+    if (p.playtime) {
+      drawTime(ctx, p)
+    }
   })
 }
 
