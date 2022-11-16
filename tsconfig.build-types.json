@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.app.json",
+  "exclude": [
+    "src/**/__tests__/*",
+    "src/App.vue",
+    "src/main.ts",
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "lib": [],
+    "types": [
+      "node",
+      "jsdom"
+    ]
+  }
+}

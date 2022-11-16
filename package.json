@@ -1,12 +1,13 @@
 {
   "name": "vue-audio-visual",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "type": "module",
   "files": [
     "dist"
   ],
   "main": "./dist/vue-audio-visual.umd.cjs",
   "module": "./dist/vue-audio-visual.js",
+  "types": "./dist/types/src/plugin.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vue-audio-visual.js",
@@ -15,12 +16,13 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check build-demo build-dist",
+    "build": "run-p type-check build-demo build-dist build-types",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
     "test:ci": "vitest --environment jsdom --run --coverage",
     "build-demo": "vite build --base=/vue-audio-visual/",
     "build-dist": "vite build --config vite.config.dist.ts",
+    "build-types": "vue-tsc -p tsconfig.build-types.json --declaration --emitDeclarationOnly --outDir dist/types",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
