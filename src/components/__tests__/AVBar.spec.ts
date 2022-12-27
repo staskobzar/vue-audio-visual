@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-global.MediaStream = {}
 import AVBars from '@/components/AVBars.vue'
 
 describe('AVBars', () => {

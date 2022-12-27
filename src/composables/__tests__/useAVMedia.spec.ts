@@ -4,7 +4,6 @@ import { useAVMedia, draw } from '@/composables/useAVMedia'
 import { Media } from '@/composables/useProps'
 
 global.AudioContext = AudioContext
-global.MediaStream = {}
 
 describe('useAVMedia', () => {
   it('draw with defaults', () => {
@@ -88,7 +87,6 @@ describe('useAVMedia', () => {
   })
 
   it('useAVMedia', () => {
-    global.MediaStream = {}
     const media = MediaStream
     const props = { media: media }
     const canv = {

@@ -48,7 +48,7 @@ Component **AvLine**. Vue template name **&lt;av-line&gt;**
     <av-line
       :line-width="2"
       line-color="lime"
-      audio-src="/static/music.mp3"
+      src="/static/music.mp3"
     ></av-line>
 ```
 This will create following element:
@@ -62,7 +62,7 @@ Component **AvBars**. Vue template name **&lt;av-bars&gt;**
       :bar-color="['#f00', '#ff0', '#0f0']"
       canv-fill-color="#000"
       :caps-height="2"
-      audio-src="/static/bach.mp3"
+      src="/static/bach.mp3"
     ></av-bars>
 ```
 This will create following element:
@@ -77,7 +77,7 @@ Component **AvCircle**. Vue template name **&lt;av-circle&gt;**
       :outline-meter-space="5"
       :playtime="true"
       playtime-font="18px Monaco"
-      audio-src="/static/bach.mp3"
+      src="/static/bach.mp3"
     ></av-circle>
 ```
 This will create following element:
@@ -87,7 +87,7 @@ This will create following element:
 Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
 ```html
     <av-waveform
-      audio-src="/static/bar.mp3"
+      src="/static/bar.mp3"
     ></av-waveform>
 ```
 This will create following waveform element:
@@ -152,7 +152,7 @@ import { AVWaveform } from 'vue-audio-visual'
 </script>
 
 <template>
-  <AVWaveform :src="http://foo.com/music.ogg" />
+  <AVWaveform src="http://foo.com/music.ogg" />
 </template>
 ```
 

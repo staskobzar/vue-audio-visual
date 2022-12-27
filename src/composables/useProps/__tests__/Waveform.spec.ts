@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest'
-global.MediaStream = {}
 import { Waveform } from '@/composables/useProps'
 
 describe('Waveform class', () => {
