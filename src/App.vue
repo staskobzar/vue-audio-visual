@@ -107,7 +107,6 @@ watch(enabled, () => {
 
             <p class="font-monospace text-muted mb-0 mt-2">type="circle"</p>
             <AVMedia :media="stream" type="circle" />
-            <AVMedia :media="stream" type="vbar"></AVMedia>
           </div>
         </div>
       </div>

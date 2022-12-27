@@ -10,7 +10,7 @@ const mediaProps = {
    * Web Audio API functions like getUserMedia or RTCPeerConnection
    */
   media: {
-    type: MediaStream,
+    type: Object,
     required: false,
     default: null
   },
