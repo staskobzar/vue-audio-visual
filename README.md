@@ -877,25 +877,27 @@ function useAVCircle<T extends object>(
       </td>
     </tr>
     <tr>
-      <td>requester</td>
-      <td><code>Object</code></td>
-      <td><code>new axios instance</code></td>
-      <td>Allow set a custom requester (axios/fetch) to be used.
-          Example: <code>:requester="myCustomRequesterInstance"</code>
+      <td><del>requester</del></td>
+      <td><del><code>Object</code></del></td>
+      <td><del><code>new axios instance</code></del></td>
+      <td>
+      <strong>Deprecated</strong>. Use composable function with useFetch
+      <del>Allow set a custom requester (axios/fetch) to be used.
+          Example: <code>:requester="myCustomRequesterInstance"</code></del>
       </td>
     </tr>
   </tbody>
 </table>
 
 Composable function is using [useFetch](https://vueuse.org/core/usefetch/) from [@vueuse/core](https://vueuse.org/) package.
-```useAVWaveform``` last argument is options for useFetch function.
+```useAVWaveform``` last argument is options for "createFetch" function from "useFetch" module.
 
 ```ts
 export function useAVWaveform<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
   props: T,
-  fetchOpts: UseFetchOptions = {}
+  fetchOpts: CreateFetchOptions = {}
 )
 ```
 
