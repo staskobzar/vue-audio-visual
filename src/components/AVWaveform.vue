@@ -7,7 +7,10 @@ const props = defineProps(makeWavefromProps())
 const player = ref(null)
 const canvas = ref(null)
 
-useAVWaveform(player, canvas, props, { refetch: true })
+useAVWaveform(player, canvas, props, {
+  options: { refetch: true },
+  fetchOptions: { mode: 'cors' }
+})
 </script>
 
 <template>

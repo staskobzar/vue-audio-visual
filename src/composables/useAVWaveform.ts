@@ -1,7 +1,7 @@
 import { watchEffect, type Ref } from 'vue'
 import { useCanvasContext } from '@/composables/useCanvasContext'
 import { Waveform, type PropsWaveformType } from '@/composables/useProps'
-import { resolveUnref, useEventListener, useFetch, useRafFn, type UseFetchOptions } from '@vueuse/core'
+import { createFetch, resolveUnref, useEventListener, useRafFn, type CreateFetchOptions } from '@vueuse/core'
 
 const peaks: [number, number][] = []
 
@@ -9,7 +9,7 @@ export function useAVWaveform<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
   props: T,
-  fetchOpts: UseFetchOptions = {}
+  fetchOpts: CreateFetchOptions = {}
 ){
   const p = new Waveform(props as PropsWaveformType)
 
@@ -87,9 +87,10 @@ function drawTime(ctx: CanvasRenderingContext2D, p: Waveform) {
   ctx.fillText(time, textX, textY)
 }
 
-function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetchOpts: UseFetchOptions) {
+function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetchOpts: CreateFetchOptions) {
   if (!p.src) return
-  useFetch(p.src, fetchOpts).arrayBuffer().then(({ error, data }) => {
+  const localFetch = createFetch(fetchOpts)
+  localFetch(p.src).arrayBuffer().then(({ error, data }) => {
     const err = resolveUnref(error)
     if (err !== null) {
       console.error(`Failed get url '${p.src}': ${err}`)
@@ -109,6 +110,7 @@ function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetc
       console.error('Failed to decode audio array buffer:', err)
     })
   })
+
   watchEffect(() => {
     const ctx = resolveUnref(canv)
     if (!ctx) return
