@@ -10,7 +10,7 @@ export function useAVWaveform<T extends object>(
   canvas: Ref<HTMLCanvasElement | null>,
   props: T,
   fetchOpts: CreateFetchOptions = {}
-){
+) {
   const p = new Waveform(props as PropsWaveformType)
 
   const ctx = useCanvasContext(canvas, p)
@@ -24,6 +24,12 @@ export function useAVWaveform<T extends object>(
 
   useEventListener(player, 'play', () => resume())
   useEventListener(player, 'pause', () => pause())
+  useEventListener(player, 'timeupdate', () => {
+    const audio = resolveUnref(player)
+    if (!audio) return
+    p.currentTime = audio.currentTime
+    draw(ctx, p)
+  })
   useEventListener(canvas, 'click', (e: Event) => {
     if (!p.playtimeClickable) return
     const audio = resolveUnref(player)
@@ -45,7 +51,7 @@ export function draw(canvas: Ref<CanvasRenderingContext2D | null>, p: Waveform) 
     ctx.lineWidth = lw
     ctx.strokeStyle = color
     ctx.beginPath()
-    for (;x < to;x++) {
+    for (; x < to; x++) {
       ctx.moveTo(x, peaks[x][0])
       ctx.lineTo(x, peaks[x][1])
     }
