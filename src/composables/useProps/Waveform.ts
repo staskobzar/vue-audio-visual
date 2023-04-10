@@ -208,11 +208,12 @@ export class Waveform {
     this.currentTime = 0
     this.duration = 0
   }
-  get playX (): number {
+  get playX(): number {
     if (!this.duration) return 0
-    return ~~(this.currentTime / this.duration * this.canvWidth)
+    const x = ~~(this.currentTime / this.duration * this.canvWidth)
+    return x > this.canvWidth ? this.canvWidth : x
   }
-  get timePlayed (): string {
+  get timePlayed(): string {
     const time = [
       this.currentTime / 3600,
       this.currentTime / 60 % 60,

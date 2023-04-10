@@ -22,8 +22,19 @@ export function useAVWaveform<T extends object>(
     draw(ctx, p)
   }, { immediate: false })
 
-  useEventListener(player, 'play', () => resume())
-  useEventListener(player, 'pause', () => pause())
+  useEventListener(player, 'play', resume)
+  useEventListener(player, 'pause', pause)
+  useEventListener(player, 'ended', () => {
+    // this is a patch for weba file formats.
+    // weba files when buffered with fetchData function return
+    // wrong data duration which is longer then real duration.
+    // So, when file is finished to play waveform still have empty
+    // space in the end. This will try to fix it.
+    const audio = resolveUnref(player)
+    if (!audio || audio.duration === p.duration) return
+    p.duration = audio.duration
+    draw(ctx, p)
+  })
   useEventListener(player, 'timeupdate', () => {
     const audio = resolveUnref(player)
     if (!audio) return
@@ -50,6 +61,7 @@ export function draw(canvas: Ref<CanvasRenderingContext2D | null>, p: Waveform) 
   const waveform = (x: number, to: number, lw: number, color: string): number => {
     ctx.lineWidth = lw
     ctx.strokeStyle = color
+    to = to > peaks.length ? peaks.length : to
     ctx.beginPath()
     for (; x < to; x++) {
       ctx.moveTo(x, peaks[x][0])
