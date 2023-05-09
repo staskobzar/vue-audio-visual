@@ -3,8 +3,6 @@ import { useCanvasContext } from '@/composables/useCanvasContext'
 import { Waveform, type PropsWaveformType } from '@/composables/useProps'
 import { createFetch, resolveUnref, useEventListener, useRafFn, type CreateFetchOptions } from '@vueuse/core'
 
-const peaks: [number, number][] = []
-
 export function useAVWaveform<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
@@ -61,18 +59,18 @@ export function draw(canvas: Ref<CanvasRenderingContext2D | null>, p: Waveform) 
   const waveform = (x: number, to: number, lw: number, color: string): number => {
     ctx.lineWidth = lw
     ctx.strokeStyle = color
-    to = to > peaks.length ? peaks.length : to
+    to = to > p.peaks.length ? p.peaks.length : to
     ctx.beginPath()
     for (; x < to; x++) {
-      ctx.moveTo(x, peaks[x][0])
-      ctx.lineTo(x, peaks[x][1])
+      ctx.moveTo(x, p.peaks[x][0])
+      ctx.lineTo(x, p.peaks[x][1])
     }
     ctx.stroke()
     return x
   }
 
   x = waveform(x, p.playX, p.playedLineWidth, p.playedLineColor)
-  waveform(x, peaks.length, p.noplayedLineWidth, p.noplayedLineColor)
+  waveform(x, p.peaks.length, p.noplayedLineWidth, p.noplayedLineColor)
 
   drawSlider(ctx, p)
 
@@ -122,7 +120,7 @@ function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetc
     const ctx = new AudioContext()
     ctx.decodeAudioData(data.value).then(buff => {
       p.duration = buff.duration
-      setPeaks(buff, p)
+      p.setPeaks(buff)
       draw(canv, p)
     }).catch(err => {
       console.error('Failed to decode audio array buffer:', err)
@@ -143,43 +141,4 @@ function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetc
       drawTime(ctx, p)
     }
   })
-}
-
-function setPeaks(buffer: AudioBuffer, p: Waveform) {
-  peaks.slice(0)
-  let min = 0
-  let max = 0
-  let top = 0
-  let bottom = 0
-  const segSize = Math.ceil(buffer.length / p.canvWidth)
-  const width = p.canvWidth
-  const height = p.canvHeight
-
-  for (let c = 0; c < buffer.numberOfChannels; c++) {
-    const data = buffer.getChannelData(c)
-    for (let s = 0; s < width; s++) {
-      const start = ~~(s * segSize)
-      const end = ~~(start + segSize)
-      min = 0
-      max = 0
-      for (let i = start; i < end; i++) {
-        min = data[i] < min ? data[i] : min
-        max = data[i] > max ? data[i] : max
-      }
-      // merge multi channel data
-      if (peaks[s]) {
-        peaks[s][0] = peaks[s][0] < max ? max : peaks[s][0]
-        peaks[s][1] = peaks[s][1] > min ? min : peaks[s][1]
-      }
-      peaks[s] = [max, min]
-    }
-  }
-  // set peaks relativelly to canvas dimensions
-  for (let i = 0; i < peaks.length; i++) {
-    max = peaks[i][0]
-    min = peaks[i][1]
-    top = ((height / 2) - (max * height / 2))
-    bottom = ((height / 2) - (min * height / 2))
-    peaks[i] = [top, bottom === top ? top + 1 : bottom]
-  }
 }
