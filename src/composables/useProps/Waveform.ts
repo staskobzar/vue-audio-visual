@@ -185,6 +185,7 @@ export class Waveform {
   playtimeSliderColor: string
   playtimeSliderWidth: number
   playtimeClickable: boolean
+  peaks: [number, number][] = []
   constructor(p: PropsWaveformType) {
     const w = PropsWaveform
     this.canvWidth = resolvePropNum(p.canvWidth, w.canvWidth.default)
@@ -226,5 +227,44 @@ export class Waveform {
       return time
     const ms = ~~(this.currentTime % 1 * 1000)
     return [time, String(ms).padStart(3, '0')].join('.')
+  }
+
+  setPeaks(buffer: AudioBuffer) {
+    this.peaks.slice(0)
+    let min = 0
+    let max = 0
+    let top = 0
+    let bottom = 0
+    const segSize = Math.ceil(buffer.length / this.canvWidth)
+    const width = this.canvWidth
+    const height = this.canvHeight
+
+    for (let c = 0; c < buffer.numberOfChannels; c++) {
+      const data = buffer.getChannelData(c)
+      for (let s = 0; s < width; s++) {
+        const start = ~~(s * segSize)
+        const end = ~~(start + segSize)
+        min = 0
+        max = 0
+        for (let i = start; i < end; i++) {
+          min = data[i] < min ? data[i] : min
+          max = data[i] > max ? data[i] : max
+        }
+        // merge multi channel data
+        if (this.peaks[s]) {
+          this.peaks[s][0] = this.peaks[s][0] < max ? max : this.peaks[s][0]
+          this.peaks[s][1] = this.peaks[s][1] > min ? min : this.peaks[s][1]
+        }
+        this.peaks[s] = [max, min]
+      }
+    }
+    // set peaks relativelly to canvas dimensions
+    for (let i = 0; i < this.peaks.length; i++) {
+      max = this.peaks[i][0]
+      min = this.peaks[i][1]
+      top = ((height / 2) - (max * height / 2))
+      bottom = ((height / 2) - (min * height / 2))
+      this.peaks[i] = [top, bottom === top ? top + 1 : bottom]
+    }
   }
 }
