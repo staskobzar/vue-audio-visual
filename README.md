@@ -6,7 +6,7 @@
 
 [![Node.js CI](https://github.com/staskobzar/vue-audio-visual/actions/workflows/node.js.yml/badge.svg)](https://github.com/staskobzar/vue-audio-visual/actions/workflows/node.js.yml)
 [![codecov](https://codecov.io/gh/staskobzar/vue-audio-visual/branch/master/graph/badge.svg)](https://codecov.io/gh/staskobzar/vue-audio-visual)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/92c77d2548074f3d9165e3e45b5aa2a4)](https://www.codacy.com/gh/staskobzar/vue-audio-visual/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=staskobzar/vue-audio-visual&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/92c77d2548074f3d9165e3e45b5aa2a4)](https://www.codacy.com/gh/staskobzar/vue-audio-visual/dashboard?utm_source=github.com&utm_medium=referral&utm_content=staskobzar/vue-audio-visual&utm_campaign=Badge_Grade)
 [![MIT](https://img.shields.io/npm/l/vue-audio-visual.svg?maxAge=2592000)](https://github.com/staskobzar/vue-audio-visual/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/vue-audio-visual.svg)](https://www.npmjs.com/package/vue-audio-visual)
 
@@ -14,82 +14,90 @@
 
 - [Overview](#overview)
 - [Get started](#get-started)
-  * [Install](#install)
-  * [Use plugin](#use-plugin)
-  * [Use component](#use-component)
-  * [Composable functions](#composable-functions)
+  - [Install](#install)
+  - [Use plugin](#use-plugin)
+  - [Use component](#use-component)
+  - [Composable functions](#composable-functions)
 - [API details](#api)
-  * [Common props](#common-props)
-  * [Common events](#common-events)
-  * [AvLine props](#avline-props)
-  * [AvBars props](#avbars-props)
-  * [AvCircle props](#avcircle-props)
-  * [AvWaveform props](#avwaveform-props)
-  * [AvMedia props](#avmedia-props)
+  - [Common props](#common-props)
+  - [Common events](#common-events)
+  - [AvLine props](#avline-props)
+  - [AvBars props](#avbars-props)
+  - [AvCircle props](#avcircle-props)
+  - [AvWaveform props](#avwaveform-props)
+  - [AvMedia props](#avmedia-props)
 - [Issues](#issues)
 - [License](#license)
 
 ## UPDATE NOTES
-:warning: Plugin current version is compatibale only with **Vue v3**. For Vue2 use plugin version 2.5.0. See [install](#install-and-setup) chapter for details.
+
+> [!WARNING] Plugin current version is compatibale only with **Vue v3**. For
+> Vue2 use plugin version 2.5.1. See [install](#install-and-setup) chapter for
+> details.
 
 ## Overview
-An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework. It is built with HTML5
-[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API.
-It provides several Vue components that allows to draw light and nice visualization for "audio" HTML elements.
 
----
-> :heavy_exclamation_mark: Visit [**DEMO page**](https://staskobzar.github.io/vue-audio-visual/) for working examples.
----
+An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework.
+It is built with HTML5
+[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+and compatible with all browsers that support HTML5 audio API. It provides
+several Vue components that allows to draw light and nice visualization for
+"audio" HTML elements.
+
+> [!NOTE] Visit [**DEMO page**](https://staskobzar.github.io/vue-audio-visual/)
+> for working examples.
 
 _Usage examples_:
 
 Component **AvLine**. Vue template name **&lt;av-line&gt;**
+
 ```html
-    <av-line
-      :line-width="2"
-      line-color="lime"
-      src="/static/music.mp3"
-    ></av-line>
+<av-line :line-width="2" line-color="lime" src="/static/music.mp3"></av-line>
 ```
+
 This will create following element:
 
 ![AvLine Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-line.png?raw=true)
 
 Component **AvBars**. Vue template name **&lt;av-bars&gt;**
+
 ```html
-    <av-bars
-      caps-color="#FFF"
-      :bar-color="['#f00', '#ff0', '#0f0']"
-      canv-fill-color="#000"
-      :caps-height="2"
-      src="/static/bach.mp3"
-    ></av-bars>
+<av-bars
+  caps-color="#FFF"
+  :bar-color="['#f00', '#ff0', '#0f0']"
+  canv-fill-color="#000"
+  :caps-height="2"
+  src="/static/bach.mp3"
+></av-bars>
 ```
+
 This will create following element:
 
 ![AvBars Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-bars.png?raw=true)
 
 Component **AvCircle**. Vue template name **&lt;av-circle&gt;**
+
 ```html
-    <av-circle
-      :outline-width="0"
-      :progress-width="5"
-      :outline-meter-space="5"
-      :playtime="true"
-      playtime-font="18px Monaco"
-      src="/static/bach.mp3"
-    ></av-circle>
+<av-circle
+  :outline-width="0"
+  :progress-width="5"
+  :outline-meter-space="5"
+  :playtime="true"
+  playtime-font="18px Monaco"
+  src="/static/bach.mp3"
+></av-circle>
 ```
+
 This will create following element:
 
 ![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png?raw=true)
 
 Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
+
 ```html
-    <av-waveform
-      src="/static/bar.mp3"
-    ></av-waveform>
+<av-waveform src="/static/bar.mp3"></av-waveform>
 ```
+
 This will create following waveform element:
 
 ![AvWaveform Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
@@ -97,55 +105,58 @@ This will create following waveform element:
 Component will pre-load audio content and generate clickable waveform.
 
 Component **AvMedia**. Vue component **&lt;AvMedia&gt;**
+
 ```html
-    <AvMedia
-      :media="mediaObject" type="vbar"
-    ></AvMedia>
+<AvMedia :media="mediaObject" type="vbar"></AvMedia>
 ```
+
 This will create following media element:
 
 ![AvMedia Intro](https://user-images.githubusercontent.com/147280/201538832-e20b12bc-ac6f-4137-9346-cd6d9e30bdd1.png)
 
 There are more media types. See details below.
 
-
 ## :gear: Get started
 
 ### Install
+
 Install using npm
+
 ```
 npm install --save vue-audio-visual
 ```
-for Vue 2 install version 2.5.0
+
+for Vue 2 install version 2.5.1
+
 ```
-npm i -S vue-audio-visual@2.5.0
+npm i -S vue-audio-visual@2.5.1
 ```
 
 ### Use plugin
 
 Install plugin in main.js:
+
 ```typescript
-import { createApp } from 'vue'
-import App from './App.vue'
-import { AVPlugin } from 'vue-audio-visual'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { AVPlugin } from "vue-audio-visual";
 
-const app = createApp(App)
-app.use(AVPlugin)
+const app = createApp(App);
+app.use(AVPlugin);
 
-app.mount('#app')
+app.mount("#app");
 ```
 
 Then anywhere is your app you can use it like this:
+
 ```html
-  <av-bars
-    src="/static/bach.mp3"
-    bar-color="#CCC">
-  </av-bars>
+<av-bars src="/static/bach.mp3" bar-color="#CCC"> </av-bars>
 ```
 
 ### Use component
 
 Single component can be imported and used
+
 ```ts
 <script setup lang="ts">
 import { AVWaveform } from 'vue-audio-visual'
@@ -158,12 +169,13 @@ import { AVWaveform } from 'vue-audio-visual'
 
 ### Composable functions
 
-Plugin provides composable "use" functions for each plugin component.
-Actually, each component uses composable function inside. See, for example,
+Plugin provides composable "use" functions for each plugin component. Actually,
+each component uses composable function inside. See, for example,
 [line component](https://github.com/staskobzar/vue-audio-visual/blob/master/src/components/AVLine.vue).
 
-Composable functions use audio and canvas element refs. It is handy when you need full access
-to audio or canvas elements. In the same time it is easy to use:
+Composable functions use audio and canvas element refs. It is handy when you
+need full access to audio or canvas elements. In the same time it is easy to
+use:
 
 ```ts
 <script setup lang="ts">
@@ -188,19 +200,16 @@ useAVBars(player, canvas, { src: mySource, canvHeight: 40, canvWidth: 200, barCo
 
 ## :gear: API
 
-There are several components that comes with plugin. Here is the list of available plugins:
-|  Name       | Component name | Composable function |
-| ----------- | -------------- | ------------------- |
-| av-bars     | AVBars         | useAVBars           |
-| av-circle   | AvCircle       | useAVCircle         |
-| av-line     | AVLine         | useAVLine           |
-| av-media    | AVMedia        | useAVMedia          |
-| av-waveform | AVWaveform     | useAVWaveform       |
+There are several components that comes with plugin. Here is the list of
+available plugins: | Name | Component name | Composable function | | -----------
+| -------------- | ------------------- | | av-bars | AVBars | useAVBars | |
+av-circle | AvCircle | useAVCircle | | av-line | AVLine | useAVLine | | av-media
+| AVMedia | useAVMedia | | av-waveform | AVWaveform | useAVWaveform |
 
-There are props that are common for all components and special props for each component.
-All props for components' names follow vue specs when using wiht composable functions.
-Meaning when prop's name is "_foo-bar_" then in composable function parameter it is expected
-to be "_fooBar_".
+There are props that are common for all components and special props for each
+component. All props for components' names follow vue specs when using wiht
+composable functions. Meaning when prop's name is "_foo-bar_" then in composable
+function parameter it is expected to be "_fooBar_".
 
 ### Common props
 
@@ -224,80 +233,12 @@ to be "_fooBar_".
       </td>
     </tr>
     <tr>
-      <td><del>audio-sink-device-id</del></td>
-      <td><del><code>String</code></del></td>
-      <td><del><code>null</code></del></td>
-      <td>
-        <strong>Deprecated</strong>. Use composable function with direct access to audio element.
-        <br/>
-        <del>Id of the audio output device to be used as sink. When provided sets audio output device.</del>
-      </td>
-    </tr>
-    <tr>
-      <td><del>ref-link</del></td>
-      <td><del><code>String</code></del></td>
-      <td><del><code>null</code></del></td>
-      <td>
-        <strong>Deprecated</strong><br/>
-        <del>
-        Reference to parent audio element via Vue "ref" attribute. When set,
-        then local audio element is not created and the plugin will connect
-        audio analyser to parent audio element. Multiple plugin instances
-        can connect to the same audio element (see example above).</del>
-      </td>
-    </tr>
-    <tr>
       <td>audio-controls</td>
       <td><code>Boolean</code></td>
       <td><code>true</code></td>
       <td>
         Audio element controls attribute. When provided should
         display audio element with controls.
-      </td>
-    </tr>
-    <tr>
-      <td><del>cors-anonym</del></td>
-      <td><del><code>Boolean</code></del></td>
-      <td><del><code>false</code></del></td>
-      <td>
-        <strong>Deprecated</strong>. Use composable function with direct access to audio element.
-        <br/><del>
-        Set CORS attribute for audio element. Set this attribute when using
-        audio source is pointing to different host/domain. When set, parameter
-        crossOrigin of audio element will be set to 'anonymous'.</del>
-      </td>
-    </tr>
-    <tr>
-      <td><del>audio-class</del></td>
-      <td><del><code>String</code></del></td>
-      <td><del><code>null</code></del></td>
-      <td>
-      <strong>Deprecated</strong>. Use composable function with direct access to audio element.
-      <br/>
-      <del>Audio element css class name.</del>
-      </td>
-    </tr>
-    <tr>
-      <td><del>canv-class</del></td>
-      <td><del><code>String</code></del></td>
-      <td><del><code>null</code></del></td>
-      <td>
-      <strong>Deprecated</strong>. Use composable function with direct access to audio element.
-      <br/>
-      <del>Canvas element css class name.</del></td>
-    </tr>
-    <tr>
-      <td><del>canv-top</del></td>
-      <td><del><code>Boolean</code></del></td>
-      <td><del><code>false</code></del></td>
-      <td>
-      <strong>Deprecated</strong>. Use composable function with direct access to audio element.
-      <br/>
-      <del>By default plugin creates "audio" element wrapped in "div"
-          and puts "canvas" element below. When "canv-top" is "true" then
-          "canvas" element is set on top. Example:
-          <code> :canv-top="true"</code> or
-          <code> v-bind:canv-top="true"</code></del>
       </td>
     </tr>
     <tr>
@@ -312,41 +253,6 @@ to be "_fooBar_".
     </tr>
   </tbody>
 </table>
-
-### Common events
-
-**Deprecated**. Use composable function with direct access to audio element.
-
-<del>
-<table>
-  <thead>
-    <tr>
-      <th width="150">Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>playing</td>
-      <td>
-        Emitted when audio starts playing.
-      </td>
-    </tr>
-    <tr>
-      <td>paused</td>
-      <td>
-        Emitted when audio is paused.
-      </td>
-    </tr>
-    <tr>
-      <td>ended</td>
-      <td>
-        Emitted when audio is ended.
-      </td>
-    </tr>
-    </tbody>
-</table>
-</del>
 
 ### AVLine props
 
@@ -410,12 +316,13 @@ to be "_fooBar_".
 </table>
 
 Composable function:
+
 ```ts
 function useAVLine<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
-  props: T
-)
+  props: T,
+);
 ```
 
 ### AVBars props
@@ -532,12 +439,13 @@ function useAVLine<T extends object>(
 </table>
 
 Composable function
+
 ```ts
 function useAVBars<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
-  props: T
-)
+  props: T,
+);
 ```
 
 ### AVCircle props
@@ -728,12 +636,13 @@ function useAVBars<T extends object>(
 </table>
 
 Composable function
+
 ```ts
 function useAVCircle<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
-  props: T
-)
+  props: T,
+);
 ```
 
 ### AVWaveform props
@@ -876,36 +785,29 @@ function useAVCircle<T extends object>(
           Example: <code>:playtime-clickable="false"</code>
       </td>
     </tr>
-    <tr>
-      <td><del>requester</del></td>
-      <td><del><code>Object</code></del></td>
-      <td><del><code>new axios instance</code></del></td>
-      <td>
-      <strong>Deprecated</strong>. Use composable function with useFetch
-      <del>Allow set a custom requester (axios/fetch) to be used.
-          Example: <code>:requester="myCustomRequesterInstance"</code></del>
-      </td>
-    </tr>
   </tbody>
 </table>
 
-Composable function is using [useFetch](https://vueuse.org/core/usefetch/) from [@vueuse/core](https://vueuse.org/) package.
-```useAVWaveform``` last argument is options for "createFetch" function from "useFetch" module.
+Composable function is using [useFetch](https://vueuse.org/core/usefetch/) from
+[@vueuse/core](https://vueuse.org/) package. `useAVWaveform` last argument is
+options for "createFetch" function from "useFetch" module.
 
 ```ts
 export function useAVWaveform<T extends object>(
   player: Ref<HTMLAudioElement | null>,
   canvas: Ref<HTMLCanvasElement | null>,
   props: T,
-  fetchOpts: CreateFetchOptions = {}
-)
+  fetchOpts: CreateFetchOptions = {},
+);
 ```
 
 ### AVMedia props
 
-Component expects ```MediaStream``` object. You can get it directly from ```navigator.mediaDevices``` or
-from @vueuse/core library function [useUserMedia](https://vueuse.org/core/useUserMedia/). Live example
-can be found in [App.vue](https://github.com/staskobzar/vue-audio-visual/blob/master/src/App.vue).
+Component expects `MediaStream` object. You can get it directly from
+`navigator.mediaDevices` or from @vueuse/core library function
+[useUserMedia](https://vueuse.org/core/useUserMedia/). Live example can be found
+in
+[App.vue](https://github.com/staskobzar/vue-audio-visual/blob/master/src/App.vue).
 
 ```ts
 <script setup lang="ts">
@@ -1106,13 +1008,15 @@ const { stream } = useUserMedia()
 </table>
 
 Composable function:
+
 ```ts
 function useAVMedia<T extends object>(
   canvas: Ref<HTMLCanvasElement | null>,
-  props: T
-)
+  props: T,
+);
 ```
+
 ## License
 
-[MIT](http://opensource.org/licenses/MIT)
-Copyright (c) 2018-present, Stas Kobzar
+[MIT](http://opensource.org/licenses/MIT) Copyright (c) 2018-present, Stas
+Kobzar
