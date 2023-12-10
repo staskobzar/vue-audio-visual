@@ -31,7 +31,8 @@
 
 ## UPDATE NOTES
 
-> [!WARNING] Plugin current version is compatibale only with **Vue v3**. For
+> [!WARNING]
+> Plugin current version is compatibale only with **Vue v3**. For
 > Vue2 use plugin version 2.5.1. See [install](#install-and-setup) chapter for
 > details.
 
@@ -44,7 +45,8 @@ and compatible with all browsers that support HTML5 audio API. It provides
 several Vue components that allows to draw light and nice visualization for
 "audio" HTML elements.
 
-> [!NOTE] Visit [**DEMO page**](https://staskobzar.github.io/vue-audio-visual/)
+> [!NOTE]
+> Visit [**DEMO page**](https://staskobzar.github.io/vue-audio-visual/)
 > for working examples.
 
 _Usage examples_:
@@ -201,10 +203,15 @@ useAVBars(player, canvas, { src: mySource, canvHeight: 40, canvWidth: 200, barCo
 ## :gear: API
 
 There are several components that comes with plugin. Here is the list of
-available plugins: | Name | Component name | Composable function | | -----------
-| -------------- | ------------------- | | av-bars | AVBars | useAVBars | |
-av-circle | AvCircle | useAVCircle | | av-line | AVLine | useAVLine | | av-media
-| AVMedia | useAVMedia | | av-waveform | AVWaveform | useAVWaveform |
+available plugins:
+
+| Name | Component name | Composable function |
+| -----------| -------------- | ------------------- |
+| av-bars | AVBars | useAVBars |
+| av-circle | AvCircle | useAVCircle |
+| av-line | AVLine | useAVLine |
+| av-media | AVMedia | useAVMedia |
+| av-waveform | AVWaveform | useAVWaveform |
 
 There are props that are common for all components and special props for each
 component. All props for components' names follow vue specs when using wiht
