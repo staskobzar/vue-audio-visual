@@ -4,9 +4,9 @@
 
 # vue-audio-visual
 
-[![Build Status](https://travis-ci.org/staskobzar/vue-audio-visual.svg?branch=master)](https://travis-ci.org/staskobzar/vue-audio-visual)
-[![codecov](https://codecov.io/gh/staskobzar/vue-audio-visual/branch/master/graph/badge.svg)](https://codecov.io/gh/staskobzar/vue-audio-visual)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bcc7e911360b4ef4a4d987ca5a846caa)](https://www.codacy.com/app/staskobzar/vue-audio-visual?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=staskobzar/vue-audio-visual&amp;utm_campaign=Badge_Grade)
+> [!CAUTION] This is version is compatible only with vue 2 and not fully
+> supported. It will be soon deprecated.
+
 [![MIT](https://img.shields.io/npm/l/vue-audio-visual.svg?maxAge=2592000)](https://github.com/staskobzar/vue-audio-visual/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/vue-audio-visual.svg)](https://www.npmjs.com/package/vue-audio-visual)
 
@@ -15,131 +15,148 @@
 - [Overview](#overview)
 - [Install and setup](#install-and-setup)
 - [API](#api)
-  * [Common props](#common-props)
-  * [Common events](#common-events)
-  * [AvLine props](#avline-props)
-  * [AvBars props](#avbars-props)
-  * [AvCircle props](#avcircle-props)
-  * [AvWaveform props](#avwaveform-props)
-  * [AvMedia props](#avmedia-props)
+  - [Common props](#common-props)
+  - [Common events](#common-events)
+  - [AvLine props](#avline-props)
+  - [AvBars props](#avbars-props)
+  - [AvCircle props](#avcircle-props)
+  - [AvWaveform props](#avwaveform-props)
+  - [AvMedia props](#avmedia-props)
 - [Issues](#issues)
 - [License](#license)
 
 ## Overview
-An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework. It is built with HTML5
-[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and compatible with all browsers that support HTML5 audio API.
-It provides several Vue components that allows to draw light and nice visualization for "audio" HTML elements. This plugin is compatible with Vue2 and Vue3 frameworks.
 
-> There is a [**DEMO**](https://staskobzar.github.io/vue-audio-visual/) available.
+An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework.
+It is built with HTML5
+[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+and compatible with all browsers that support HTML5 audio API. It provides
+several Vue components that allows to draw light and nice visualization for
+"audio" HTML elements. This plugin is compatible with Vue2 and Vue3 frameworks.
+
+> There is a [**DEMO**](https://staskobzar.github.io/vue-audio-visual/)
+> available.
 
 Component **AvLine**. Vue template name **&lt;av-line&gt;**
+
 ```html
-    <av-line
-      :line-width="2"
-      line-color="lime"
-      audio-src="/static/music.mp3"
-    ></av-line>
+<av-line
+  :line-width="2"
+  line-color="lime"
+  audio-src="/static/music.mp3"
+></av-line>
 ```
+
 This will create following element:
 
 ![AvLine Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-line.png?raw=true)
 
 Component **AvBars**. Vue template name **&lt;av-bars&gt;**
+
 ```html
-    <av-bars
-      caps-color="#FFF"
-      :bar-color="['#f00', '#ff0', '#0f0']"
-      canv-fill-color="#000"
-      :caps-height="2"
-      audio-src="/static/bach.mp3"
-    ></av-bars>
+<av-bars
+  caps-color="#FFF"
+  :bar-color="['#f00', '#ff0', '#0f0']"
+  canv-fill-color="#000"
+  :caps-height="2"
+  audio-src="/static/bach.mp3"
+></av-bars>
 ```
+
 This will create following element:
 
 ![AvBars Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-bars.png?raw=true)
 
 Component **AvCircle**. Vue template name **&lt;av-circle&gt;**
+
 ```html
-    <av-circle
-      :outline-width="0"
-      :progress-width="5"
-      :outline-meter-space="5"
-      :playtime="true"
-      playtime-font="18px Monaco"
-      audio-src="/static/bach.mp3"
-    ></av-circle>
+<av-circle
+  :outline-width="0"
+  :progress-width="5"
+  :outline-meter-space="5"
+  :playtime="true"
+  playtime-font="18px Monaco"
+  audio-src="/static/bach.mp3"
+></av-circle>
 ```
+
 This will create following element:
 
 ![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png?raw=true)
 
 Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
+
 ```html
-    <av-waveform
-      audio-src="/static/bar.mp3"
-    ></av-waveform>
+<av-waveform audio-src="/static/bar.mp3"></av-waveform>
 ```
+
 This will create following waveform element:
 
 ![AvWaveform Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
 
-Component will pre-load audio content and generate clickable waveform. 
+Component will pre-load audio content and generate clickable waveform.
 
 Component **AvMedia**. Vue template name **&lt;av-media&gt;**
+
 ```html
-    <av-media
-      :media="mediaObject"
-    ></av-media>
+<av-media :media="mediaObject"></av-media>
 ```
+
 This will create following media element:
 
 ![AvMedia Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-media.png?raw=true)
 
-
 ## Install and setup
 
 Install using npm
+
 ```
 npm install --save vue-audio-visual
 ```
 
 Enable plugin in main.js:
-```javascript
-import Vue from 'vue'
-import AudioVisual from 'vue-audio-visual'
 
-Vue.use(AudioVisual)
+```javascript
+import Vue from "vue";
+import AudioVisual from "vue-audio-visual";
+
+Vue.use(AudioVisual);
 ```
 
 Example of usage in App.vue or any other Vue component:
+
 ```html
-  <av-bars
-    audio-src="/static/bach.mp3">
-  </av-bars>
+<av-bars audio-src="/static/bach.mp3"> </av-bars>
 ```
 
 ## API
 
 There are three components that comes with plugin: av-line, av-bars, av-circle.
 
-There are a lot of **props** available to configurate each component.
-The only mandatory "prop" to pass to component: **audio-src**.
-Prop **audio-src** value should contain URL to media file. Example:
+There are a lot of **props** available to configurate each component. The only
+mandatory "prop" to pass to component: **audio-src**. Prop **audio-src** value
+should contain URL to media file. Example:
+
 ```
 audio-src="http://example.com/media/song.mp3"
 ```
 
-Plugin will generate "audio" to control media playback and "canvas" element for visualization.
+Plugin will generate "audio" to control media playback and "canvas" element for
+visualization.
 
-Another way is to link to existing Vue element using "ref-link" property. When "ref-link" property is set, then "audio-src" property is ignored.
+Another way is to link to existing Vue element using "ref-link" property. When
+"ref-link" property is set, then "audio-src" property is ignored.
+
 ```html
 <audio ref="foo" src="music.mp3"></audio>
 <av-bars ref-link="foo" />
 <av-line ref-link="foo" />
 ```
+
 However, it will reference **only** parent component elements.
 
-There are props that are common for all components and special props for each component.
+There are props that are common for all components and special props for each
+component.
 
 ### Common props
 
@@ -784,6 +801,7 @@ There are props that are common for all components and special props for each co
 Please note that common pros are not usable for that element.
 
 Vue component example with media from user device.
+
 ```vue
 <template>
   <audio ref="player" controls />
@@ -791,21 +809,20 @@ Vue component example with media from user device.
 </template>
 <script>
 export default {
-    name: 'HelloWorld',
-    data() {
-        return {
-            media: null
-        }
-    },
-    mounted () {
-      const constraints = { audio: true, video: false }
-      navigator.mediaDevices.getUserMedia(constraints).
-        then(media => {
-          this.media = media
-          this.$refs.player.srcObject = media
-        })
-    }
-}
+  name: "HelloWorld",
+  data() {
+    return {
+      media: null,
+    };
+  },
+  mounted() {
+    const constraints = { audio: true, video: false };
+    navigator.mediaDevices.getUserMedia(constraints).then((media) => {
+      this.media = media;
+      this.$refs.player.srcObject = media;
+    });
+  },
+};
 </script>
 ```
 
@@ -891,7 +908,7 @@ export default {
       If not set or not recognized then 'lr' is set. <br/>
           Example: <code>frequ-direction="mo"</code>
       </td>
-    </tr>    
+    </tr>
     <tr>
       <td>line-color</td>
       <td><code>String</code></td>
@@ -932,5 +949,5 @@ export default {
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT)
-Copyright (c) 2018-present, Stas Kobzar
+[MIT](http://opensource.org/licenses/MIT) Copyright (c) 2018-present, Stas
+Kobzar

@@ -189,11 +189,16 @@ const AvWaveform = {
         console.log(err)
       })
     this.audio.onplay = () => {
+      this.$emit('playing')
       this.animId = requestAnimationFrame(this.waveformAnim)
     }
     this.audio.onpause = () => {
+      this.$emit('paused')
       cancelAnimationFrame(this.animId)
       this.animId = null
+    }
+    this.audio.onended = () => {
+      this.$emit('ended')
     }
   },
   methods: {
