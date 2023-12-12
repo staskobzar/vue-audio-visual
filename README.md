@@ -7,7 +7,7 @@
 [![Node.js CI](https://github.com/staskobzar/vue-audio-visual/actions/workflows/node.js.yml/badge.svg)](https://github.com/staskobzar/vue-audio-visual/actions/workflows/node.js.yml)
 [![codecov](https://codecov.io/gh/staskobzar/vue-audio-visual/branch/master/graph/badge.svg)](https://codecov.io/gh/staskobzar/vue-audio-visual)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/92c77d2548074f3d9165e3e45b5aa2a4)](https://www.codacy.com/gh/staskobzar/vue-audio-visual/dashboard?utm_source=github.com&utm_medium=referral&utm_content=staskobzar/vue-audio-visual&utm_campaign=Badge_Grade)
-[![MIT](https://img.shields.io/npm/l/vue-audio-visual.svg?maxAge=2592000)](https://github.com/staskobzar/vue-audio-visual/blob/master/LICENSE)
+[![MIT](https://img.shields.io/npm/l/vue-audio-visual.svg)](https://github.com/staskobzar/vue-audio-visual/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/vue-audio-visual.svg)](https://www.npmjs.com/package/vue-audio-visual)
 
 > Vue HTML5 audio visualization components
