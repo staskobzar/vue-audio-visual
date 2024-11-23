@@ -1,6 +1,6 @@
 {
   "name": "vue-audio-visual",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "type": "module",
   "license": "MIT",
   "files": [
@@ -11,7 +11,10 @@
   "types": "./dist/types/src/plugin.d.ts",
   "exports": {
     ".": {
-      "import": ["./dist/vue-audio-visual.js", "./dist/types/src/plugin.d.ts"],
+      "import": [
+        "./dist/vue-audio-visual.js",
+        "./dist/types/src/plugin.d.ts"
+      ],
       "require": "./dist/vue-audio-visual.umd.cjs"
     }
   },
