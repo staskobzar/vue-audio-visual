@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { makeWavefromProps } from '@/composables/useProps'
+import { makeWaveformProps } from '@/composables/useProps'
 import { useAVWaveform } from '@/composables/useAVWaveform'
 
-const props = defineProps(makeWavefromProps())
+const props = defineProps(makeWaveformProps())
 const player = ref(null)
 const canvas = ref(null)
 

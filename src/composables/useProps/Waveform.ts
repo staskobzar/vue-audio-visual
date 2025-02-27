@@ -162,7 +162,7 @@ const waveformProps = {
 
 export const PropsWaveform = { ...commonProps, ...waveformProps }
 export type PropsWaveformType = typeof PropsWaveform
-export function makeWavefromProps(): PropsWaveformType { return PropsWaveform }
+export function makeWaveformProps(): PropsWaveformType { return PropsWaveform }
 
 export class Waveform {
   src: string | null
