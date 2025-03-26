@@ -26,7 +26,7 @@
     "test:ci": "vitest --environment jsdom --run --coverage",
     "build-demo": "vite build --base=/vue-audio-visual/",
     "build-dist": "vite build --config vite.config.dist.ts",
-    "build-types": "vue-tsc -p tsconfig.build-types.json --declaration --emitDeclarationOnly --outDir dist/types",
+    "build-types": "vue-tsc -p tsconfig.build-types.json && tsc-alias -p tsconfig.build-types.json",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
@@ -48,6 +48,7 @@
     "eslint-plugin-vue": "^9.3.0",
     "jsdom": "^20.0.0",
     "npm-run-all": "^4.1.5",
+    "tsc-alias": "^1.8.11",
     "typescript": "~4.7.4",
     "vite": "^3.2.10",
     "vitest": "^0.21.0",
