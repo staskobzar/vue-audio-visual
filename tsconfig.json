@@ -1,6 +1,8 @@
 {
   "files": [],
-  "target": "esnext",
+  "compilerOptions": {
+    "target": "esnext",
+  },
   "references": [
     {
       "path": "./tsconfig.config.json"
