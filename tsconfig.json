@@ -2,6 +2,7 @@
   "files": [],
   "compilerOptions": {
     "target": "esnext",
+    "types": ["vitest/global", "vite/client"]
   },
   "references": [
     {
