@@ -1,5 +1,5 @@
-import { resolveUnref, useEventListener, useRafFn } from '@vueuse/core'
-import type { Ref } from 'vue'
+import { useEventListener, useRafFn } from '@vueuse/core'
+import { unref, type Ref } from 'vue'
 
 export function useAudioContext(
   player: Ref<HTMLAudioElement | null>,
@@ -19,7 +19,7 @@ export function useAudioContext(
   }, { immediate: false })
 
   useEventListener(player, 'play', () => {
-    const audio = resolveUnref(player)
+    const audio = unref(player)
     if (!audio) return
     if (!ctx) {
       ctx = new AudioContext()

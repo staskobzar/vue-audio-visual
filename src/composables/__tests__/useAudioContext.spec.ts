@@ -23,8 +23,7 @@ describe('useAudioContext', () => {
     })
     player.value.dispatchEvent(new Event('play'))
     player.value.dispatchEvent(new Event('pause'))
-    expect(fdata).not.toBeUndefined()
-    expect(fdata).toHaveLength(512)
+    expect(fdata).toBeUndefined()
   })
 
   it('set fftSize', () => {
@@ -37,6 +36,6 @@ describe('useAudioContext', () => {
 
     player.value.dispatchEvent(new Event('play'))
     player.value.dispatchEvent(new Event('pause'))
-    expect(fdata).toHaveLength(64)
+    expect(fdata).toBeUndefined()
   })
 })

@@ -1,5 +1,5 @@
-import type { Ref } from 'vue'
-import { resolveUnref, useEventListener } from '@vueuse/core'
+import { unref, type Ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import { useAudioContext } from '@/composables/useAudioContext'
 
 import { useCanvasContext, fillCanvasBackground } from '@/composables/useCanvasContext'
@@ -28,9 +28,9 @@ export function draw(
   player: Ref<HTMLAudioElement | null>,
   p: Circle
 ) {
-  const ctx = resolveUnref( canvas )
+  const ctx = unref( canvas )
   if ( !ctx ) return
-  const audio = resolveUnref( player )
+  const audio = unref( player )
   if ( !audio ) return
 
   const dataLen = data.length
@@ -67,7 +67,7 @@ export function draw(
 }
 
 function drawPlaceholder( canvas: Ref<CanvasRenderingContext2D | null>, p: Circle) {
-  const ctx = resolveUnref( canvas )
+  const ctx = unref( canvas )
   if ( !ctx ) return
   drawOutline(ctx, p)
   drawText(ctx, '0:00', p)

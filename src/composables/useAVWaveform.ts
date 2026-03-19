@@ -1,7 +1,7 @@
-import { watchEffect, type Ref } from 'vue'
+import { watchEffect, unref, type Ref } from 'vue'
 import { useCanvasContext } from '@/composables/useCanvasContext'
 import { Waveform, type PropsWaveformType } from '@/composables/useProps'
-import { createFetch, resolveUnref, useEventListener, useRafFn, type CreateFetchOptions } from '@vueuse/core'
+import { createFetch, useEventListener, useRafFn, type CreateFetchOptions } from '@vueuse/core'
 
 export function useAVWaveform<T extends object>(
   player: Ref<HTMLAudioElement | null>,
@@ -28,20 +28,20 @@ export function useAVWaveform<T extends object>(
     // wrong data duration which is longer then real duration.
     // So, when file is finished to play waveform still have empty
     // space in the end. This will try to fix it.
-    const audio = resolveUnref(player)
+    const audio = unref(player)
     if (!audio || audio.duration === p.duration) return
     p.duration = audio.duration
     draw(ctx, p)
   })
   useEventListener(player, 'timeupdate', () => {
-    const audio = resolveUnref(player)
+    const audio = unref(player)
     if (!audio) return
     p.currentTime = audio.currentTime
     draw(ctx, p)
   })
   useEventListener(canvas, 'click', (e: Event) => {
     if (!p.playtimeClickable) return
-    const audio = resolveUnref(player)
+    const audio = unref(player)
     if (!audio) return
     audio.currentTime = (e as PointerEvent).offsetX / p.canvWidth * p.duration
     p.currentTime = audio.currentTime
@@ -50,7 +50,7 @@ export function useAVWaveform<T extends object>(
 }
 
 export function draw(canvas: Ref<CanvasRenderingContext2D | null>, p: Waveform) {
-  const ctx = resolveUnref(canvas)
+  const ctx = unref(canvas)
   if (!ctx) return
   let x = 0
 
@@ -107,7 +107,7 @@ function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetc
   if (!p.src) return
   const localFetch = createFetch(fetchOpts)
   localFetch(p.src).arrayBuffer().then(({ error, data }) => {
-    const err = resolveUnref(error)
+    const err = unref(error)
     if (err !== null) {
       console.error(`Failed get url '${p.src}': ${err}`)
       return
@@ -128,7 +128,7 @@ function fetchData(canv: Ref<CanvasRenderingContext2D | null>, p: Waveform, fetc
   })
 
   watchEffect(() => {
-    const ctx = resolveUnref(canv)
+    const ctx = unref(canv)
     if (!ctx) return
     ctx.lineWidth = p.noplayedLineWidth
     ctx.strokeStyle = p.noplayedLineColor

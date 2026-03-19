@@ -1,5 +1,5 @@
-import type { Ref } from 'vue'
-import { resolveUnref, useEventListener } from '@vueuse/core'
+import { unref, type Ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import { useAudioContext } from '@/composables/useAudioContext'
 
 import {
@@ -39,7 +39,7 @@ export function draw(
   canvas: Ref<CanvasRenderingContext2D | null>,
   props: PropsBarsType
 ) {
-  const ctx = resolveUnref( canvas )
+  const ctx = unref( canvas )
   if ( !ctx ) return
 
   const p = new Bars(props)

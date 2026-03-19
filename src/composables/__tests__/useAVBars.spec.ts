@@ -31,8 +31,8 @@ describe('useAVBars', () => {
     draw(data, canv, props)
     expect(canv.fillStyle).toBe('#F00')
     expect(fillRect).toHaveBeenCalledTimes(2)
-    expect(fillRect.calls[0]).toEqual([0, 0, 100, 50])
-    expect(fillRect.calls[1]).toEqual([0, 50, 50, 0])
+    expect(vi.mocked(fillRect).mock.calls[0]).toEqual([0, 0, 100, 50])
+    expect(vi.mocked(fillRect).mock.calls[1]).toEqual([0, 50, 50, 0])
   })
 
   it('draw bars with caps', () => {
@@ -51,7 +51,7 @@ describe('useAVBars', () => {
 
     draw(data, canv, props)
     expect(fillRect).toHaveBeenCalledTimes(3)
-    expect(fillRect.calls[0]).toEqual([0, 0, 100, 50])
+    expect(vi.mocked(fillRect).mock.calls[0]).toEqual([0, 0, 100, 50])
   })
 
   it('draw bricks bars', () => {
@@ -71,12 +71,12 @@ describe('useAVBars', () => {
 
     draw(data, canv, props)
     expect(fillRect).toHaveBeenCalledTimes(6)
-    expect(fillRect.calls[0]).toEqual([0, 0, 100, 50])
-    expect(fillRect.calls[1]).toEqual([ 0, 0, 5, 5 ])
-    expect(fillRect.calls[2]).toEqual([ 0, 10, 5, 5 ])
-    expect(fillRect.calls[3]).toEqual([ 0, 20, 5, 5 ])
-    expect(fillRect.calls[4]).toEqual([ 0, 30, 5, 5 ])
-    expect(fillRect.calls[5]).toEqual([ 0, 40, 5, 5 ])
+    expect(vi.mocked(fillRect).mock.calls[0]).toEqual([0, 0, 100, 50])
+    expect(vi.mocked(fillRect).mock.calls[1]).toEqual([ 0, 0, 5, 5 ])
+    expect(vi.mocked(fillRect).mock.calls[2]).toEqual([ 0, 10, 5, 5 ])
+    expect(vi.mocked(fillRect).mock.calls[3]).toEqual([ 0, 20, 5, 5 ])
+    expect(vi.mocked(fillRect).mock.calls[4]).toEqual([ 0, 30, 5, 5 ])
+    expect(vi.mocked(fillRect).mock.calls[5]).toEqual([ 0, 40, 5, 5 ])
   })
 
   it('draw symmetric to middle', () => {
@@ -96,8 +96,8 @@ describe('useAVBars', () => {
 
     draw(data, canv, props)
     expect(fillRect).toHaveBeenCalledTimes(2)
-    expect(fillRect.calls[0]).toEqual([0, 0, 100, 50])
-    expect(fillRect.calls[1]).toEqual([0, 25, 50, 0])
+    expect(vi.mocked(fillRect).mock.calls[0]).toEqual([0, 0, 100, 50])
+    expect(vi.mocked(fillRect).mock.calls[1]).toEqual([0, 25, 50, 0])
   })
 
   it('draw symmetric to middle', () => {

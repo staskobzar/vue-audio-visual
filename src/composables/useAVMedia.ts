@@ -1,5 +1,5 @@
-import { resolveUnref, useRafFn } from '@vueuse/core'
-import { watchEffect, type Ref } from 'vue'
+import { useRafFn } from '@vueuse/core'
+import { unref, watchEffect, type Ref } from 'vue'
 import { useCanvasContext } from './useCanvasContext'
 import { type PropsMediaType, Media } from './useProps'
 
@@ -18,7 +18,7 @@ export function useAVMedia<T extends object>(
   }, { immediate: false })
 
   watchEffect(() => {
-    const stream = resolveUnref(p.media)
+    const stream = unref(p.media)
     if (stream) {
       analyser = setAnalyser(stream as unknown as MediaStream, new Media(p))
       resume()
@@ -44,7 +44,7 @@ function setAnalyser(stream: MediaStream, p: Media): AnalyserNode {
 }
 
 export function draw(analyser: AnalyserNode, canv: Ref<CanvasRenderingContext2D | null>, p: Media) {
-  const ctx = resolveUnref(canv)
+  const ctx = unref(canv)
   if (!ctx) return
   const data = new Uint8Array(analyser.fftSize)
   if (p.canvFillColor) ctx.fillStyle = p.canvFillColor
