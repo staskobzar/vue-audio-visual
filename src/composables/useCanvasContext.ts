@@ -1,5 +1,4 @@
-import { resolveUnref } from '@vueuse/core'
-import { watchEffect, ref, type Ref } from 'vue'
+import { watchEffect, ref, unref, type Ref } from 'vue'
 import type { Props } from '@/composables/useProps'
 
 export function useCanvasContext(
@@ -8,7 +7,7 @@ export function useCanvasContext(
 ): Ref<CanvasRenderingContext2D | null> {
   const ctx = ref<CanvasRenderingContext2D | null>(null)
   watchEffect(() => {
-    const canv = resolveUnref(canvas)
+    const canv = unref(canvas)
     if (!canv) return
 
     ctx.value = canv.getContext('2d')

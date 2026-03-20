@@ -1,5 +1,4 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   'root': true,
@@ -8,7 +7,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript/recommended'
   ],
-  'ignorePatterns': ['docs/'],
+  'ignorePatterns': ['docs/', 'dist/'],
   'parserOptions': {
     'ecmaVersion': 'latest'
   },

@@ -1,5 +1,4 @@
-import { watch, type Ref } from 'vue'
-import { resolveUnref } from '@vueuse/core'
+import { watch, type Ref, unref } from 'vue'
 import { useAudioContext } from '@/composables/useAudioContext'
 
 import {
@@ -20,7 +19,7 @@ export function useAVLine<T extends object>(
 
   watch(ctx, () => {
     if (!p.placeholder) return
-    const canv = resolveUnref( ctx )
+    const canv = unref( ctx )
     if (!canv) return
     draw(new Uint8Array(p.fftSize), ctx, p)
   })
@@ -35,7 +34,7 @@ export function draw(
   canvas: Ref<CanvasRenderingContext2D | null>,
   props: Line
 ) {
-  const ctx = resolveUnref( canvas )
+  const ctx = unref( canvas )
   if ( !ctx ) return
 
   const w = props.canvWidth
