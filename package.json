@@ -54,12 +54,5 @@
     "vite": "^8.0.14",
     "vitest": "^2.0.0",
     "vue-tsc": "^2.0.0"
-  },
-  "overrides": {
-    "@typescript-eslint/typescript-estree": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/type-utils": "^8.0.0",
-    "@typescript-eslint/utils": "^8.0.0"
   }
 }
