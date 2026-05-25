@@ -7,11 +7,13 @@ module.exports = {
     node: true,
     es2021: true
   },
-  parser: '@typescript-eslint/parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
-    extraFileExtensions: ['.vue']
+    extraFileExtensions: ['.vue'],
+    project: './tsconfig.eslint.json'
   },
   plugins: ['vue', '@typescript-eslint'],
   extends: [
@@ -27,7 +29,8 @@ module.exports = {
     'comma-spacing': ['error', { before: false, after: true }],
     'indent': ['error', 2],
     '@typescript-eslint/no-require-imports': 'off',
-    '@typescript-eslint/no-unused-vars': 'off'
+    '@typescript-eslint/no-unused-vars': 'error',
+    'vue/script-setup-uses-vars': 'error'
   },
   overrides: [
     {
@@ -35,6 +38,9 @@ module.exports = {
       parser: 'vue-eslint-parser',
       parserOptions: {
         parser: '@typescript-eslint/parser'
+      },
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off'
       }
     },
     {

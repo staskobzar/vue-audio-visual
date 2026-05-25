@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": [
+    "src/**/*",
+    "src/**/*.vue",
+    "tests.setup.ts",
+    "env.d.ts",
+    "tsconfig.*.json",
+    "vite.config.ts",
+    "vite.config.dist.ts",
+    ".eslintrc.cjs",
+    "eslint.config.cjs",
+    "coverage/**/*.js"
+  ],
+  "exclude": ["node_modules"]
+}
