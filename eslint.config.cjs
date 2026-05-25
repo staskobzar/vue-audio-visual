@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 // Flat config for ESLint v10
 // Registers plugins and parsers and mirrors rules from the legacy .eslintrc.cjs
 
@@ -32,7 +30,7 @@ module.exports = [
       'indent': ['error', 2],
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-unused-vars': 'error',
-      'vue/script-setup-uses-vars': 'error'
+      'vue/script-setup-uses-vars': 'off'
     }
   },
   {
