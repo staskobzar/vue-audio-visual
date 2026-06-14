@@ -9,11 +9,13 @@ import { useUserMedia } from "@vueuse/core";
 
 const audioSrc = ref("./file_example_MP3_1MG.mp3");
 const showMedia = ref(false);
-const { stream, enabled } = useUserMedia();
+const { stream, enabled } = useUserMedia({
+  constraints: { audio: true },
+});
 
 watch(enabled, () => {
   if (showMedia.value) return;
-  if (enabled) showMedia.value = true;
+  if (enabled.value) showMedia.value = true;
 });
 </script>
 
