@@ -20,7 +20,6 @@
   - [Composable functions](#composable-functions)
 - [API details](#api)
   - [Common props](#common-props)
-  - [Common events](#common-events)
   - [AvLine props](#avline-props)
   - [AvBars props](#avbars-props)
   - [AvCircle props](#avcircle-props)
@@ -32,8 +31,8 @@
 ## UPDATE NOTES
 
 > [!WARNING]
-> Plugin current version is compatibale only with **Vue v3**. For
-> Vue2 use plugin version 2.5.1. See [install](#install-and-setup) chapter for
+> The current plugin version is compatible only with **Vue v3**. For
+> Vue 2, use plugin version 2.5.1. See the [install](#install) section for
 > details.
 
 ## Overview
@@ -41,9 +40,9 @@
 An audio spectrum visualizer plugin for [VueJS](https://vuejs.org/) framework.
 It is built with HTML5
 [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
-and compatible with all browsers that support HTML5 audio API. It provides
-several Vue components that allows to draw light and nice visualization for
-"audio" HTML elements.
+and compatible with all browsers that support the HTML5 audio API. It provides
+several Vue components that let you draw lightweight, attractive visualizations
+for `audio` HTML elements.
 
 > [!NOTE]
 > Visit [**DEMO page**](https://staskobzar.github.io/vue-audio-visual/)
@@ -57,7 +56,7 @@ Component **AvLine**. Vue template name **&lt;av-line&gt;**
 <av-line :line-width="2" line-color="lime" src="/static/music.mp3"></av-line>
 ```
 
-This will create following element:
+This will create the following element:
 
 ![AvLine Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-line.png?raw=true)
 
@@ -73,7 +72,7 @@ Component **AvBars**. Vue template name **&lt;av-bars&gt;**
 ></av-bars>
 ```
 
-This will create following element:
+This will create the following element:
 
 ![AvBars Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-bars.png?raw=true)
 
@@ -90,7 +89,7 @@ Component **AvCircle**. Vue template name **&lt;av-circle&gt;**
 ></av-circle>
 ```
 
-This will create following element:
+This will create the following element:
 
 ![AvCircle Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-circle.png?raw=true)
 
@@ -100,11 +99,11 @@ Component **AvWaveform**. Vue template name **&lt;av-waveform&gt;**
 <av-waveform src="/static/bar.mp3"></av-waveform>
 ```
 
-This will create following waveform element:
+This will create the following waveform element:
 
 ![AvWaveform Intro](https://github.com/staskobzar/vue-audio-visual/blob/master/static/overview-vav-waveform.png?raw=true)
 
-Component will pre-load audio content and generate clickable waveform.
+The component will pre-load audio content and generate a clickable waveform.
 
 Component **AvMedia**. Vue component **&lt;AvMedia&gt;**
 
@@ -112,7 +111,7 @@ Component **AvMedia**. Vue component **&lt;AvMedia&gt;**
 <AvMedia :media="mediaObject" type="vbar"></AvMedia>
 ```
 
-This will create following media element:
+This will create the following media element:
 
 ![AvMedia Intro](https://user-images.githubusercontent.com/147280/201538832-e20b12bc-ac6f-4137-9346-cd6d9e30bdd1.png)
 
@@ -128,7 +127,7 @@ Install using npm
 npm install --save vue-audio-visual
 ```
 
-for Vue 2 install version 2.5.1
+For Vue 2, install version 2.5.1
 
 ```
 npm i -S vue-audio-visual@2.5.1
@@ -136,7 +135,7 @@ npm i -S vue-audio-visual@2.5.1
 
 ### Use plugin
 
-Install plugin in main.js:
+Install the plugin in main.js:
 
 ```typescript
 import { createApp } from "vue";
@@ -149,7 +148,7 @@ app.use(AVPlugin);
 app.mount("#app");
 ```
 
-Then anywhere is your app you can use it like this:
+Then anywhere in your app you can use it like this:
 
 ```html
 <av-bars src="/static/bach.mp3" bar-color="#CCC"> </av-bars>
@@ -157,7 +156,7 @@ Then anywhere is your app you can use it like this:
 
 ### Use component
 
-Single component can be imported and used
+A single component can be imported and used:
 
 ```ts
 <script setup lang="ts">
@@ -171,12 +170,12 @@ import { AVWaveform } from 'vue-audio-visual'
 
 ### Composable functions
 
-Plugin provides composable "use" functions for each plugin component. Actually,
-each component uses composable function inside. See, for example,
+The plugin provides composable "use" functions for each component. Each
+component uses a composable function internally. See, for example,
 [line component](https://github.com/staskobzar/vue-audio-visual/blob/master/src/components/AVLine.vue).
 
-Composable functions use audio and canvas element refs. It is handy when you
-need full access to audio or canvas elements. In the same time it is easy to
+Composable functions use audio and canvas element refs. They are handy when you
+need full access to audio or canvas elements. At the same time they are easy to
 use:
 
 ```ts
@@ -202,8 +201,8 @@ useAVBars(player, canvas, { src: mySource, canvHeight: 40, canvWidth: 200, barCo
 
 ## :gear: API
 
-There are several components that comes with plugin. Here is the list of
-available plugins:
+There are several components that come with the plugin. Here is the list of
+available components:
 
 | Name | Component name | Composable function |
 | -----------| -------------- | ------------------- |
@@ -213,10 +212,10 @@ available plugins:
 | av-media | AVMedia | useAVMedia |
 | av-waveform | AVWaveform | useAVWaveform |
 
-There are props that are common for all components and special props for each
-component. All props for components' names follow vue specs when using wiht
-composable functions. Meaning when prop's name is "_foo-bar_" then in composable
-function parameter it is expected to be "_fooBar_".
+There are props that are common to all components and special props for each
+component. Component prop names follow Vue conventions when used with composable
+functions: when a prop's name is "_foo-bar_", the corresponding composable
+function parameter is expected to be "_fooBar_".
 
 ### Common props
 
@@ -235,8 +234,8 @@ function parameter it is expected to be "_fooBar_".
       <td><code>String</code></td>
       <td><code>null</code></td>
       <td>
-        URL of Audio element src attribute. When provided creates audio element
-        wrapped in "div".
+        URL for the audio element's src attribute. When provided, creates an
+        audio element wrapped in a "div".
       </td>
     </tr>
     <tr>
@@ -244,8 +243,8 @@ function parameter it is expected to be "_fooBar_".
       <td><code>Boolean</code></td>
       <td><code>true</code></td>
       <td>
-        Audio element controls attribute. When provided should
-        display audio element with controls.
+        Audio element controls attribute. When provided, displays the
+        audio element with controls.
       </td>
     </tr>
     <tr>
@@ -253,7 +252,7 @@ function parameter it is expected to be "_fooBar_".
       <td><code>String</code></td>
       <td><code>null</code></td>
       <td>Canvas fill background RGB color.
-          Default is null, which makes background transperent.
+          Default is null, which makes the background transparent.
           Examples:<br/>
           <code>canv-fill-color="#00AAFF"</code><br/>
       </td>
@@ -302,8 +301,8 @@ function parameter it is expected to be "_fooBar_".
       <td><code>String</code>, <code>Array</code></td>
       <td><code>#9F9</code></td>
       <td>Graph line color. Can be string RGB color or Array of RGB color.
-          When Array is given, plugin creates linear gradient and set it as background.
-          Array value should be binded.
+When an Array is given, the plugin creates a linear gradient and sets it as the background.
+The Array value should be bound.
           Examples:<br/>
           <code>line-color="#00AAFF"</code><br/>
           <code>:line-color="['#FFF', 'rgb(0,255,127)', '#00f']"</code>
@@ -395,7 +394,7 @@ function useAVLine<T extends object>(
       <td>caps-drop-speed</td>
       <td><code>Number</code></td>
       <td><code>0.9</code></td>
-      <td>Caps drop down animation speed. The higher nubmer the faster caps are going down.
+      <td>Caps drop down animation speed. The higher the number, the faster the caps go down.
           Example: <code>:caps-drop-speed="0.5"</code>
       </td>
     </tr>
@@ -545,7 +544,7 @@ function useAVBars<T extends object>(
       <td>bar-color</td>
       <td><code>String</code>, <code>Array</code></td>
       <td><code>[#FFF,#00F]</code></td>
-      <td>Bar style RGB color or radient gradient when array.
+      <td>Bar style RGB color or radial gradient when an array.
           Example: <code>:bar-color="#12AA55"</code>
       </td>
     </tr>
@@ -585,7 +584,7 @@ function useAVBars<T extends object>(
       <td>outline-meter-space</td>
       <td><code>Number</code></td>
       <td><code>3</code></td>
-      <td>Space between outline and progress meter. The bigger the closer to the circle centre.
+      <td>Space between outline and progress meter. The bigger the value, the closer to the circle centre.
           Example: <code>:outline-meter-space="1"</code>
       </td>
     </tr>
@@ -617,7 +616,7 @@ function useAVBars<T extends object>(
       <td>rotate-graph</td>
       <td><code>Boolean</code></td>
       <td><code>false</code></td>
-      <td>Rotate graph clockwise enable.
+      <td>Enable clockwise graph rotation.
           Example: <code>:rotate-graph="true"</code>
       </td>
     </tr>
@@ -685,7 +684,7 @@ function useAVCircle<T extends object>(
       <td><code>Number</code></td>
       <td><code>0.5</code></td>
       <td>Waveform line width for played segment of audio.
-          Example: <code>:playtime-line-width="0.8"</code>
+          Example: <code>:played-line-width="0.8"</code>
       </td>
     </tr>
     <tr>
@@ -693,14 +692,14 @@ function useAVCircle<T extends object>(
       <td><code>String</code></td>
       <td><code>navy</code></td>
       <td>Waveform line color for played segment of audio.
-          Example: <code>:playtime-line-color="#ABC123"</code>
+          Example: <code>:played-line-color="#ABC123"</code>
       </td>
     </tr>
     <tr>
       <td>noplayed-line-width</td>
       <td><code>Number</code></td>
       <td><code>0.5</code></td>
-      <td>Waveform line width for not yet played segment of audio
+      <td>Waveform line width for the not-yet-played segment of audio.
           Example: <code>:noplayed-line-width="1"</code>
       </td>
     </tr>
@@ -708,7 +707,7 @@ function useAVCircle<T extends object>(
       <td>noplayed-line-color</td>
       <td><code>String</code></td>
       <td><code>lime</code></td>
-      <td>Waveform line color for not yet played segment of audio.
+      <td>Waveform line color for the not-yet-played segment of audio.
           Example: <code>:noplayed-line-color="grey"</code>
       </td>
     </tr>
@@ -724,7 +723,7 @@ function useAVCircle<T extends object>(
       <td>playtime-with-ms</td>
       <td><code>Boolean</code></td>
       <td><code>true</code></td>
-      <td>Display milliseconds in played when true. For example: 02:55.054.
+      <td>Display milliseconds in the played time when true. For example: 02:55.054.
           Example: <code>:playtime-with-ms="false"</code>
       </td>
     </tr>
@@ -756,7 +755,7 @@ function useAVCircle<T extends object>(
       <td>playtime-text-bottom</td>
       <td><code>Boolean</code></td>
       <td><code>false</code></td>
-      <td>Position playtime text bottom. Default on top.
+      <td>Position the playtime text at the bottom. Default is on top.
           Example: <code>playtime-text-bottom</code>
       </td>
     </tr>
@@ -795,9 +794,9 @@ function useAVCircle<T extends object>(
   </tbody>
 </table>
 
-Composable function is using [useFetch](https://vueuse.org/core/usefetch/) from
-[@vueuse/core](https://vueuse.org/) package. `useAVWaveform` last argument is
-options for "createFetch" function from "useFetch" module.
+The composable function uses [useFetch](https://vueuse.org/core/usefetch/) from
+[@vueuse/core](https://vueuse.org/) package. The last argument of `useAVWaveform` is
+options for the "createFetch" function from the "useFetch" module.
 
 ```ts
 export function useAVWaveform<T extends object>(
@@ -810,9 +809,9 @@ export function useAVWaveform<T extends object>(
 
 ### AVMedia props
 
-Component expects `MediaStream` object. You can get it directly from
-`navigator.mediaDevices` or from @vueuse/core library function
-[useUserMedia](https://vueuse.org/core/useUserMedia/). Live example can be found
+The component expects a `MediaStream` object. You can get it directly from
+`navigator.mediaDevices` or from the @vueuse/core library function
+[useUserMedia](https://vueuse.org/core/useUserMedia/). A live example can be found
 in
 [App.vue](https://github.com/staskobzar/vue-audio-visual/blob/master/src/App.vue).
 
@@ -853,7 +852,7 @@ const { stream } = useUserMedia()
       <td><code>String</code></td>
       <td><code>wform</code></td>
       <td>Type of media visualization. Available types: 'wform', 'circle', 'frequ' and 'vbar'.
-      If not set or not recognized then 'wform' is set. See examples in demo. <br/>
+      If not set or not recognized then 'wform' is set. See examples in the demo. <br/>
           Example: <code>type="frequ"</code>
       </td>
     </tr>
